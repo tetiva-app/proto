@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package gophercourier.sync.v1;
+
+message CollectionData {
+  string parent_id = 1;
+  string name = 2;
+  string description = 3;
+  string auth_type = 4;
+  string auth_data = 5;
+  repeated HeaderItem grpc_metadata = 6;
+  string pre_script = 7;
+  string post_script = 8;
+}
+
+message RequestData {
+  string collection_id = 1;
+  string name = 2;
+  string protocol = 3;
+  string method = 4;
+  string url = 5;
+  repeated HeaderItem headers = 6;
+  string body = 7;
+  string body_type = 8;
+  string auth_type = 9;
+  string auth_data = 10;
+  string grpc_service = 11;
+  string grpc_method = 12;
+  string grpc_proto_path = 13;
+  repeated HeaderItem grpc_metadata = 14;
+  string graphql_query = 15;
+  string graphql_variables = 16;
+  string graphql_schema_path = 17;
+  string graphql_operation = 18;
+  string pre_script = 19;
+  string post_script = 20;
+}
+
+message EnvironmentData {
+  string name = 1;
+}
+
+message VariableData {
+  string environment_id = 1;
+  string key = 2;
+  string value = 3;
+  bool is_secret = 4;
+  bool enabled = 5;
+}
+
+message HeaderItem {
+  string key = 1;
+  string value = 2;
+  bool enabled = 3;
+}

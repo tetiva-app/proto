@@ -1,0 +1,55 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  BUF_VER: '1.53.0'
+  PROTOC_GEN_GO_VER: 'v1.36.6'
+  PROTOC_GEN_GO_GRPC_VER: 'v1.5.1'
+
+  BIN_DIR: '{{.ROOT_DIR}}/bin'
+  BUF_DIR: '{{.BIN_DIR}}/buf'
+  PROTOC_GEN_GO: '{{.BIN_DIR}}/protoc-gen-go'
+  PROTOC_GEN_GO_GRPC: '{{.BIN_DIR}}/protoc-gen-go-grpc'
+
+tasks:
+  install-buf:
+    cmds:
+      - |
+        mkdir -p {{.BIN_DIR}}
+        [ -f {{.BUF_DIR}} ] || {
+          echo 'Install buf {{.BUF_VER}}...'
+          GOBIN={{.BIN_DIR}} go install github.com/bufbuild/buf/cmd/buf@v{{.BUF_VER}}
+        }
+  proto:install-plugins:
+    cmds:
+      - |
+        [ -f {{.PROTOC_GEN_GO}} ] || {
+          echo 'Installing protoc-gen-go...'
+          GOBIN={{.BIN_DIR}} go install google.golang.org/protobuf/cmd/protoc-gen-go@{{.PROTOC_GEN_GO_VER}}
+        }
+        [ -f {{.PROTOC_GEN_GO_GRPC}} ] || {
+          echo 'Installing protoc-gen-go-grpc...'
+          GOBIN={{.BIN_DIR}} go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@{{.PROTOC_GEN_GO_GRPC_VER}}
+        }
+  proto:lint:
+    deps: [ install-buf, proto:install-plugins ]
+    dir: proto
+    cmds:
+      - '{{.BUF_DIR}} lint'
+
+  proto:gen:
+    deps: [ install-buf, proto:install-plugins, proto:lint ]
+    dir: proto
+    cmds:
+      - '{{.BUF_DIR}} generate'
+
+  proto:clean:
+    cmds:
+      - 'rm -rf ./go'
+
+  proto:gen-web:
+    deps: [install-buf]
+    dir: proto
+    cmds:
+      - '{{.BUF_DIR}} generate --template buf.gen.web.yaml'

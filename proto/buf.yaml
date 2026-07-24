@@ -1,0 +1,8 @@
+version: "v2"
+name: github.com/tetiva-app/proto
+lint:
+  use:
+    - STANDARD
+breaking:
+  use:
+    - FILE

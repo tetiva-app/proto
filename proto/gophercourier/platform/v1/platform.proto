@@ -1,0 +1,302 @@
+syntax = "proto3";
+
+package gophercourier.platform.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// PlatformService is the Platform Admin (Instance Operator) gRPC surface.
+// Combines read-only support API with tightly-bounded force-* mutations.
+//
+// Per spec [07] + [12] §M11:
+//   * Every method requires the caller's JWT to carry IsPlatformStaff=true
+//     (enforced by PlatformStaffGuard interceptor).
+//   * Every read emits a `platform.read` audit row server-side.
+//   * Every force-* mutation requires `Reason` (10..500 chars after trim) and
+//     emits a matching `platform.*` audit row PLUS cascaded
+//     `auth.session_revoked` per killed session.
+service PlatformService {
+  // Read.
+  rpc ListOrgs(PlatformServiceListOrgsRequest) returns (PlatformServiceListOrgsResponse);
+  rpc GetOrg(PlatformServiceGetOrgRequest) returns (PlatformServiceGetOrgResponse);
+  rpc ListUsers(PlatformServiceListUsersRequest) returns (PlatformServiceListUsersResponse);
+  rpc GetUser(PlatformServiceGetUserRequest) returns (PlatformServiceGetUserResponse);
+  rpc ListAudit(PlatformServiceListAuditRequest) returns (PlatformServiceListAuditResponse);
+
+  // Write (force-*).
+  rpc ForceResetPassword(PlatformServiceForceResetPasswordRequest)
+      returns (PlatformServiceForceResetPasswordResponse);
+  rpc ForceTransferOrg(PlatformServiceForceTransferOrgRequest)
+      returns (PlatformServiceForceTransferOrgResponse);
+  rpc ForceRevokeSessions(PlatformServiceForceRevokeSessionsRequest)
+      returns (PlatformServiceForceRevokeSessionsResponse);
+  rpc ForceDeleteUser(PlatformServiceForceDeleteUserRequest)
+      returns (PlatformServiceForceDeleteUserResponse);
+
+  // ForceDeleteOrg soft-deletes a non-personal org with cascade. Personal orgs
+  // are rejected with FailedPrecondition. Reason is required (10..500 chars).
+  rpc ForceDeleteOrg(PlatformServiceForceDeleteOrgRequest)
+      returns (PlatformServiceForceDeleteOrgResponse);
+
+  // AdminVerifyEmail flips email_verified=true without involving the user's
+  // verification-email flow. Idempotent — already-verified users return
+  // was_already_verified=true without error.
+  rpc AdminVerifyEmail(PlatformServiceAdminVerifyEmailRequest)
+      returns (PlatformServiceAdminVerifyEmailResponse);
+}
+
+// ---- Request / Response shapes ----
+
+message PlatformServiceListOrgsRequest {
+  bool include_personal = 1;
+  bool include_deleted = 2;
+  string cursor = 3;
+  int32 limit = 4;
+}
+
+message PlatformServiceOrgRow {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  string owner_user_id = 4;
+  bool is_personal = 5;
+  int32 member_count = 6;
+  int32 workspace_count = 7;
+  google.protobuf.Timestamp last_activity_at = 8;
+  bool is_deleted = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+  // Owner's email at the time of listing. Empty string if the owner user
+  // is deleted or missing.
+  string owner_email = 12;
+}
+
+message PlatformServiceListOrgsResponse {
+  repeated PlatformServiceOrgRow orgs = 1;
+  string next_cursor = 2;
+}
+
+message PlatformServiceGetOrgRequest {
+  string org_id = 1;
+}
+
+message PlatformServiceOrgMember {
+  string user_id = 1;
+  string email = 2;
+  string name = 3;
+  string role_id = 4;
+  string role_name = 5;
+  google.protobuf.Timestamp joined_at = 6;
+  google.protobuf.Timestamp last_login_at = 7;
+  // True if the user's email is verified. Lets the Platform admin UI hide
+  // the Verify Email action for already-verified members.
+  bool email_verified = 8;
+}
+
+message PlatformServiceWorkspace {
+  string id = 1;
+  string name = 2;
+  string visibility = 3;
+  int32 member_count = 4;
+  google.protobuf.Timestamp last_sync_at = 5;
+}
+
+message PlatformServiceInvite {
+  string id = 1;
+  string email = 2;
+  string role_id = 3;
+  int32 max_uses = 4;
+  int32 used_count = 5;
+  google.protobuf.Timestamp expires_at = 6;
+  string status = 7;
+  // Human-readable role name (e.g. "Admin", "Member"). Sourced from
+  // authz.BuiltinRoles for builtin roles. Empty for unknown role IDs —
+  // UI falls back to role_id in that case.
+  string role_name = 8;
+}
+
+message PlatformServiceOrg {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  string owner_user_id = 4;
+  bool is_personal = 5;
+  bool is_deleted = 6;
+  int32 version = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+message PlatformServiceGetOrgResponse {
+  PlatformServiceOrg org = 1;
+  repeated PlatformServiceOrgMember members = 2;
+  repeated PlatformServiceWorkspace workspaces = 3;
+  repeated PlatformServiceInvite invites = 4;
+}
+
+message PlatformServiceListUsersRequest {
+  string email_substring = 1;
+  bool include_deleted = 2;
+  string cursor = 3;
+  int32 limit = 4;
+}
+
+message PlatformServiceUserRow {
+  string id = 1;
+  string email = 2;
+  string name = 3;
+  bool email_verified = 4;
+  bool is_platform_staff = 5;
+  bool is_deleted = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp last_login_at = 8;
+  int32 org_count = 9;
+}
+
+message PlatformServiceListUsersResponse {
+  repeated PlatformServiceUserRow users = 1;
+  string next_cursor = 2;
+}
+
+message PlatformServiceGetUserRequest {
+  string user_id = 1;
+}
+
+message PlatformServiceUserMembership {
+  string org_id = 1;
+  string org_name = 2;
+  string role_id = 3;
+  string role_name = 4;
+  google.protobuf.Timestamp joined_at = 5;
+}
+
+message PlatformServiceUserSession {
+  string id = 1;
+  string client_id = 2;
+  string user_agent = 3;
+  string ip = 4;
+  google.protobuf.Timestamp last_used_at = 5;
+  google.protobuf.Timestamp revoked_at = 6;
+}
+
+message PlatformServiceUser {
+  string id = 1;
+  string email = 2;
+  string name = 3;
+  bool email_verified = 4;
+  bool is_platform_staff = 5;
+  bool is_deleted = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp last_login_at = 8;
+}
+
+message PlatformServiceGetUserResponse {
+  PlatformServiceUser user = 1;
+  repeated PlatformServiceUserMembership memberships = 2;
+  repeated PlatformServiceUserSession sessions = 3;
+}
+
+message PlatformServiceAuditFilter {
+  string org_id = 1;
+  string workspace_id = 2;
+  string actor_user_id = 3;
+  string action = 4;
+  string target_id = 5;
+  google.protobuf.Timestamp from = 6;
+  google.protobuf.Timestamp to = 7;
+}
+
+message PlatformServiceAuditEntry {
+  google.protobuf.Timestamp timestamp = 1;
+  string action = 2;
+  string actor_type = 3;
+  string actor_user_id = 4;
+  string actor_name = 5;
+  string actor_ip = 6;
+  string actor_user_agent = 7;
+  string actor_session_id = 8;
+  string org_id = 9;
+  string workspace_id = 10;
+  string target_type = 11;
+  string target_id = 12;
+  string target_name = 13;
+  string metadata_json = 14;
+}
+
+message PlatformServiceListAuditRequest {
+  PlatformServiceAuditFilter filter = 1;
+  int32 limit = 2;
+  string cursor = 3;
+}
+
+message PlatformServiceListAuditResponse {
+  repeated PlatformServiceAuditEntry entries = 1;
+  string next_cursor = 2;
+}
+
+message PlatformServiceForceResetPasswordRequest {
+  string target_user_id = 1;
+  string new_password = 2;
+  bool revoke_sessions = 3;
+  string reason = 4;
+}
+
+message PlatformServiceForceResetPasswordResponse {
+  string user_id = 1;
+  int32 sessions_revoked = 2;
+}
+
+message PlatformServiceForceTransferOrgRequest {
+  string org_id = 1;
+  string new_owner_user_id = 2;
+  string reason = 3;
+}
+
+message PlatformServiceForceTransferOrgResponse {
+  string org_id = 1;
+  string previous_owner_id = 2;
+  string new_owner_id = 3;
+  int32 org_version = 4;
+  bool new_owner_was_member = 5;
+}
+
+message PlatformServiceForceRevokeSessionsRequest {
+  string target_user_id = 1;
+  string reason = 2;
+}
+
+message PlatformServiceForceRevokeSessionsResponse {
+  string user_id = 1;
+  int32 sessions_revoked = 2;
+}
+
+message PlatformServiceForceDeleteUserRequest {
+  string target_user_id = 1;
+  string reason = 2;
+}
+
+message PlatformServiceForceDeleteUserResponse {
+  string user_id = 1;
+  int32 sessions_revoked = 2;
+  string personal_org_id = 3;
+  int32 non_personal_orgs_left = 4;
+}
+
+message PlatformServiceForceDeleteOrgRequest {
+  string org_id = 1;
+  string reason = 2;
+}
+
+message PlatformServiceForceDeleteOrgResponse {
+  string org_id = 1;
+  int32 workspaces_deleted = 2;
+  int32 memberships_pruned = 3;
+}
+
+message PlatformServiceAdminVerifyEmailRequest {
+  string target_user_id = 1;
+}
+
+message PlatformServiceAdminVerifyEmailResponse {
+  string user_id = 1;
+  bool was_already_verified = 2;
+}

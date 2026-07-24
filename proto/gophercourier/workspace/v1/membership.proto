@@ -1,0 +1,167 @@
+syntax = "proto3";
+
+package gophercourier.workspace.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// WorkspaceMembershipService — workspace-scoped membership lifecycle and
+// invites. Distinct from WorkspaceService (entity CRUD).
+//
+// Message types are prefixed with the service name to satisfy buf STANDARD
+// uniqueness within gophercourier.workspace.v1 (which also defines
+// WorkspaceService messages).
+service WorkspaceMembershipService {
+  // List members for the workspace. Permission: workspace:read.
+  rpc ListMembers(WorkspaceMembershipServiceListMembersRequest) returns (WorkspaceMembershipServiceListMembersResponse);
+  // Get one member row (uses-by P4 detail drawer parity). Permission: workspace:read.
+  rpc GetMember(WorkspaceMembershipServiceGetMemberRequest) returns (WorkspaceMembershipServiceGetMemberResponse);
+  // Direct-add a user (no invite). Permission: workspace:manage_members.
+  rpc AddMember(WorkspaceMembershipServiceAddMemberRequest) returns (WorkspaceMembershipServiceAddMemberResponse);
+  // Change a member's role. Permission: workspace:manage_roles.
+  rpc ChangeMemberRole(WorkspaceMembershipServiceChangeMemberRoleRequest) returns (WorkspaceMembershipServiceChangeMemberRoleResponse);
+  // Remove a member (caller != target). Permission: workspace:manage_members.
+  rpc RemoveMember(WorkspaceMembershipServiceRemoveMemberRequest) returns (WorkspaceMembershipServiceRemoveMemberResponse);
+  // Caller leaves the workspace. Blocked when caller is the last system:ws_admin.
+  rpc Leave(WorkspaceMembershipServiceLeaveRequest) returns (WorkspaceMembershipServiceLeaveResponse);
+  // List active workspace invites. Permission: workspace:manage_members.
+  rpc ListInvites(WorkspaceMembershipServiceListInvitesRequest) returns (WorkspaceMembershipServiceListInvitesResponse);
+  // Create a shareable workspace invite. Permission: workspace:manage_members.
+  // Code is globally unique across all workspaces.
+  rpc CreateInvite(WorkspaceMembershipServiceCreateInviteRequest) returns (WorkspaceMembershipServiceCreateInviteResponse);
+  // Revoke an active invite. Permission: workspace:manage_members.
+  rpc RevokeInvite(WorkspaceMembershipServiceRevokeInviteRequest) returns (WorkspaceMembershipServiceRevokeInviteResponse);
+  // Accept an invite. Caller must already be a member of the invite's parent org.
+  // Permission: none (caller-only operation; the invite code IS the authz).
+  rpc JoinByInvite(WorkspaceMembershipServiceJoinByInviteRequest) returns (WorkspaceMembershipServiceJoinByInviteResponse);
+}
+
+// --- Domain shapes ---
+
+// Member row returned by ListMembers / GetMember. Email + name are denormalised
+// from the user doc at list-time (orphan-tolerant: blanked when user is
+// soft-deleted; user_deleted=true mirrors org-side OrgMember semantics).
+message WorkspaceMember {
+  string user_id = 1;
+  string email = 2;
+  string name = 3;
+  string role_id = 4;
+  string role_name = 5;
+  google.protobuf.Timestamp joined_at = 6;
+  bool user_deleted = 7;
+  string invited_by = 8;
+}
+
+// Invite row returned by ListInvites. status one of "pending" | "revoked" |
+// "expired" | "exhausted".
+message WorkspaceInvite {
+  string id = 1;
+  string workspace_id = 2;
+  string org_id = 3;
+  string code = 4;
+  string role_id = 5;
+  int32 max_uses = 6;
+  int32 used_count = 7;
+  google.protobuf.Timestamp expires_at = 8;
+  google.protobuf.Timestamp revoked_at = 9;
+  google.protobuf.Timestamp created_at = 10;
+  string created_by = 11;
+  string status = 12;
+}
+
+// --- Requests / responses ---
+
+message WorkspaceMembershipServiceListMembersRequest {
+  string workspace_id = 1;
+  string cursor = 2;
+  int32 limit = 3;
+  // empty → no filter
+  string role_id = 4;
+}
+
+message WorkspaceMembershipServiceListMembersResponse {
+  repeated WorkspaceMember members = 1;
+  string next_cursor = 2;
+}
+
+message WorkspaceMembershipServiceGetMemberRequest {
+  string workspace_id = 1;
+  string user_id = 2;
+}
+
+message WorkspaceMembershipServiceGetMemberResponse {
+  WorkspaceMember member = 1;
+}
+
+message WorkspaceMembershipServiceAddMemberRequest {
+  string workspace_id = 1;
+  string target_user_id = 2;
+  string role_id = 3;
+}
+
+message WorkspaceMembershipServiceAddMemberResponse {
+  string membership_id = 1;
+}
+
+message WorkspaceMembershipServiceChangeMemberRoleRequest {
+  string workspace_id = 1;
+  string target_user_id = 2;
+  string new_role_id = 3;
+}
+
+message WorkspaceMembershipServiceChangeMemberRoleResponse {}
+
+message WorkspaceMembershipServiceRemoveMemberRequest {
+  string workspace_id = 1;
+  string target_user_id = 2;
+}
+
+message WorkspaceMembershipServiceRemoveMemberResponse {}
+
+message WorkspaceMembershipServiceLeaveRequest {
+  string workspace_id = 1;
+}
+
+message WorkspaceMembershipServiceLeaveResponse {}
+
+message WorkspaceMembershipServiceListInvitesRequest {
+  string workspace_id = 1;
+  string cursor = 2;
+  int32 limit = 3;
+  // empty → all statuses; otherwise one of "pending" | "revoked" | "expired" | "exhausted"
+  string status = 4;
+}
+
+message WorkspaceMembershipServiceListInvitesResponse {
+  repeated WorkspaceInvite invites = 1;
+  string next_cursor = 2;
+}
+
+message WorkspaceMembershipServiceCreateInviteRequest {
+  string workspace_id = 1;
+  string role_id = 2;
+  // 1..100; server clamps and validates.
+  int32 max_uses = 3;
+  // 1..168 hours; server clamps.
+  int32 expires_in_hours = 4;
+}
+
+message WorkspaceMembershipServiceCreateInviteResponse {
+  WorkspaceInvite invite = 1;
+}
+
+message WorkspaceMembershipServiceRevokeInviteRequest {
+  string workspace_id = 1;
+  string invite_id = 2;
+}
+
+message WorkspaceMembershipServiceRevokeInviteResponse {}
+
+message WorkspaceMembershipServiceJoinByInviteRequest {
+  string code = 1;
+}
+
+message WorkspaceMembershipServiceJoinByInviteResponse {
+  string workspace_id = 1;
+  string org_id = 2;
+  string membership_id = 3;
+}

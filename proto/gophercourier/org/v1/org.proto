@@ -1,0 +1,137 @@
+syntax = "proto3";
+
+package gophercourier.org.v1;
+
+import "google/protobuf/timestamp.proto";
+
+service OrgService {
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc ListMine(ListMineRequest) returns (ListMineResponse);
+  rpc ListMembers(ListMembersRequest) returns (ListMembersResponse);
+  rpc ListUsersByIDs(ListUsersByIDsRequest) returns (ListUsersByIDsResponse);
+}
+
+message Org {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  string owner_user_id = 4;
+  bool is_personal = 5;
+  OrgSettings settings = 6;
+  string description = 7;
+  string icon_url = 8;
+  int32 version = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+message OrgSettings {
+  bool allow_members_create_workspaces = 1;
+  bool registration_invite_only = 2;
+  string default_member_role_id = 3;
+  string default_workspace_role_id = 4;
+}
+
+message CreateRequest {
+  string name = 1;
+  string slug = 2;
+  string description = 3;
+  string icon_url = 4;
+}
+
+message CreateResponse {
+  Org org = 1;
+}
+
+message UpdateRequest {
+  string org_id = 1;
+  optional string name = 2;
+  optional string slug = 3;
+  optional string description = 4;
+  optional string icon_url = 5;
+  optional OrgSettings settings = 6;
+}
+
+message UpdateResponse {
+  Org org = 1;
+}
+
+message DeleteRequest {
+  string org_id = 1;
+}
+
+message DeleteResponse {}
+
+message GetRequest {
+  string org_id = 1;
+}
+
+message GetResponse {
+  Org org = 1;
+}
+
+message ListMineRequest {}
+
+message ListMineResponse {
+  repeated OrgWithRole orgs = 1;
+}
+
+message OrgWithRole {
+  Org org = 1;
+  string role_id = 2;
+  bool is_active = 3;
+}
+
+message ListMembersRequest {
+  string org_id = 1;
+  string cursor = 2;
+  int32 limit = 3;   // 0 → server default 50, server clamps to max 200
+  string role_id = 4; // empty → no filter
+  // Reserved 5 for future email_substring once paging semantics are defined.
+  reserved 5;
+  reserved "email_substring";
+}
+
+message OrgMember {
+  string user_id = 1;
+  string email = 2;
+  string name = 3;
+  string role_id = 4;
+  string role_name = 5;
+  google.protobuf.Timestamp joined_at = 6;
+  // user_deleted=true means the underlying User row is missing or soft-deleted.
+  // In that case email/name will be empty — frontend should render as
+  // "(deleted user)" or similar disambiguated state.
+  bool user_deleted = 7;
+}
+
+message ListMembersResponse {
+  repeated OrgMember members = 1;
+  string next_cursor = 2; // empty when no more pages
+}
+
+message ListUsersByIDsRequest {
+  // Org the caller is acting within. Required.
+  string org_id = 1;
+  // Up to 100 user IDs to look up. Server clamps to 100; empty returns empty.
+  repeated string user_ids = 2;
+}
+
+message ListUsersByIDsResponse {
+  // One entry per requested ID that exists AND is a member of org_id.
+  // Missing IDs (hard-deleted users, or users not in org) are simply absent.
+  // Soft-deleted users ARE returned with is_deleted=true and empty email/name
+  // (mirrors OrgMember.user_deleted semantics) — frontend uses this for
+  // orphan-tolerant rendering (avatar "——", last-6 of user_id).
+  repeated OrgUser users = 1;
+}
+
+message OrgUser {
+  string user_id = 1;
+  string email = 2;
+  string name = 3;
+  bool is_deleted = 4;
+}

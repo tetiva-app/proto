@@ -1,0 +1,16 @@
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: github.com/tetiva-app/proto/go
+plugins:
+  - local: ../bin/protoc-gen-go
+    out: ../go
+    opt:
+      - paths=source_relative
+      - default_api_level=API_OPAQUE
+  - local: ../bin/protoc-gen-go-grpc
+    out: ../go
+    opt:
+      - paths=source_relative

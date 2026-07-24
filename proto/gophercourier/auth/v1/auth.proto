@@ -1,0 +1,184 @@
+syntax = "proto3";
+
+package gophercourier.auth.v1;
+
+import "google/protobuf/timestamp.proto";
+
+service AuthService {
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Refresh(RefreshRequest) returns (RefreshResponse);
+  rpc GetMe(GetMeRequest) returns (GetMeResponse);
+
+  // P3 additions.
+  rpc SwitchOrg(SwitchOrgRequest) returns (SwitchOrgResponse);
+  rpc Me(MeRequest) returns (MeResponse);
+  rpc MyOrgs(MyOrgsRequest) returns (MyOrgsResponse);
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
+  rpc ResendVerification(ResendVerificationRequest) returns (ResendVerificationResponse);
+
+  // P9 additions.
+  // ChangePassword updates the calling user's password.
+  // Requires authentication (bearer token).
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  // Logout revokes the calling user's current session.
+  // Requires authentication (bearer token).
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+  string name = 3;
+  string client_id = 4;
+  // Optional invite token. Empty for self-serve registration.
+  string invite_token = 5;
+  // Optional UI locale ("ru" | "en"). Drives single-language emails; empty
+  // falls back to the bilingual template.
+  string locale = 6;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  string client_id = 3;
+}
+
+message RefreshRequest {
+  string refresh_token = 1;
+  string client_id = 2;
+}
+
+message GetMeRequest {}
+
+message RegisterResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  User user = 3;
+  string active_org_id = 10;
+  string active_role_id = 11;
+  bool is_platform_staff = 12;
+  repeated Membership memberships = 13;
+  bool requires_email_verification = 14;
+}
+
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  User user = 3;
+  string active_org_id = 10;
+  string active_role_id = 11;
+  bool is_platform_staff = 12;
+  repeated Membership memberships = 13;
+  bool requires_email_verification = 14;
+}
+
+message RefreshResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  User user = 3;
+  string active_org_id = 10;
+  string active_role_id = 11;
+  bool is_platform_staff = 12;
+  repeated Membership memberships = 13;
+  bool requires_email_verification = 14;
+}
+
+message GetMeResponse {
+  User user = 1;
+}
+
+// User is the public projection of the user entity.
+message User {
+  string id = 1;
+  string email = 2;
+  string name = 3;
+  google.protobuf.Timestamp created_at = 4;
+  bool email_verified = 5;
+  bool is_platform_staff = 6;
+  string last_active_org_id = 7;
+}
+
+// Membership is the denormalized projection used in /login, /me, /my_orgs.
+message Membership {
+  string org_id = 1;
+  string org_name = 2;
+  string org_slug = 3;
+  bool is_personal = 4;
+  string role_id = 5;
+  string role_name = 6;
+  google.protobuf.Timestamp joined_at = 7;
+}
+
+// SwitchOrgRequest changes the active org context for the calling session.
+message SwitchOrgRequest {
+  string org_id = 1;
+}
+
+message SwitchOrgResponse {
+  string access_token = 1;
+  // refresh_token is empty — switch_org does not rotate refresh.
+  string refresh_token = 2;
+  User user = 3;
+  string active_org_id = 10;
+  string active_role_id = 11;
+  bool is_platform_staff = 12;
+  repeated Membership memberships = 13;
+}
+
+message MeRequest {}
+
+message MeResponse {
+  User user = 1;
+  ActiveOrg active_org = 2;
+  repeated Membership memberships = 3;
+  repeated SessionView sessions = 4;
+}
+
+message ActiveOrg {
+  string org_id = 1;
+  string org_name = 2;
+  string org_slug = 3;
+  bool is_personal = 4;
+  string role_id = 5;
+  string role_name = 6;
+}
+
+message SessionView {
+  string id = 1;
+  string client_id = 2;
+  string user_agent = 3;
+  string ip = 4;
+  google.protobuf.Timestamp last_used_at = 5;
+  bool is_current = 6;
+}
+
+message MyOrgsRequest {}
+
+message MyOrgsResponse {
+  repeated Membership memberships = 1;
+}
+
+message VerifyEmailRequest {
+  string token = 1;
+}
+
+message VerifyEmailResponse {}
+
+message ResendVerificationRequest {}
+
+message ResendVerificationResponse {}
+
+message ChangePasswordRequest {
+  string old_password = 1;
+  string new_password = 2;
+  // Reserved for future explicit control. Server currently always revokes other
+  // sessions (proto3 default false would not match the secure default).
+  bool revoke_other_sessions = 3;
+}
+
+message ChangePasswordResponse {}
+
+message LogoutRequest {}
+
+message LogoutResponse {}

@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+package gophercourier.role.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// RoleService is the read+write surface for builtin and custom roles.
+//
+// Read RPCs (GetRole, ListRoles) are open to any authenticated org member;
+// the service performs no extra gating beyond JWT auth — callers without
+// access to an org won't have its role IDs anyway.
+//
+// Write RPCs (CreateRole, UpdateRole, DeleteRole) are gated by
+// `org:manage_roles` in the target org and enforce escalation guards
+// (caller must hold every permission they place into a role).
+service RoleService {
+  // GetRole returns a role by ID. Soft-deleted custom roles surface as NotFound.
+  rpc GetRole(GetRoleRequest) returns (GetRoleResponse);
+
+  // ListRoles returns builtin roles + non-deleted custom roles for the org.
+  rpc ListRoles(ListRolesRequest) returns (ListRolesResponse);
+
+  // CreateRole creates a new custom role inside an org. The caller must
+  // hold every permission they grant (escalation guard) and the org must
+  // not be a Personal Org.
+  rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse);
+
+  // UpdateRole applies a partial update to a custom role. Builtin roles
+  // are immutable. Permissions newly added to the role are escalation-checked.
+  rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse);
+
+  // DeleteRole soft-deletes a custom role. Builtin roles are immutable.
+  // Roles with active member assignments must be reassigned first
+  // (operation fails with FailedPrecondition).
+  rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse);
+}
+
+// Role is the wire shape of a domain Role entity.
+message Role {
+  string id = 1;
+  string org_id = 2;          // empty for builtin roles
+  string name = 3;
+  string description = 4;
+  string scope = 5;           // "org" | "workspace"
+  repeated string permissions = 6;
+  string implicit_ws = 7;     // optional; only meaningful on org-scope roles
+  bool is_built_in = 8;
+  bool is_default = 9;
+  string created_by = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+  int32 version = 13;
+}
+
+message GetRoleRequest {
+  string role_id = 1;
+}
+message GetRoleResponse {
+  Role role = 1;
+}
+
+message ListRolesRequest {
+  string org_id = 1;
+}
+message ListRolesResponse {
+  repeated Role roles = 1;
+}
+
+message CreateRoleRequest {
+  string org_id = 1;
+  string name = 2;
+  string description = 3;
+  string scope = 4;                // "org" | "workspace"
+  repeated string permissions = 5;
+  string implicit_ws = 6;          // optional
+}
+message CreateRoleResponse {
+  Role role = 1;
+}
+
+// UpdateRoleRequest uses the proto3 `optional` keyword for nullable patch
+// fields. Permissions, being a repeated field, cannot be nullable in proto3 —
+// the `update_permissions` boolean acts as a presence sentinel.
+message UpdateRoleRequest {
+  string role_id = 1;
+  string org_id = 2;
+  optional string name = 3;
+  optional string description = 4;
+
+  // permissions: ignored unless update_permissions=true. When the flag is
+  // true, the entire permissions list is replaced (including with empty).
+  repeated string permissions = 5;
+  bool update_permissions = 6;
+}
+message UpdateRoleResponse {
+  Role role = 1;
+}
+
+message DeleteRoleRequest {
+  string role_id = 1;
+  string org_id = 2;
+}
+message DeleteRoleResponse {}

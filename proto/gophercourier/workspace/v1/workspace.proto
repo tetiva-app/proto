@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+package gophercourier.workspace.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// WorkspaceService — workspace entity CRUD scoped to its parent Org. Membership
+// and invite ops live in WorkspaceMembershipService (see membership.proto).
+//
+// Authz: every RPC except Create checks workspace-scoped permissions
+// (workspace:read / workspace:update / workspace:delete) at the usecase layer.
+// Create checks org:create_workspace in the OrgScope derived from the request's
+// org_id.
+service WorkspaceService {
+  // Create a workspace inside org_id. Permission: org:create_workspace.
+  rpc Create(CreateRequest) returns (CreateResponse);
+  // Update a workspace's name / description / visibility (partial update).
+  // Permission: workspace:update. Optional proto3 fields mean "no change".
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+  // Soft-delete the workspace + cascade memberships and invites. Permission:
+  // workspace:delete. Requires non-empty `reason` (10..500) — same pattern as
+  // P4 Force-* org ops.
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+  // Get one workspace by ID. Permission: workspace:read.
+  rpc Get(GetRequest) returns (GetResponse);
+  // Cursor-paginated list of workspaces in an org filtered by the caller's
+  // workspace:read perm. Permission: org:read (caller must be in the org).
+  rpc ListByOrg(ListByOrgRequest) returns (ListByOrgResponse);
+}
+
+// Workspace — denormalised view. Members are NOT embedded here; use
+// WorkspaceMembershipService.ListMembers for the paginated list.
+//
+// V2 breaking rewrite: prior contract used owner_id + repeated Member; both
+// fields are gone. Reserved names are pinned below so future contributors
+// can't accidentally re-introduce them on a different tag number.
+message Workspace {
+  // Tag/name reservations from the pre-V2 contract.
+  reserved "owner_id", "members";
+
+  string id = 1;
+  string org_id = 2;
+  // 1..100 chars; server-validated.
+  string name = 3;
+  // Free-text; 0..2000 chars; server-validated.
+  string description = 4;
+  // One of "internal" | "private" | "personal". See entities.WorkspaceVisibility.
+  string visibility = 5;
+  int32 version = 6;
+  bool is_deleted = 7;
+  string created_by = 8;
+  string updated_by = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+message CreateRequest {
+  string org_id = 1;
+  // 1..100 chars.
+  string name = 2;
+  // 0..2000 chars.
+  string description = 3;
+  // Optional; defaults to "internal" in non-personal orgs.
+  string visibility = 4;
+}
+
+message CreateResponse {
+  Workspace workspace = 1;
+}
+
+message UpdateRequest {
+  string workspace_id = 1;
+  optional string name = 2;
+  optional string description = 3;
+  optional string visibility = 4;
+}
+
+message UpdateResponse {
+  Workspace workspace = 1;
+}
+
+message DeleteRequest {
+  string workspace_id = 1;
+  // Required. 10..500 chars. Embedded in audit metadata.
+  string reason = 2;
+}
+
+message DeleteResponse {
+  string workspace_id = 1;
+}
+
+message GetRequest {
+  string workspace_id = 1;
+}
+
+message GetResponse {
+  Workspace workspace = 1;
+}
+
+message ListByOrgRequest {
+  string org_id = 1;
+  string cursor = 2;
+  // 0 → server default 50, server clamps to max 200.
+  int32 limit = 3;
+}
+
+message ListByOrgResponse {
+  repeated Workspace workspaces = 1;
+  string next_cursor = 2;
+}

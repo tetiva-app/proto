@@ -1,0 +1,11 @@
+.idea
+bin
+/vendor.protogen/
+go.work
+go.work.sum
+.env
+.config.yaml
+*.exe
+*.dll
+*.so
+ts/

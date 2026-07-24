@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package gophercourier.audit.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// AuditService is the read+export surface for the audit log. The writer is
+// internal to the server (each mutating usecase calls audit.Logger.Log) and
+// has no RPC.
+//
+// Per spec [06]:
+//   * List/Export are gated by org:view_audit (org-scope) OR
+//     platform_staff (cross-org).
+//   * Cursor pagination is mandatory because audit_log is append-only and
+//     grows unbounded.
+//   * Export streams CSV chunks to avoid loading 100k rows into one
+//     response message.
+service AuditService {
+  // List returns the next page of audit entries newest-first.
+  rpc List(AuditServiceListRequest) returns (AuditServiceListResponse);
+
+  // Export streams CSV chunks. The first chunk includes the header row.
+  // Server hard-caps at 100k rows; if more entries match, the final chunk
+  // sets `truncated`.
+  rpc Export(AuditServiceExportRequest) returns (stream AuditServiceExportResponse);
+}
+
+message AuditServiceFilter {
+  string org_id = 1;                          // empty + caller=staff → cross-org
+  string workspace_id = 2;
+  string actor_user_id = 3;
+  string action = 4;                          // exact match
+  string target_id = 5;
+  google.protobuf.Timestamp from = 6;         // inclusive
+  google.protobuf.Timestamp to = 7;           // exclusive
+}
+
+message AuditServiceEntry {
+  google.protobuf.Timestamp timestamp = 1;
+  string action = 2;
+
+  string actor_type = 3;                      // "user" | "platform_staff" | "system" | "cli"
+  string actor_user_id = 4;
+  string actor_name = 5;
+  string actor_ip = 6;
+  string actor_user_agent = 7;
+  string actor_session_id = 8;
+
+  string org_id = 9;
+  string workspace_id = 10;
+
+  string target_type = 11;                    // "user" | "org" | "workspace" | ...
+  string target_id = 12;
+  string target_name = 13;
+
+  string metadata_json = 14;                  // JSON-encoded map[string]any
+}
+
+message AuditServiceListRequest {
+  AuditServiceFilter filter = 1;
+  int32 limit = 2;                            // 0 → server default (100)
+  string cursor = 3;                          // opaque; empty → newest-first
+}
+
+message AuditServiceListResponse {
+  repeated AuditServiceEntry entries = 1;
+  string next_cursor = 2;                     // empty when no more rows
+}
+
+message AuditServiceExportRequest {
+  AuditServiceFilter filter = 1;
+  int32 max_rows = 2;                         // 0 → server default (100_000)
+}
+
+message AuditServiceExportResponse {
+  bytes csv_chunk = 1;
+  bool last = 2;                              // true on the final chunk only
+  bool truncated = 3;                         // set on final chunk when row cap hit
+  int32 row_count = 4;                        // populated on the final chunk
+}

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package gophercourier.org.v1;
+
+// MembershipService extends the org/v1 surface with the lifecycle ops shipped
+// in P7: change-role, kick, self-leave, transfer-ownership. These are the
+// org-level membership mutations; workspace-level lifecycle lives in
+// gophercourier.workspace.v1.WorkspaceMembershipService.
+service MembershipService {
+  rpc ChangeRole(ChangeRoleRequest) returns (ChangeRoleResponse);
+  rpc RemoveMember(RemoveMemberRequest) returns (RemoveMemberResponse);
+  rpc Leave(LeaveRequest) returns (LeaveResponse);
+  rpc TransferOwnership(TransferOwnershipRequest) returns (TransferOwnershipResponse);
+}
+
+message ChangeRoleRequest {
+  string org_id = 1;
+  string target_user_id = 2;
+  string new_role_id = 3;
+}
+
+message ChangeRoleResponse {}
+
+message RemoveMemberRequest {
+  string org_id = 1;
+  string target_user_id = 2;
+}
+
+message RemoveMemberResponse {
+  int64 ws_memberships_cascaded = 1;
+  bool active_org_reset = 2;
+}
+
+message LeaveRequest {
+  string org_id = 1;
+}
+
+message LeaveResponse {
+  string new_active_org_id = 1;
+  int64 ws_memberships_cascaded = 2;
+}
+
+message TransferOwnershipRequest {
+  string org_id = 1;
+  string new_owner_user_id = 2;
+  string reason = 3;
+}
+
+message TransferOwnershipResponse {
+  string new_owner_user_id = 1;
+  string previous_owner_user_id = 2;
+  int32 org_version = 3;
+}

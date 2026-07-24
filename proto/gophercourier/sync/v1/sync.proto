@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package gophercourier.sync.v1;
+
+import "google/protobuf/timestamp.proto";
+import "gophercourier/sync/v1/entities.proto";
+
+service SyncService {
+  rpc Push(PushRequest) returns (PushResponse);
+  rpc Pull(PullRequest) returns (PullResponse);
+  rpc Subscribe(SubscribeRequest) returns (stream SubscribeResponse);
+}
+
+enum EntityType {
+  ENTITY_TYPE_UNSPECIFIED = 0;
+  ENTITY_TYPE_COLLECTION = 1;
+  ENTITY_TYPE_REQUEST = 2;
+  ENTITY_TYPE_ENVIRONMENT = 3;
+  ENTITY_TYPE_VARIABLE = 4;
+}
+
+enum Action {
+  ACTION_UNSPECIFIED = 0;
+  ACTION_CREATE = 1;
+  ACTION_UPDATE = 2;
+  ACTION_DELETE = 3;
+  ACTION_SNAPSHOT = 4;
+}
+
+enum PushStatus {
+  PUSH_STATUS_UNSPECIFIED = 0;
+  PUSH_STATUS_ACCEPTED = 1;
+  PUSH_STATUS_CONFLICT_RESOLVED = 2;
+  PUSH_STATUS_REJECTED = 3;
+  PUSH_STATUS_DUPLICATE = 4;
+}
+
+message PushRequest {
+  string workspace_id = 1;
+  string client_id = 2;
+  repeated SyncEntity entities = 3;
+}
+
+message SyncEntity {
+  EntityType entity_type = 1;
+  string entity_id = 2;
+  string operation_id = 3;
+  int32 version = 4;
+  bool is_deleted = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  google.protobuf.Timestamp created_at = 7;
+  int32 sort_order = 8;
+
+  oneof payload {
+    CollectionData collection = 20;
+    RequestData request = 21;
+    EnvironmentData environment = 22;
+    VariableData variable = 23;
+  }
+}
+
+message PushResponse {
+  repeated PushResult results = 1;
+  int64 current_seq = 2;
+}
+
+message PushResult {
+  string entity_id = 1;
+  string operation_id = 2;
+  PushStatus status = 3;
+  int64 sync_seq = 4;
+  int32 new_version = 5;
+  SyncEntity winner = 6;
+  string error_message = 7;
+}
+
+message PullRequest {
+  string workspace_id = 1;
+  int64 last_sync_seq = 2;
+  int32 limit = 3;
+}
+
+message PullResponse {
+  repeated SyncChange changes = 1;
+  int64 next_sync_seq = 2;
+  bool has_more = 3;
+  bool resync_required = 4;
+}
+
+message SyncChange {
+  EntityType entity_type = 1;
+  string entity_id = 2;
+  Action action = 3;
+  int64 sync_seq = 4;
+  SyncEntity entity = 5;
+}
+
+message SubscribeRequest {
+  string workspace_id = 1;
+  string client_id = 2;
+}
+
+message SubscribeResponse {
+  oneof event {
+    SyncChange change = 1;
+    Heartbeat heartbeat = 2;
+    ResyncRequired resync = 3;
+  }
+}
+
+message Heartbeat {
+  int64 current_seq = 1;
+}
+
+message ResyncRequired {}
