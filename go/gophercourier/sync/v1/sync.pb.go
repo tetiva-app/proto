@@ -171,6 +171,54 @@ func (x PushStatus) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
+// Machine-readable cause behind PUSH_STATUS_REJECTED.
+type PushRejectReason int32
+
+const (
+	PushRejectReason_PUSH_REJECT_REASON_UNSPECIFIED      PushRejectReason = 0
+	PushRejectReason_PUSH_REJECT_REASON_PARENT_NOT_FOUND PushRejectReason = 1
+	PushRejectReason_PUSH_REJECT_REASON_QUOTA_EXCEEDED   PushRejectReason = 2
+	PushRejectReason_PUSH_REJECT_REASON_ID_CONFLICT      PushRejectReason = 3
+)
+
+// Enum value maps for PushRejectReason.
+var (
+	PushRejectReason_name = map[int32]string{
+		0: "PUSH_REJECT_REASON_UNSPECIFIED",
+		1: "PUSH_REJECT_REASON_PARENT_NOT_FOUND",
+		2: "PUSH_REJECT_REASON_QUOTA_EXCEEDED",
+		3: "PUSH_REJECT_REASON_ID_CONFLICT",
+	}
+	PushRejectReason_value = map[string]int32{
+		"PUSH_REJECT_REASON_UNSPECIFIED":      0,
+		"PUSH_REJECT_REASON_PARENT_NOT_FOUND": 1,
+		"PUSH_REJECT_REASON_QUOTA_EXCEEDED":   2,
+		"PUSH_REJECT_REASON_ID_CONFLICT":      3,
+	}
+)
+
+func (x PushRejectReason) Enum() *PushRejectReason {
+	p := new(PushRejectReason)
+	*p = x
+	return p
+}
+
+func (x PushRejectReason) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PushRejectReason) Descriptor() protoreflect.EnumDescriptor {
+	return file_gophercourier_sync_v1_sync_proto_enumTypes[3].Descriptor()
+}
+
+func (PushRejectReason) Type() protoreflect.EnumType {
+	return &file_gophercourier_sync_v1_sync_proto_enumTypes[3]
+}
+
+func (x PushRejectReason) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
 type PushRequest struct {
 	state                  protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_WorkspaceId string                 `protobuf:"bytes,1,opt,name=workspace_id,json=workspaceId,proto3"`
@@ -733,6 +781,7 @@ type PushResult struct {
 	xxx_hidden_NewVersion   int32                  `protobuf:"varint,5,opt,name=new_version,json=newVersion,proto3"`
 	xxx_hidden_Winner       *SyncEntity            `protobuf:"bytes,6,opt,name=winner,proto3"`
 	xxx_hidden_ErrorMessage string                 `protobuf:"bytes,7,opt,name=error_message,json=errorMessage,proto3"`
+	xxx_hidden_RejectReason PushRejectReason       `protobuf:"varint,8,opt,name=reject_reason,json=rejectReason,proto3,enum=gophercourier.sync.v1.PushRejectReason"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -811,6 +860,13 @@ func (x *PushResult) GetErrorMessage() string {
 	return ""
 }
 
+func (x *PushResult) GetRejectReason() PushRejectReason {
+	if x != nil {
+		return x.xxx_hidden_RejectReason
+	}
+	return PushRejectReason_PUSH_REJECT_REASON_UNSPECIFIED
+}
+
 func (x *PushResult) SetEntityId(v string) {
 	x.xxx_hidden_EntityId = v
 }
@@ -839,6 +895,10 @@ func (x *PushResult) SetErrorMessage(v string) {
 	x.xxx_hidden_ErrorMessage = v
 }
 
+func (x *PushResult) SetRejectReason(v PushRejectReason) {
+	x.xxx_hidden_RejectReason = v
+}
+
 func (x *PushResult) HasWinner() bool {
 	if x == nil {
 		return false
@@ -860,6 +920,7 @@ type PushResult_builder struct {
 	NewVersion   int32
 	Winner       *SyncEntity
 	ErrorMessage string
+	RejectReason PushRejectReason
 }
 
 func (b0 PushResult_builder) Build() *PushResult {
@@ -873,6 +934,7 @@ func (b0 PushResult_builder) Build() *PushResult {
 	x.xxx_hidden_NewVersion = b.NewVersion
 	x.xxx_hidden_Winner = b.Winner
 	x.xxx_hidden_ErrorMessage = b.ErrorMessage
+	x.xxx_hidden_RejectReason = b.RejectReason
 	return m0
 }
 
@@ -1606,7 +1668,7 @@ const file_gophercourier_sync_v1_sync_proto_rawDesc = "" +
 	"\fPushResponse\x12;\n" +
 	"\aresults\x18\x01 \x03(\v2!.gophercourier.sync.v1.PushResultR\aresults\x12\x1f\n" +
 	"\vcurrent_seq\x18\x02 \x01(\x03R\n" +
-	"currentSeq\"\xa3\x02\n" +
+	"currentSeq\"\xf1\x02\n" +
 	"\n" +
 	"PushResult\x12\x1b\n" +
 	"\tentity_id\x18\x01 \x01(\tR\bentityId\x12!\n" +
@@ -1616,7 +1678,8 @@ const file_gophercourier_sync_v1_sync_proto_rawDesc = "" +
 	"\vnew_version\x18\x05 \x01(\x05R\n" +
 	"newVersion\x129\n" +
 	"\x06winner\x18\x06 \x01(\v2!.gophercourier.sync.v1.SyncEntityR\x06winner\x12#\n" +
-	"\rerror_message\x18\a \x01(\tR\ferrorMessage\"j\n" +
+	"\rerror_message\x18\a \x01(\tR\ferrorMessage\x12L\n" +
+	"\rreject_reason\x18\b \x01(\x0e2'.gophercourier.sync.v1.PushRejectReasonR\frejectReason\"j\n" +
 	"\vPullRequest\x12!\n" +
 	"\fworkspace_id\x18\x01 \x01(\tR\vworkspaceId\x12\"\n" +
 	"\rlast_sync_seq\x18\x02 \x01(\x03R\vlastSyncSeq\x12\x14\n" +
@@ -1665,66 +1728,73 @@ const file_gophercourier_sync_v1_sync_proto_rawDesc = "" +
 	"\x14PUSH_STATUS_ACCEPTED\x10\x01\x12!\n" +
 	"\x1dPUSH_STATUS_CONFLICT_RESOLVED\x10\x02\x12\x18\n" +
 	"\x14PUSH_STATUS_REJECTED\x10\x03\x12\x19\n" +
-	"\x15PUSH_STATUS_DUPLICATE\x10\x042\x91\x02\n" +
+	"\x15PUSH_STATUS_DUPLICATE\x10\x04*\xaa\x01\n" +
+	"\x10PushRejectReason\x12\"\n" +
+	"\x1ePUSH_REJECT_REASON_UNSPECIFIED\x10\x00\x12'\n" +
+	"#PUSH_REJECT_REASON_PARENT_NOT_FOUND\x10\x01\x12%\n" +
+	"!PUSH_REJECT_REASON_QUOTA_EXCEEDED\x10\x02\x12\"\n" +
+	"\x1ePUSH_REJECT_REASON_ID_CONFLICT\x10\x032\x91\x02\n" +
 	"\vSyncService\x12O\n" +
 	"\x04Push\x12\".gophercourier.sync.v1.PushRequest\x1a#.gophercourier.sync.v1.PushResponse\x12O\n" +
 	"\x04Pull\x12\".gophercourier.sync.v1.PullRequest\x1a#.gophercourier.sync.v1.PullResponse\x12`\n" +
 	"\tSubscribe\x12'.gophercourier.sync.v1.SubscribeRequest\x1a(.gophercourier.sync.v1.SubscribeResponse0\x01B\xd9\x01\n" +
 	"\x19com.gophercourier.sync.v1B\tSyncProtoP\x01Z;github.com/tetiva-app/proto/go/gophercourier/sync/v1;syncv1\xa2\x02\x03GSX\xaa\x02\x15Gophercourier.Sync.V1\xca\x02\x15Gophercourier\\Sync\\V1\xe2\x02!Gophercourier\\Sync\\V1\\GPBMetadata\xea\x02\x17Gophercourier::Sync::V1b\x06proto3"
 
-var file_gophercourier_sync_v1_sync_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_gophercourier_sync_v1_sync_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
 var file_gophercourier_sync_v1_sync_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_gophercourier_sync_v1_sync_proto_goTypes = []any{
 	(EntityType)(0),               // 0: gophercourier.sync.v1.EntityType
 	(Action)(0),                   // 1: gophercourier.sync.v1.Action
 	(PushStatus)(0),               // 2: gophercourier.sync.v1.PushStatus
-	(*PushRequest)(nil),           // 3: gophercourier.sync.v1.PushRequest
-	(*SyncEntity)(nil),            // 4: gophercourier.sync.v1.SyncEntity
-	(*PushResponse)(nil),          // 5: gophercourier.sync.v1.PushResponse
-	(*PushResult)(nil),            // 6: gophercourier.sync.v1.PushResult
-	(*PullRequest)(nil),           // 7: gophercourier.sync.v1.PullRequest
-	(*PullResponse)(nil),          // 8: gophercourier.sync.v1.PullResponse
-	(*SyncChange)(nil),            // 9: gophercourier.sync.v1.SyncChange
-	(*SubscribeRequest)(nil),      // 10: gophercourier.sync.v1.SubscribeRequest
-	(*SubscribeResponse)(nil),     // 11: gophercourier.sync.v1.SubscribeResponse
-	(*Heartbeat)(nil),             // 12: gophercourier.sync.v1.Heartbeat
-	(*ResyncRequired)(nil),        // 13: gophercourier.sync.v1.ResyncRequired
-	(*timestamppb.Timestamp)(nil), // 14: google.protobuf.Timestamp
-	(*CollectionData)(nil),        // 15: gophercourier.sync.v1.CollectionData
-	(*RequestData)(nil),           // 16: gophercourier.sync.v1.RequestData
-	(*EnvironmentData)(nil),       // 17: gophercourier.sync.v1.EnvironmentData
-	(*VariableData)(nil),          // 18: gophercourier.sync.v1.VariableData
+	(PushRejectReason)(0),         // 3: gophercourier.sync.v1.PushRejectReason
+	(*PushRequest)(nil),           // 4: gophercourier.sync.v1.PushRequest
+	(*SyncEntity)(nil),            // 5: gophercourier.sync.v1.SyncEntity
+	(*PushResponse)(nil),          // 6: gophercourier.sync.v1.PushResponse
+	(*PushResult)(nil),            // 7: gophercourier.sync.v1.PushResult
+	(*PullRequest)(nil),           // 8: gophercourier.sync.v1.PullRequest
+	(*PullResponse)(nil),          // 9: gophercourier.sync.v1.PullResponse
+	(*SyncChange)(nil),            // 10: gophercourier.sync.v1.SyncChange
+	(*SubscribeRequest)(nil),      // 11: gophercourier.sync.v1.SubscribeRequest
+	(*SubscribeResponse)(nil),     // 12: gophercourier.sync.v1.SubscribeResponse
+	(*Heartbeat)(nil),             // 13: gophercourier.sync.v1.Heartbeat
+	(*ResyncRequired)(nil),        // 14: gophercourier.sync.v1.ResyncRequired
+	(*timestamppb.Timestamp)(nil), // 15: google.protobuf.Timestamp
+	(*CollectionData)(nil),        // 16: gophercourier.sync.v1.CollectionData
+	(*RequestData)(nil),           // 17: gophercourier.sync.v1.RequestData
+	(*EnvironmentData)(nil),       // 18: gophercourier.sync.v1.EnvironmentData
+	(*VariableData)(nil),          // 19: gophercourier.sync.v1.VariableData
 }
 var file_gophercourier_sync_v1_sync_proto_depIdxs = []int32{
-	4,  // 0: gophercourier.sync.v1.PushRequest.entities:type_name -> gophercourier.sync.v1.SyncEntity
+	5,  // 0: gophercourier.sync.v1.PushRequest.entities:type_name -> gophercourier.sync.v1.SyncEntity
 	0,  // 1: gophercourier.sync.v1.SyncEntity.entity_type:type_name -> gophercourier.sync.v1.EntityType
-	14, // 2: gophercourier.sync.v1.SyncEntity.updated_at:type_name -> google.protobuf.Timestamp
-	14, // 3: gophercourier.sync.v1.SyncEntity.created_at:type_name -> google.protobuf.Timestamp
-	15, // 4: gophercourier.sync.v1.SyncEntity.collection:type_name -> gophercourier.sync.v1.CollectionData
-	16, // 5: gophercourier.sync.v1.SyncEntity.request:type_name -> gophercourier.sync.v1.RequestData
-	17, // 6: gophercourier.sync.v1.SyncEntity.environment:type_name -> gophercourier.sync.v1.EnvironmentData
-	18, // 7: gophercourier.sync.v1.SyncEntity.variable:type_name -> gophercourier.sync.v1.VariableData
-	6,  // 8: gophercourier.sync.v1.PushResponse.results:type_name -> gophercourier.sync.v1.PushResult
+	15, // 2: gophercourier.sync.v1.SyncEntity.updated_at:type_name -> google.protobuf.Timestamp
+	15, // 3: gophercourier.sync.v1.SyncEntity.created_at:type_name -> google.protobuf.Timestamp
+	16, // 4: gophercourier.sync.v1.SyncEntity.collection:type_name -> gophercourier.sync.v1.CollectionData
+	17, // 5: gophercourier.sync.v1.SyncEntity.request:type_name -> gophercourier.sync.v1.RequestData
+	18, // 6: gophercourier.sync.v1.SyncEntity.environment:type_name -> gophercourier.sync.v1.EnvironmentData
+	19, // 7: gophercourier.sync.v1.SyncEntity.variable:type_name -> gophercourier.sync.v1.VariableData
+	7,  // 8: gophercourier.sync.v1.PushResponse.results:type_name -> gophercourier.sync.v1.PushResult
 	2,  // 9: gophercourier.sync.v1.PushResult.status:type_name -> gophercourier.sync.v1.PushStatus
-	4,  // 10: gophercourier.sync.v1.PushResult.winner:type_name -> gophercourier.sync.v1.SyncEntity
-	9,  // 11: gophercourier.sync.v1.PullResponse.changes:type_name -> gophercourier.sync.v1.SyncChange
-	0,  // 12: gophercourier.sync.v1.SyncChange.entity_type:type_name -> gophercourier.sync.v1.EntityType
-	1,  // 13: gophercourier.sync.v1.SyncChange.action:type_name -> gophercourier.sync.v1.Action
-	4,  // 14: gophercourier.sync.v1.SyncChange.entity:type_name -> gophercourier.sync.v1.SyncEntity
-	9,  // 15: gophercourier.sync.v1.SubscribeResponse.change:type_name -> gophercourier.sync.v1.SyncChange
-	12, // 16: gophercourier.sync.v1.SubscribeResponse.heartbeat:type_name -> gophercourier.sync.v1.Heartbeat
-	13, // 17: gophercourier.sync.v1.SubscribeResponse.resync:type_name -> gophercourier.sync.v1.ResyncRequired
-	3,  // 18: gophercourier.sync.v1.SyncService.Push:input_type -> gophercourier.sync.v1.PushRequest
-	7,  // 19: gophercourier.sync.v1.SyncService.Pull:input_type -> gophercourier.sync.v1.PullRequest
-	10, // 20: gophercourier.sync.v1.SyncService.Subscribe:input_type -> gophercourier.sync.v1.SubscribeRequest
-	5,  // 21: gophercourier.sync.v1.SyncService.Push:output_type -> gophercourier.sync.v1.PushResponse
-	8,  // 22: gophercourier.sync.v1.SyncService.Pull:output_type -> gophercourier.sync.v1.PullResponse
-	11, // 23: gophercourier.sync.v1.SyncService.Subscribe:output_type -> gophercourier.sync.v1.SubscribeResponse
-	21, // [21:24] is the sub-list for method output_type
-	18, // [18:21] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	5,  // 10: gophercourier.sync.v1.PushResult.winner:type_name -> gophercourier.sync.v1.SyncEntity
+	3,  // 11: gophercourier.sync.v1.PushResult.reject_reason:type_name -> gophercourier.sync.v1.PushRejectReason
+	10, // 12: gophercourier.sync.v1.PullResponse.changes:type_name -> gophercourier.sync.v1.SyncChange
+	0,  // 13: gophercourier.sync.v1.SyncChange.entity_type:type_name -> gophercourier.sync.v1.EntityType
+	1,  // 14: gophercourier.sync.v1.SyncChange.action:type_name -> gophercourier.sync.v1.Action
+	5,  // 15: gophercourier.sync.v1.SyncChange.entity:type_name -> gophercourier.sync.v1.SyncEntity
+	10, // 16: gophercourier.sync.v1.SubscribeResponse.change:type_name -> gophercourier.sync.v1.SyncChange
+	13, // 17: gophercourier.sync.v1.SubscribeResponse.heartbeat:type_name -> gophercourier.sync.v1.Heartbeat
+	14, // 18: gophercourier.sync.v1.SubscribeResponse.resync:type_name -> gophercourier.sync.v1.ResyncRequired
+	4,  // 19: gophercourier.sync.v1.SyncService.Push:input_type -> gophercourier.sync.v1.PushRequest
+	8,  // 20: gophercourier.sync.v1.SyncService.Pull:input_type -> gophercourier.sync.v1.PullRequest
+	11, // 21: gophercourier.sync.v1.SyncService.Subscribe:input_type -> gophercourier.sync.v1.SubscribeRequest
+	6,  // 22: gophercourier.sync.v1.SyncService.Push:output_type -> gophercourier.sync.v1.PushResponse
+	9,  // 23: gophercourier.sync.v1.SyncService.Pull:output_type -> gophercourier.sync.v1.PullResponse
+	12, // 24: gophercourier.sync.v1.SyncService.Subscribe:output_type -> gophercourier.sync.v1.SubscribeResponse
+	22, // [22:25] is the sub-list for method output_type
+	19, // [19:22] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_gophercourier_sync_v1_sync_proto_init() }
@@ -1749,7 +1819,7 @@ func file_gophercourier_sync_v1_sync_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_gophercourier_sync_v1_sync_proto_rawDesc), len(file_gophercourier_sync_v1_sync_proto_rawDesc)),
-			NumEnums:      3,
+			NumEnums:      4,
 			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,

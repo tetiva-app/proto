@@ -24,6 +24,12 @@ service AuthService {
   // Logout revokes the calling user's current session.
   // Requires authentication (bearer token).
   rpc Logout(LogoutRequest) returns (LogoutResponse);
+
+  // Device management. Both operate on the caller's own sessions only.
+  // RevokeSession returns NotFound when the session belongs to someone else.
+  rpc RevokeSession(RevokeSessionRequest) returns (RevokeSessionResponse);
+  // LogoutAll revokes every session except the current one.
+  rpc LogoutAll(LogoutAllRequest) returns (LogoutAllResponse);
 }
 
 message RegisterRequest {
@@ -182,3 +188,15 @@ message ChangePasswordResponse {}
 message LogoutRequest {}
 
 message LogoutResponse {}
+
+message RevokeSessionRequest {
+  string session_id = 1;
+}
+
+message RevokeSessionResponse {}
+
+message LogoutAllRequest {}
+
+message LogoutAllResponse {
+  int32 revoked_count = 1;
+}

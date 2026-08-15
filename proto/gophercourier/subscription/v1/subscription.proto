@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package gophercourier.subscription.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Read-only resolution of an org's active plan. Caller must have org:read on org_id.
+service SubscriptionService {
+  rpc GetActivePlan(GetActivePlanRequest) returns (GetActivePlanResponse);
+}
+
+message GetActivePlanRequest {
+  string org_id = 1;
+}
+
+message GetActivePlanResponse {
+  Plan plan = 1;
+  Usage usage = 2;
+}
+
+message Plan {
+  string tier = 1;                            // effective: free|pro|team|business
+  int32 seats = 2;                            // org's own seats; 0 for free/pro/personal
+  google.protobuf.Timestamp plan_until = 3;   // org's own; unset = indefinite
+  repeated string features = 4;
+  // org.members, org.cloud_collections, user.devices; -1 = unlimited
+  map<string, int32> quotas = 5;
+  string inherited_from_org_id = 6;           // set when a personal org inherits a team plan
+}
+
+message Usage {
+  int32 members = 1;
+  int32 pending_invites = 2;
+  int32 cloud_collections = 3;
+}

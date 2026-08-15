@@ -35,6 +35,14 @@ enum PushStatus {
   PUSH_STATUS_DUPLICATE = 4;
 }
 
+// Machine-readable cause behind PUSH_STATUS_REJECTED.
+enum PushRejectReason {
+  PUSH_REJECT_REASON_UNSPECIFIED = 0;
+  PUSH_REJECT_REASON_PARENT_NOT_FOUND = 1;
+  PUSH_REJECT_REASON_QUOTA_EXCEEDED = 2;
+  PUSH_REJECT_REASON_ID_CONFLICT = 3;
+}
+
 message PushRequest {
   string workspace_id = 1;
   string client_id = 2;
@@ -72,6 +80,7 @@ message PushResult {
   int32 new_version = 5;
   SyncEntity winner = 6;
   string error_message = 7;
+  PushRejectReason reject_reason = 8;
 }
 
 message PullRequest {

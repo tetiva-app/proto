@@ -42,6 +42,11 @@ service PlatformService {
   // was_already_verified=true without error.
   rpc AdminVerifyEmail(PlatformServiceAdminVerifyEmailRequest)
       returns (PlatformServiceAdminVerifyEmailResponse);
+
+  // SetPlan assigns a billing plan to an org. Both upgrade and downgrade go
+  // through this single call; nothing is deleted on downgrade.
+  rpc SetPlan(PlatformServiceSetPlanRequest)
+      returns (PlatformServiceSetPlanResponse);
 }
 
 // ---- Request / Response shapes ----
@@ -299,4 +304,20 @@ message PlatformServiceAdminVerifyEmailRequest {
 message PlatformServiceAdminVerifyEmailResponse {
   string user_id = 1;
   bool was_already_verified = 2;
+}
+
+message PlatformServiceSetPlanRequest {
+  string org_id = 1;
+  string plan = 2;                             // free | pro | team | business
+  int32 seats = 3;                             // 0 → tier default
+  google.protobuf.Timestamp plan_until = 4;    // unset = indefinite
+  string reason = 5;                           // 10..500 chars
+}
+
+message PlatformServiceSetPlanResponse {
+  string org_id = 1;
+  string plan = 2;
+  int32 seats = 3;
+  google.protobuf.Timestamp plan_until = 4;
+  int32 org_version = 5;
 }

@@ -30,6 +30,7 @@ const (
 	PlatformService_ForceDeleteUser_FullMethodName     = "/gophercourier.platform.v1.PlatformService/ForceDeleteUser"
 	PlatformService_ForceDeleteOrg_FullMethodName      = "/gophercourier.platform.v1.PlatformService/ForceDeleteOrg"
 	PlatformService_AdminVerifyEmail_FullMethodName    = "/gophercourier.platform.v1.PlatformService/AdminVerifyEmail"
+	PlatformService_SetPlan_FullMethodName             = "/gophercourier.platform.v1.PlatformService/SetPlan"
 )
 
 // PlatformServiceClient is the client API for PlatformService service.
@@ -65,6 +66,9 @@ type PlatformServiceClient interface {
 	// verification-email flow. Idempotent — already-verified users return
 	// was_already_verified=true without error.
 	AdminVerifyEmail(ctx context.Context, in *PlatformServiceAdminVerifyEmailRequest, opts ...grpc.CallOption) (*PlatformServiceAdminVerifyEmailResponse, error)
+	// SetPlan assigns a billing plan to an org. Both upgrade and downgrade go
+	// through this single call; nothing is deleted on downgrade.
+	SetPlan(ctx context.Context, in *PlatformServiceSetPlanRequest, opts ...grpc.CallOption) (*PlatformServiceSetPlanResponse, error)
 }
 
 type platformServiceClient struct {
@@ -185,6 +189,16 @@ func (c *platformServiceClient) AdminVerifyEmail(ctx context.Context, in *Platfo
 	return out, nil
 }
 
+func (c *platformServiceClient) SetPlan(ctx context.Context, in *PlatformServiceSetPlanRequest, opts ...grpc.CallOption) (*PlatformServiceSetPlanResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PlatformServiceSetPlanResponse)
+	err := c.cc.Invoke(ctx, PlatformService_SetPlan_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PlatformServiceServer is the server API for PlatformService service.
 // All implementations must embed UnimplementedPlatformServiceServer
 // for forward compatibility.
@@ -218,6 +232,9 @@ type PlatformServiceServer interface {
 	// verification-email flow. Idempotent — already-verified users return
 	// was_already_verified=true without error.
 	AdminVerifyEmail(context.Context, *PlatformServiceAdminVerifyEmailRequest) (*PlatformServiceAdminVerifyEmailResponse, error)
+	// SetPlan assigns a billing plan to an org. Both upgrade and downgrade go
+	// through this single call; nothing is deleted on downgrade.
+	SetPlan(context.Context, *PlatformServiceSetPlanRequest) (*PlatformServiceSetPlanResponse, error)
 	mustEmbedUnimplementedPlatformServiceServer()
 }
 
@@ -260,6 +277,9 @@ func (UnimplementedPlatformServiceServer) ForceDeleteOrg(context.Context, *Platf
 }
 func (UnimplementedPlatformServiceServer) AdminVerifyEmail(context.Context, *PlatformServiceAdminVerifyEmailRequest) (*PlatformServiceAdminVerifyEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AdminVerifyEmail not implemented")
+}
+func (UnimplementedPlatformServiceServer) SetPlan(context.Context, *PlatformServiceSetPlanRequest) (*PlatformServiceSetPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetPlan not implemented")
 }
 func (UnimplementedPlatformServiceServer) mustEmbedUnimplementedPlatformServiceServer() {}
 func (UnimplementedPlatformServiceServer) testEmbeddedByValue()                         {}
@@ -480,6 +500,24 @@ func _PlatformService_AdminVerifyEmail_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PlatformService_SetPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformServiceSetPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlatformServiceServer).SetPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlatformService_SetPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlatformServiceServer).SetPlan(ctx, req.(*PlatformServiceSetPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PlatformService_ServiceDesc is the grpc.ServiceDesc for PlatformService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -530,6 +568,10 @@ var PlatformService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AdminVerifyEmail",
 			Handler:    _PlatformService_AdminVerifyEmail_Handler,
+		},
+		{
+			MethodName: "SetPlan",
+			Handler:    _PlatformService_SetPlan_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

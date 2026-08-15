@@ -2378,6 +2378,206 @@ func (b0 LogoutResponse_builder) Build() *LogoutResponse {
 	return m0
 }
 
+type RevokeSessionRequest struct {
+	state                protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_SessionId string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *RevokeSessionRequest) Reset() {
+	*x = RevokeSessionRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeSessionRequest) ProtoMessage() {}
+
+func (x *RevokeSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *RevokeSessionRequest) GetSessionId() string {
+	if x != nil {
+		return x.xxx_hidden_SessionId
+	}
+	return ""
+}
+
+func (x *RevokeSessionRequest) SetSessionId(v string) {
+	x.xxx_hidden_SessionId = v
+}
+
+type RevokeSessionRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	SessionId string
+}
+
+func (b0 RevokeSessionRequest_builder) Build() *RevokeSessionRequest {
+	m0 := &RevokeSessionRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_SessionId = b.SessionId
+	return m0
+}
+
+type RevokeSessionResponse struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RevokeSessionResponse) Reset() {
+	*x = RevokeSessionResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeSessionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeSessionResponse) ProtoMessage() {}
+
+func (x *RevokeSessionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+type RevokeSessionResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+}
+
+func (b0 RevokeSessionResponse_builder) Build() *RevokeSessionResponse {
+	m0 := &RevokeSessionResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	return m0
+}
+
+type LogoutAllRequest struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LogoutAllRequest) Reset() {
+	*x = LogoutAllRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LogoutAllRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LogoutAllRequest) ProtoMessage() {}
+
+func (x *LogoutAllRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+type LogoutAllRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+}
+
+func (b0 LogoutAllRequest_builder) Build() *LogoutAllRequest {
+	m0 := &LogoutAllRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	return m0
+}
+
+type LogoutAllResponse struct {
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RevokedCount int32                  `protobuf:"varint,1,opt,name=revoked_count,json=revokedCount,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *LogoutAllResponse) Reset() {
+	*x = LogoutAllResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LogoutAllResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LogoutAllResponse) ProtoMessage() {}
+
+func (x *LogoutAllResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *LogoutAllResponse) GetRevokedCount() int32 {
+	if x != nil {
+		return x.xxx_hidden_RevokedCount
+	}
+	return 0
+}
+
+func (x *LogoutAllResponse) SetRevokedCount(v int32) {
+	x.xxx_hidden_RevokedCount = v
+}
+
+type LogoutAllResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	RevokedCount int32
+}
+
+func (b0 LogoutAllResponse_builder) Build() *LogoutAllResponse {
+	m0 := &LogoutAllResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_RevokedCount = b.RevokedCount
+	return m0
+}
+
 var File_gophercourier_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_gophercourier_auth_v1_auth_proto_rawDesc = "" +
@@ -2500,7 +2700,14 @@ const file_gophercourier_auth_v1_auth_proto_rawDesc = "" +
 	"\x15revoke_other_sessions\x18\x03 \x01(\bR\x13revokeOtherSessions\"\x18\n" +
 	"\x16ChangePasswordResponse\"\x0f\n" +
 	"\rLogoutRequest\"\x10\n" +
-	"\x0eLogoutResponse2\x95\b\n" +
+	"\x0eLogoutResponse\"5\n" +
+	"\x14RevokeSessionRequest\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\"\x17\n" +
+	"\x15RevokeSessionResponse\"\x12\n" +
+	"\x10LogoutAllRequest\"8\n" +
+	"\x11LogoutAllResponse\x12#\n" +
+	"\rrevoked_count\x18\x01 \x01(\x05R\frevokedCount2\xe1\t\n" +
 	"\vAuthService\x12[\n" +
 	"\bRegister\x12&.gophercourier.auth.v1.RegisterRequest\x1a'.gophercourier.auth.v1.RegisterResponse\x12R\n" +
 	"\x05Login\x12#.gophercourier.auth.v1.LoginRequest\x1a$.gophercourier.auth.v1.LoginResponse\x12X\n" +
@@ -2512,10 +2719,12 @@ const file_gophercourier_auth_v1_auth_proto_rawDesc = "" +
 	"\vVerifyEmail\x12).gophercourier.auth.v1.VerifyEmailRequest\x1a*.gophercourier.auth.v1.VerifyEmailResponse\x12y\n" +
 	"\x12ResendVerification\x120.gophercourier.auth.v1.ResendVerificationRequest\x1a1.gophercourier.auth.v1.ResendVerificationResponse\x12m\n" +
 	"\x0eChangePassword\x12,.gophercourier.auth.v1.ChangePasswordRequest\x1a-.gophercourier.auth.v1.ChangePasswordResponse\x12U\n" +
-	"\x06Logout\x12$.gophercourier.auth.v1.LogoutRequest\x1a%.gophercourier.auth.v1.LogoutResponseB\xd9\x01\n" +
+	"\x06Logout\x12$.gophercourier.auth.v1.LogoutRequest\x1a%.gophercourier.auth.v1.LogoutResponse\x12j\n" +
+	"\rRevokeSession\x12+.gophercourier.auth.v1.RevokeSessionRequest\x1a,.gophercourier.auth.v1.RevokeSessionResponse\x12^\n" +
+	"\tLogoutAll\x12'.gophercourier.auth.v1.LogoutAllRequest\x1a(.gophercourier.auth.v1.LogoutAllResponseB\xd9\x01\n" +
 	"\x19com.gophercourier.auth.v1B\tAuthProtoP\x01Z;github.com/tetiva-app/proto/go/gophercourier/auth/v1;authv1\xa2\x02\x03GAX\xaa\x02\x15Gophercourier.Auth.V1\xca\x02\x15Gophercourier\\Auth\\V1\xe2\x02!Gophercourier\\Auth\\V1\\GPBMetadata\xea\x02\x17Gophercourier::Auth::V1b\x06proto3"
 
-var file_gophercourier_auth_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
+var file_gophercourier_auth_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_gophercourier_auth_v1_auth_proto_goTypes = []any{
 	(*RegisterRequest)(nil),            // 0: gophercourier.auth.v1.RegisterRequest
 	(*LoginRequest)(nil),               // 1: gophercourier.auth.v1.LoginRequest
@@ -2543,7 +2752,11 @@ var file_gophercourier_auth_v1_auth_proto_goTypes = []any{
 	(*ChangePasswordResponse)(nil),     // 23: gophercourier.auth.v1.ChangePasswordResponse
 	(*LogoutRequest)(nil),              // 24: gophercourier.auth.v1.LogoutRequest
 	(*LogoutResponse)(nil),             // 25: gophercourier.auth.v1.LogoutResponse
-	(*timestamppb.Timestamp)(nil),      // 26: google.protobuf.Timestamp
+	(*RevokeSessionRequest)(nil),       // 26: gophercourier.auth.v1.RevokeSessionRequest
+	(*RevokeSessionResponse)(nil),      // 27: gophercourier.auth.v1.RevokeSessionResponse
+	(*LogoutAllRequest)(nil),           // 28: gophercourier.auth.v1.LogoutAllRequest
+	(*LogoutAllResponse)(nil),          // 29: gophercourier.auth.v1.LogoutAllResponse
+	(*timestamppb.Timestamp)(nil),      // 30: google.protobuf.Timestamp
 }
 var file_gophercourier_auth_v1_auth_proto_depIdxs = []int32{
 	8,  // 0: gophercourier.auth.v1.RegisterResponse.user:type_name -> gophercourier.auth.v1.User
@@ -2553,15 +2766,15 @@ var file_gophercourier_auth_v1_auth_proto_depIdxs = []int32{
 	8,  // 4: gophercourier.auth.v1.RefreshResponse.user:type_name -> gophercourier.auth.v1.User
 	9,  // 5: gophercourier.auth.v1.RefreshResponse.memberships:type_name -> gophercourier.auth.v1.Membership
 	8,  // 6: gophercourier.auth.v1.GetMeResponse.user:type_name -> gophercourier.auth.v1.User
-	26, // 7: gophercourier.auth.v1.User.created_at:type_name -> google.protobuf.Timestamp
-	26, // 8: gophercourier.auth.v1.Membership.joined_at:type_name -> google.protobuf.Timestamp
+	30, // 7: gophercourier.auth.v1.User.created_at:type_name -> google.protobuf.Timestamp
+	30, // 8: gophercourier.auth.v1.Membership.joined_at:type_name -> google.protobuf.Timestamp
 	8,  // 9: gophercourier.auth.v1.SwitchOrgResponse.user:type_name -> gophercourier.auth.v1.User
 	9,  // 10: gophercourier.auth.v1.SwitchOrgResponse.memberships:type_name -> gophercourier.auth.v1.Membership
 	8,  // 11: gophercourier.auth.v1.MeResponse.user:type_name -> gophercourier.auth.v1.User
 	14, // 12: gophercourier.auth.v1.MeResponse.active_org:type_name -> gophercourier.auth.v1.ActiveOrg
 	9,  // 13: gophercourier.auth.v1.MeResponse.memberships:type_name -> gophercourier.auth.v1.Membership
 	15, // 14: gophercourier.auth.v1.MeResponse.sessions:type_name -> gophercourier.auth.v1.SessionView
-	26, // 15: gophercourier.auth.v1.SessionView.last_used_at:type_name -> google.protobuf.Timestamp
+	30, // 15: gophercourier.auth.v1.SessionView.last_used_at:type_name -> google.protobuf.Timestamp
 	9,  // 16: gophercourier.auth.v1.MyOrgsResponse.memberships:type_name -> gophercourier.auth.v1.Membership
 	0,  // 17: gophercourier.auth.v1.AuthService.Register:input_type -> gophercourier.auth.v1.RegisterRequest
 	1,  // 18: gophercourier.auth.v1.AuthService.Login:input_type -> gophercourier.auth.v1.LoginRequest
@@ -2574,19 +2787,23 @@ var file_gophercourier_auth_v1_auth_proto_depIdxs = []int32{
 	20, // 25: gophercourier.auth.v1.AuthService.ResendVerification:input_type -> gophercourier.auth.v1.ResendVerificationRequest
 	22, // 26: gophercourier.auth.v1.AuthService.ChangePassword:input_type -> gophercourier.auth.v1.ChangePasswordRequest
 	24, // 27: gophercourier.auth.v1.AuthService.Logout:input_type -> gophercourier.auth.v1.LogoutRequest
-	4,  // 28: gophercourier.auth.v1.AuthService.Register:output_type -> gophercourier.auth.v1.RegisterResponse
-	5,  // 29: gophercourier.auth.v1.AuthService.Login:output_type -> gophercourier.auth.v1.LoginResponse
-	6,  // 30: gophercourier.auth.v1.AuthService.Refresh:output_type -> gophercourier.auth.v1.RefreshResponse
-	7,  // 31: gophercourier.auth.v1.AuthService.GetMe:output_type -> gophercourier.auth.v1.GetMeResponse
-	11, // 32: gophercourier.auth.v1.AuthService.SwitchOrg:output_type -> gophercourier.auth.v1.SwitchOrgResponse
-	13, // 33: gophercourier.auth.v1.AuthService.Me:output_type -> gophercourier.auth.v1.MeResponse
-	17, // 34: gophercourier.auth.v1.AuthService.MyOrgs:output_type -> gophercourier.auth.v1.MyOrgsResponse
-	19, // 35: gophercourier.auth.v1.AuthService.VerifyEmail:output_type -> gophercourier.auth.v1.VerifyEmailResponse
-	21, // 36: gophercourier.auth.v1.AuthService.ResendVerification:output_type -> gophercourier.auth.v1.ResendVerificationResponse
-	23, // 37: gophercourier.auth.v1.AuthService.ChangePassword:output_type -> gophercourier.auth.v1.ChangePasswordResponse
-	25, // 38: gophercourier.auth.v1.AuthService.Logout:output_type -> gophercourier.auth.v1.LogoutResponse
-	28, // [28:39] is the sub-list for method output_type
-	17, // [17:28] is the sub-list for method input_type
+	26, // 28: gophercourier.auth.v1.AuthService.RevokeSession:input_type -> gophercourier.auth.v1.RevokeSessionRequest
+	28, // 29: gophercourier.auth.v1.AuthService.LogoutAll:input_type -> gophercourier.auth.v1.LogoutAllRequest
+	4,  // 30: gophercourier.auth.v1.AuthService.Register:output_type -> gophercourier.auth.v1.RegisterResponse
+	5,  // 31: gophercourier.auth.v1.AuthService.Login:output_type -> gophercourier.auth.v1.LoginResponse
+	6,  // 32: gophercourier.auth.v1.AuthService.Refresh:output_type -> gophercourier.auth.v1.RefreshResponse
+	7,  // 33: gophercourier.auth.v1.AuthService.GetMe:output_type -> gophercourier.auth.v1.GetMeResponse
+	11, // 34: gophercourier.auth.v1.AuthService.SwitchOrg:output_type -> gophercourier.auth.v1.SwitchOrgResponse
+	13, // 35: gophercourier.auth.v1.AuthService.Me:output_type -> gophercourier.auth.v1.MeResponse
+	17, // 36: gophercourier.auth.v1.AuthService.MyOrgs:output_type -> gophercourier.auth.v1.MyOrgsResponse
+	19, // 37: gophercourier.auth.v1.AuthService.VerifyEmail:output_type -> gophercourier.auth.v1.VerifyEmailResponse
+	21, // 38: gophercourier.auth.v1.AuthService.ResendVerification:output_type -> gophercourier.auth.v1.ResendVerificationResponse
+	23, // 39: gophercourier.auth.v1.AuthService.ChangePassword:output_type -> gophercourier.auth.v1.ChangePasswordResponse
+	25, // 40: gophercourier.auth.v1.AuthService.Logout:output_type -> gophercourier.auth.v1.LogoutResponse
+	27, // 41: gophercourier.auth.v1.AuthService.RevokeSession:output_type -> gophercourier.auth.v1.RevokeSessionResponse
+	29, // 42: gophercourier.auth.v1.AuthService.LogoutAll:output_type -> gophercourier.auth.v1.LogoutAllResponse
+	30, // [30:43] is the sub-list for method output_type
+	17, // [17:30] is the sub-list for method input_type
 	17, // [17:17] is the sub-list for extension type_name
 	17, // [17:17] is the sub-list for extension extendee
 	0,  // [0:17] is the sub-list for field type_name
@@ -2603,7 +2820,7 @@ func file_gophercourier_auth_v1_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_gophercourier_auth_v1_auth_proto_rawDesc), len(file_gophercourier_auth_v1_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   26,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
