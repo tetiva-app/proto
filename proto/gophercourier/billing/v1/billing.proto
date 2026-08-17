@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package gophercourier.billing.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Self-service purchase. Subscribe and GetPaymentStatus require
+// org:manage_billing; GetSubscription needs only org:read.
+service BillingService {
+  rpc Subscribe(SubscribeRequest) returns (SubscribeResponse);
+  rpc GetPaymentStatus(GetPaymentStatusRequest) returns (GetPaymentStatusResponse);
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse);
+}
+
+message SubscribeRequest {
+  string org_id = 1;
+  string tier = 2;             // pro | team
+  string period = 3;           // month | year
+  // Client-generated UUID, stable across retries of the same intent. The
+  // server derives the payment id from it, so a repeated click reuses the
+  // existing checkout instead of opening a second one.
+  string idempotency_key = 4;
+}
+
+message SubscribeResponse {
+  string payment_id = 1;
+  string confirmation_url = 2;
+  int64 amount_minor = 3;
+  string currency = 4;
+}
+
+message GetPaymentStatusRequest {
+  string payment_id = 1;
+}
+
+message GetPaymentStatusResponse {
+  string payment_id = 1;
+  string status = 2;           // creating | pending | succeeded | canceled | needs_attention
+  string cancel_reason = 3;
+  Subscription subscription = 4; // set once the plan has been applied
+}
+
+message GetSubscriptionRequest {
+  string org_id = 1;
+}
+
+message GetSubscriptionResponse {
+  Subscription subscription = 1; // unset when the org never subscribed
+}
+
+message Subscription {
+  string id = 1;
+  string tier = 2;
+  string period = 3;
+  int32 seats = 4;
+  string status = 5;           // active | past_due | canceled | expired
+  google.protobuf.Timestamp current_period_end = 6;
+}
