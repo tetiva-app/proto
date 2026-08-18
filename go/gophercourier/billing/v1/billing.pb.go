@@ -514,21 +514,321 @@ func (b0 GetSubscriptionResponse_builder) Build() *GetSubscriptionResponse {
 	return m0
 }
 
+type RenewNowRequest struct {
+	state                     protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_OrgId          string                 `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3"`
+	xxx_hidden_IdempotencyKey string                 `protobuf:"bytes,2,opt,name=idempotency_key,json=idempotencyKey,proto3"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
+}
+
+func (x *RenewNowRequest) Reset() {
+	*x = RenewNowRequest{}
+	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RenewNowRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RenewNowRequest) ProtoMessage() {}
+
+func (x *RenewNowRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *RenewNowRequest) GetOrgId() string {
+	if x != nil {
+		return x.xxx_hidden_OrgId
+	}
+	return ""
+}
+
+func (x *RenewNowRequest) GetIdempotencyKey() string {
+	if x != nil {
+		return x.xxx_hidden_IdempotencyKey
+	}
+	return ""
+}
+
+func (x *RenewNowRequest) SetOrgId(v string) {
+	x.xxx_hidden_OrgId = v
+}
+
+func (x *RenewNowRequest) SetIdempotencyKey(v string) {
+	x.xxx_hidden_IdempotencyKey = v
+}
+
+type RenewNowRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	OrgId string
+	// A manual renewal spends no rung of the retry ladder, so it is addressed by
+	// this key rather than by an attempt number: that is what makes a repeated
+	// click land on the same payment.
+	IdempotencyKey string
+}
+
+func (b0 RenewNowRequest_builder) Build() *RenewNowRequest {
+	m0 := &RenewNowRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_OrgId = b.OrgId
+	x.xxx_hidden_IdempotencyKey = b.IdempotencyKey
+	return m0
+}
+
+type RenewNowResponse struct {
+	state                      protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_PaymentId       string                 `protobuf:"bytes,1,opt,name=payment_id,json=paymentId,proto3"`
+	xxx_hidden_ConfirmationUrl string                 `protobuf:"bytes,2,opt,name=confirmation_url,json=confirmationUrl,proto3"`
+	xxx_hidden_Subscription    *Subscription          `protobuf:"bytes,3,opt,name=subscription,proto3"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
+}
+
+func (x *RenewNowResponse) Reset() {
+	*x = RenewNowResponse{}
+	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RenewNowResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RenewNowResponse) ProtoMessage() {}
+
+func (x *RenewNowResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *RenewNowResponse) GetPaymentId() string {
+	if x != nil {
+		return x.xxx_hidden_PaymentId
+	}
+	return ""
+}
+
+func (x *RenewNowResponse) GetConfirmationUrl() string {
+	if x != nil {
+		return x.xxx_hidden_ConfirmationUrl
+	}
+	return ""
+}
+
+func (x *RenewNowResponse) GetSubscription() *Subscription {
+	if x != nil {
+		return x.xxx_hidden_Subscription
+	}
+	return nil
+}
+
+func (x *RenewNowResponse) SetPaymentId(v string) {
+	x.xxx_hidden_PaymentId = v
+}
+
+func (x *RenewNowResponse) SetConfirmationUrl(v string) {
+	x.xxx_hidden_ConfirmationUrl = v
+}
+
+func (x *RenewNowResponse) SetSubscription(v *Subscription) {
+	x.xxx_hidden_Subscription = v
+}
+
+func (x *RenewNowResponse) HasSubscription() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_Subscription != nil
+}
+
+func (x *RenewNowResponse) ClearSubscription() {
+	x.xxx_hidden_Subscription = nil
+}
+
+type RenewNowResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	PaymentId string
+	// Empty when a saved card was charged without the customer.
+	ConfirmationUrl string
+	Subscription    *Subscription
+}
+
+func (b0 RenewNowResponse_builder) Build() *RenewNowResponse {
+	m0 := &RenewNowResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_PaymentId = b.PaymentId
+	x.xxx_hidden_ConfirmationUrl = b.ConfirmationUrl
+	x.xxx_hidden_Subscription = b.Subscription
+	return m0
+}
+
+type CancelSubscriptionRequest struct {
+	state            protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_OrgId string                 `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *CancelSubscriptionRequest) Reset() {
+	*x = CancelSubscriptionRequest{}
+	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelSubscriptionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelSubscriptionRequest) ProtoMessage() {}
+
+func (x *CancelSubscriptionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *CancelSubscriptionRequest) GetOrgId() string {
+	if x != nil {
+		return x.xxx_hidden_OrgId
+	}
+	return ""
+}
+
+func (x *CancelSubscriptionRequest) SetOrgId(v string) {
+	x.xxx_hidden_OrgId = v
+}
+
+type CancelSubscriptionRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	OrgId string
+}
+
+func (b0 CancelSubscriptionRequest_builder) Build() *CancelSubscriptionRequest {
+	m0 := &CancelSubscriptionRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_OrgId = b.OrgId
+	return m0
+}
+
+type CancelSubscriptionResponse struct {
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Subscription *Subscription          `protobuf:"bytes,1,opt,name=subscription,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *CancelSubscriptionResponse) Reset() {
+	*x = CancelSubscriptionResponse{}
+	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelSubscriptionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelSubscriptionResponse) ProtoMessage() {}
+
+func (x *CancelSubscriptionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *CancelSubscriptionResponse) GetSubscription() *Subscription {
+	if x != nil {
+		return x.xxx_hidden_Subscription
+	}
+	return nil
+}
+
+func (x *CancelSubscriptionResponse) SetSubscription(v *Subscription) {
+	x.xxx_hidden_Subscription = v
+}
+
+func (x *CancelSubscriptionResponse) HasSubscription() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_Subscription != nil
+}
+
+func (x *CancelSubscriptionResponse) ClearSubscription() {
+	x.xxx_hidden_Subscription = nil
+}
+
+type CancelSubscriptionResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Subscription *Subscription
+}
+
+func (b0 CancelSubscriptionResponse_builder) Build() *CancelSubscriptionResponse {
+	m0 := &CancelSubscriptionResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Subscription = b.Subscription
+	return m0
+}
+
 type Subscription struct {
-	state                       protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Id               string                 `protobuf:"bytes,1,opt,name=id,proto3"`
-	xxx_hidden_Tier             string                 `protobuf:"bytes,2,opt,name=tier,proto3"`
-	xxx_hidden_Period           string                 `protobuf:"bytes,3,opt,name=period,proto3"`
-	xxx_hidden_Seats            int32                  `protobuf:"varint,4,opt,name=seats,proto3"`
-	xxx_hidden_Status           string                 `protobuf:"bytes,5,opt,name=status,proto3"`
-	xxx_hidden_CurrentPeriodEnd *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=current_period_end,json=currentPeriodEnd,proto3"`
-	unknownFields               protoimpl.UnknownFields
-	sizeCache                   protoimpl.SizeCache
+	state                         protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_Tier               string                 `protobuf:"bytes,2,opt,name=tier,proto3"`
+	xxx_hidden_Period             string                 `protobuf:"bytes,3,opt,name=period,proto3"`
+	xxx_hidden_Seats              int32                  `protobuf:"varint,4,opt,name=seats,proto3"`
+	xxx_hidden_Status             string                 `protobuf:"bytes,5,opt,name=status,proto3"`
+	xxx_hidden_CurrentPeriodEnd   *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=current_period_end,json=currentPeriodEnd,proto3"`
+	xxx_hidden_PaymentMethodTitle string                 `protobuf:"bytes,7,opt,name=payment_method_title,json=paymentMethodTitle,proto3"`
+	xxx_hidden_NextChargeAt       *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=next_charge_at,json=nextChargeAt,proto3"`
+	xxx_hidden_ChargeAttempts     int32                  `protobuf:"varint,9,opt,name=charge_attempts,json=chargeAttempts,proto3"`
+	xxx_hidden_CanceledAt         *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=canceled_at,json=canceledAt,proto3"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
 }
 
 func (x *Subscription) Reset() {
 	*x = Subscription{}
-	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[6]
+	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -540,7 +840,7 @@ func (x *Subscription) String() string {
 func (*Subscription) ProtoMessage() {}
 
 func (x *Subscription) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[6]
+	mi := &file_gophercourier_billing_v1_billing_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -593,6 +893,34 @@ func (x *Subscription) GetCurrentPeriodEnd() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *Subscription) GetPaymentMethodTitle() string {
+	if x != nil {
+		return x.xxx_hidden_PaymentMethodTitle
+	}
+	return ""
+}
+
+func (x *Subscription) GetNextChargeAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_NextChargeAt
+	}
+	return nil
+}
+
+func (x *Subscription) GetChargeAttempts() int32 {
+	if x != nil {
+		return x.xxx_hidden_ChargeAttempts
+	}
+	return 0
+}
+
+func (x *Subscription) GetCanceledAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_CanceledAt
+	}
+	return nil
+}
+
 func (x *Subscription) SetId(v string) {
 	x.xxx_hidden_Id = v
 }
@@ -617,6 +945,22 @@ func (x *Subscription) SetCurrentPeriodEnd(v *timestamppb.Timestamp) {
 	x.xxx_hidden_CurrentPeriodEnd = v
 }
 
+func (x *Subscription) SetPaymentMethodTitle(v string) {
+	x.xxx_hidden_PaymentMethodTitle = v
+}
+
+func (x *Subscription) SetNextChargeAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_NextChargeAt = v
+}
+
+func (x *Subscription) SetChargeAttempts(v int32) {
+	x.xxx_hidden_ChargeAttempts = v
+}
+
+func (x *Subscription) SetCanceledAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_CanceledAt = v
+}
+
 func (x *Subscription) HasCurrentPeriodEnd() bool {
 	if x == nil {
 		return false
@@ -624,8 +968,30 @@ func (x *Subscription) HasCurrentPeriodEnd() bool {
 	return x.xxx_hidden_CurrentPeriodEnd != nil
 }
 
+func (x *Subscription) HasNextChargeAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_NextChargeAt != nil
+}
+
+func (x *Subscription) HasCanceledAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_CanceledAt != nil
+}
+
 func (x *Subscription) ClearCurrentPeriodEnd() {
 	x.xxx_hidden_CurrentPeriodEnd = nil
+}
+
+func (x *Subscription) ClearNextChargeAt() {
+	x.xxx_hidden_NextChargeAt = nil
+}
+
+func (x *Subscription) ClearCanceledAt() {
+	x.xxx_hidden_CanceledAt = nil
 }
 
 type Subscription_builder struct {
@@ -637,6 +1003,11 @@ type Subscription_builder struct {
 	Seats            int32
 	Status           string
 	CurrentPeriodEnd *timestamppb.Timestamp
+	// Human-readable only, e.g. "Visa •••• 4242". Empty means no saved card.
+	PaymentMethodTitle string
+	NextChargeAt       *timestamppb.Timestamp
+	ChargeAttempts     int32
+	CanceledAt         *timestamppb.Timestamp
 }
 
 func (b0 Subscription_builder) Build() *Subscription {
@@ -649,6 +1020,10 @@ func (b0 Subscription_builder) Build() *Subscription {
 	x.xxx_hidden_Seats = b.Seats
 	x.xxx_hidden_Status = b.Status
 	x.xxx_hidden_CurrentPeriodEnd = b.CurrentPeriodEnd
+	x.xxx_hidden_PaymentMethodTitle = b.PaymentMethodTitle
+	x.xxx_hidden_NextChargeAt = b.NextChargeAt
+	x.xxx_hidden_ChargeAttempts = b.ChargeAttempts
+	x.xxx_hidden_CanceledAt = b.CanceledAt
 	return m0
 }
 
@@ -680,46 +1055,78 @@ const file_gophercourier_billing_v1_billing_proto_rawDesc = "" +
 	"\x16GetSubscriptionRequest\x12\x15\n" +
 	"\x06org_id\x18\x01 \x01(\tR\x05orgId\"e\n" +
 	"\x17GetSubscriptionResponse\x12J\n" +
-	"\fsubscription\x18\x01 \x01(\v2&.gophercourier.billing.v1.SubscriptionR\fsubscription\"\xc2\x01\n" +
+	"\fsubscription\x18\x01 \x01(\v2&.gophercourier.billing.v1.SubscriptionR\fsubscription\"Q\n" +
+	"\x0fRenewNowRequest\x12\x15\n" +
+	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12'\n" +
+	"\x0fidempotency_key\x18\x02 \x01(\tR\x0eidempotencyKey\"\xa8\x01\n" +
+	"\x10RenewNowResponse\x12\x1d\n" +
+	"\n" +
+	"payment_id\x18\x01 \x01(\tR\tpaymentId\x12)\n" +
+	"\x10confirmation_url\x18\x02 \x01(\tR\x0fconfirmationUrl\x12J\n" +
+	"\fsubscription\x18\x03 \x01(\v2&.gophercourier.billing.v1.SubscriptionR\fsubscription\"2\n" +
+	"\x19CancelSubscriptionRequest\x12\x15\n" +
+	"\x06org_id\x18\x01 \x01(\tR\x05orgId\"h\n" +
+	"\x1aCancelSubscriptionResponse\x12J\n" +
+	"\fsubscription\x18\x01 \x01(\v2&.gophercourier.billing.v1.SubscriptionR\fsubscription\"\x9c\x03\n" +
 	"\fSubscription\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04tier\x18\x02 \x01(\tR\x04tier\x12\x16\n" +
 	"\x06period\x18\x03 \x01(\tR\x06period\x12\x14\n" +
 	"\x05seats\x18\x04 \x01(\x05R\x05seats\x12\x16\n" +
 	"\x06status\x18\x05 \x01(\tR\x06status\x12H\n" +
-	"\x12current_period_end\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\x10currentPeriodEnd2\xe9\x02\n" +
+	"\x12current_period_end\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\x10currentPeriodEnd\x120\n" +
+	"\x14payment_method_title\x18\a \x01(\tR\x12paymentMethodTitle\x12@\n" +
+	"\x0enext_charge_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\fnextChargeAt\x12'\n" +
+	"\x0fcharge_attempts\x18\t \x01(\x05R\x0echargeAttempts\x12;\n" +
+	"\vcanceled_at\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"canceledAt2\xcd\x04\n" +
 	"\x0eBillingService\x12d\n" +
 	"\tSubscribe\x12*.gophercourier.billing.v1.SubscribeRequest\x1a+.gophercourier.billing.v1.SubscribeResponse\x12y\n" +
 	"\x10GetPaymentStatus\x121.gophercourier.billing.v1.GetPaymentStatusRequest\x1a2.gophercourier.billing.v1.GetPaymentStatusResponse\x12v\n" +
-	"\x0fGetSubscription\x120.gophercourier.billing.v1.GetSubscriptionRequest\x1a1.gophercourier.billing.v1.GetSubscriptionResponseB\xf1\x01\n" +
+	"\x0fGetSubscription\x120.gophercourier.billing.v1.GetSubscriptionRequest\x1a1.gophercourier.billing.v1.GetSubscriptionResponse\x12a\n" +
+	"\bRenewNow\x12).gophercourier.billing.v1.RenewNowRequest\x1a*.gophercourier.billing.v1.RenewNowResponse\x12\x7f\n" +
+	"\x12CancelSubscription\x123.gophercourier.billing.v1.CancelSubscriptionRequest\x1a4.gophercourier.billing.v1.CancelSubscriptionResponseB\xf1\x01\n" +
 	"\x1ccom.gophercourier.billing.v1B\fBillingProtoP\x01ZAgithub.com/tetiva-app/proto/go/gophercourier/billing/v1;billingv1\xa2\x02\x03GBX\xaa\x02\x18Gophercourier.Billing.V1\xca\x02\x18Gophercourier\\Billing\\V1\xe2\x02$Gophercourier\\Billing\\V1\\GPBMetadata\xea\x02\x1aGophercourier::Billing::V1b\x06proto3"
 
-var file_gophercourier_billing_v1_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_gophercourier_billing_v1_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_gophercourier_billing_v1_billing_proto_goTypes = []any{
-	(*SubscribeRequest)(nil),         // 0: gophercourier.billing.v1.SubscribeRequest
-	(*SubscribeResponse)(nil),        // 1: gophercourier.billing.v1.SubscribeResponse
-	(*GetPaymentStatusRequest)(nil),  // 2: gophercourier.billing.v1.GetPaymentStatusRequest
-	(*GetPaymentStatusResponse)(nil), // 3: gophercourier.billing.v1.GetPaymentStatusResponse
-	(*GetSubscriptionRequest)(nil),   // 4: gophercourier.billing.v1.GetSubscriptionRequest
-	(*GetSubscriptionResponse)(nil),  // 5: gophercourier.billing.v1.GetSubscriptionResponse
-	(*Subscription)(nil),             // 6: gophercourier.billing.v1.Subscription
-	(*timestamppb.Timestamp)(nil),    // 7: google.protobuf.Timestamp
+	(*SubscribeRequest)(nil),           // 0: gophercourier.billing.v1.SubscribeRequest
+	(*SubscribeResponse)(nil),          // 1: gophercourier.billing.v1.SubscribeResponse
+	(*GetPaymentStatusRequest)(nil),    // 2: gophercourier.billing.v1.GetPaymentStatusRequest
+	(*GetPaymentStatusResponse)(nil),   // 3: gophercourier.billing.v1.GetPaymentStatusResponse
+	(*GetSubscriptionRequest)(nil),     // 4: gophercourier.billing.v1.GetSubscriptionRequest
+	(*GetSubscriptionResponse)(nil),    // 5: gophercourier.billing.v1.GetSubscriptionResponse
+	(*RenewNowRequest)(nil),            // 6: gophercourier.billing.v1.RenewNowRequest
+	(*RenewNowResponse)(nil),           // 7: gophercourier.billing.v1.RenewNowResponse
+	(*CancelSubscriptionRequest)(nil),  // 8: gophercourier.billing.v1.CancelSubscriptionRequest
+	(*CancelSubscriptionResponse)(nil), // 9: gophercourier.billing.v1.CancelSubscriptionResponse
+	(*Subscription)(nil),               // 10: gophercourier.billing.v1.Subscription
+	(*timestamppb.Timestamp)(nil),      // 11: google.protobuf.Timestamp
 }
 var file_gophercourier_billing_v1_billing_proto_depIdxs = []int32{
-	6, // 0: gophercourier.billing.v1.GetPaymentStatusResponse.subscription:type_name -> gophercourier.billing.v1.Subscription
-	6, // 1: gophercourier.billing.v1.GetSubscriptionResponse.subscription:type_name -> gophercourier.billing.v1.Subscription
-	7, // 2: gophercourier.billing.v1.Subscription.current_period_end:type_name -> google.protobuf.Timestamp
-	0, // 3: gophercourier.billing.v1.BillingService.Subscribe:input_type -> gophercourier.billing.v1.SubscribeRequest
-	2, // 4: gophercourier.billing.v1.BillingService.GetPaymentStatus:input_type -> gophercourier.billing.v1.GetPaymentStatusRequest
-	4, // 5: gophercourier.billing.v1.BillingService.GetSubscription:input_type -> gophercourier.billing.v1.GetSubscriptionRequest
-	1, // 6: gophercourier.billing.v1.BillingService.Subscribe:output_type -> gophercourier.billing.v1.SubscribeResponse
-	3, // 7: gophercourier.billing.v1.BillingService.GetPaymentStatus:output_type -> gophercourier.billing.v1.GetPaymentStatusResponse
-	5, // 8: gophercourier.billing.v1.BillingService.GetSubscription:output_type -> gophercourier.billing.v1.GetSubscriptionResponse
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	10, // 0: gophercourier.billing.v1.GetPaymentStatusResponse.subscription:type_name -> gophercourier.billing.v1.Subscription
+	10, // 1: gophercourier.billing.v1.GetSubscriptionResponse.subscription:type_name -> gophercourier.billing.v1.Subscription
+	10, // 2: gophercourier.billing.v1.RenewNowResponse.subscription:type_name -> gophercourier.billing.v1.Subscription
+	10, // 3: gophercourier.billing.v1.CancelSubscriptionResponse.subscription:type_name -> gophercourier.billing.v1.Subscription
+	11, // 4: gophercourier.billing.v1.Subscription.current_period_end:type_name -> google.protobuf.Timestamp
+	11, // 5: gophercourier.billing.v1.Subscription.next_charge_at:type_name -> google.protobuf.Timestamp
+	11, // 6: gophercourier.billing.v1.Subscription.canceled_at:type_name -> google.protobuf.Timestamp
+	0,  // 7: gophercourier.billing.v1.BillingService.Subscribe:input_type -> gophercourier.billing.v1.SubscribeRequest
+	2,  // 8: gophercourier.billing.v1.BillingService.GetPaymentStatus:input_type -> gophercourier.billing.v1.GetPaymentStatusRequest
+	4,  // 9: gophercourier.billing.v1.BillingService.GetSubscription:input_type -> gophercourier.billing.v1.GetSubscriptionRequest
+	6,  // 10: gophercourier.billing.v1.BillingService.RenewNow:input_type -> gophercourier.billing.v1.RenewNowRequest
+	8,  // 11: gophercourier.billing.v1.BillingService.CancelSubscription:input_type -> gophercourier.billing.v1.CancelSubscriptionRequest
+	1,  // 12: gophercourier.billing.v1.BillingService.Subscribe:output_type -> gophercourier.billing.v1.SubscribeResponse
+	3,  // 13: gophercourier.billing.v1.BillingService.GetPaymentStatus:output_type -> gophercourier.billing.v1.GetPaymentStatusResponse
+	5,  // 14: gophercourier.billing.v1.BillingService.GetSubscription:output_type -> gophercourier.billing.v1.GetSubscriptionResponse
+	7,  // 15: gophercourier.billing.v1.BillingService.RenewNow:output_type -> gophercourier.billing.v1.RenewNowResponse
+	9,  // 16: gophercourier.billing.v1.BillingService.CancelSubscription:output_type -> gophercourier.billing.v1.CancelSubscriptionResponse
+	12, // [12:17] is the sub-list for method output_type
+	7,  // [7:12] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_gophercourier_billing_v1_billing_proto_init() }
@@ -733,7 +1140,7 @@ func file_gophercourier_billing_v1_billing_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_gophercourier_billing_v1_billing_proto_rawDesc), len(file_gophercourier_billing_v1_billing_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

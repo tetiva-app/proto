@@ -4,12 +4,19 @@ package gophercourier.billing.v1;
 
 import "google/protobuf/timestamp.proto";
 
-// Self-service purchase. Subscribe and GetPaymentStatus require
-// org:manage_billing; GetSubscription needs only org:read.
+// Self-service purchase. Every RPC requires org:manage_billing except
+// GetSubscription, which needs only org:read.
 service BillingService {
   rpc Subscribe(SubscribeRequest) returns (SubscribeResponse);
   rpc GetPaymentStatus(GetPaymentStatusRequest) returns (GetPaymentStatusResponse);
   rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse);
+  // Charge now and extend the paid period. With a working saved card the charge
+  // is silent; otherwise this returns a checkout that also stores a new card,
+  // so it doubles as the "my card stopped working" path.
+  rpc RenewNow(RenewNowRequest) returns (RenewNowResponse);
+  // Stop renewals and forget the saved card. YooKassa requires this to be
+  // self-service before it enables recurring charges at all.
+  rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse);
 }
 
 message SubscribeRequest {
@@ -48,6 +55,29 @@ message GetSubscriptionResponse {
   Subscription subscription = 1; // unset when the org never subscribed
 }
 
+message RenewNowRequest {
+  string org_id = 1;
+  // A manual renewal spends no rung of the retry ladder, so it is addressed by
+  // this key rather than by an attempt number: that is what makes a repeated
+  // click land on the same payment.
+  string idempotency_key = 2;
+}
+
+message RenewNowResponse {
+  string payment_id = 1;
+  // Empty when a saved card was charged without the customer.
+  string confirmation_url = 2;
+  Subscription subscription = 3;
+}
+
+message CancelSubscriptionRequest {
+  string org_id = 1;
+}
+
+message CancelSubscriptionResponse {
+  Subscription subscription = 1;
+}
+
 message Subscription {
   string id = 1;
   string tier = 2;
@@ -55,4 +85,9 @@ message Subscription {
   int32 seats = 4;
   string status = 5;           // active | past_due | canceled | expired
   google.protobuf.Timestamp current_period_end = 6;
+  // Human-readable only, e.g. "Visa •••• 4242". Empty means no saved card.
+  string payment_method_title = 7;
+  google.protobuf.Timestamp next_charge_at = 8;
+  int32 charge_attempts = 9;
+  google.protobuf.Timestamp canceled_at = 10;
 }

@@ -19,21 +19,30 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BillingService_Subscribe_FullMethodName        = "/gophercourier.billing.v1.BillingService/Subscribe"
-	BillingService_GetPaymentStatus_FullMethodName = "/gophercourier.billing.v1.BillingService/GetPaymentStatus"
-	BillingService_GetSubscription_FullMethodName  = "/gophercourier.billing.v1.BillingService/GetSubscription"
+	BillingService_Subscribe_FullMethodName          = "/gophercourier.billing.v1.BillingService/Subscribe"
+	BillingService_GetPaymentStatus_FullMethodName   = "/gophercourier.billing.v1.BillingService/GetPaymentStatus"
+	BillingService_GetSubscription_FullMethodName    = "/gophercourier.billing.v1.BillingService/GetSubscription"
+	BillingService_RenewNow_FullMethodName           = "/gophercourier.billing.v1.BillingService/RenewNow"
+	BillingService_CancelSubscription_FullMethodName = "/gophercourier.billing.v1.BillingService/CancelSubscription"
 )
 
 // BillingServiceClient is the client API for BillingService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// Self-service purchase. Subscribe and GetPaymentStatus require
-// org:manage_billing; GetSubscription needs only org:read.
+// Self-service purchase. Every RPC requires org:manage_billing except
+// GetSubscription, which needs only org:read.
 type BillingServiceClient interface {
 	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (*SubscribeResponse, error)
 	GetPaymentStatus(ctx context.Context, in *GetPaymentStatusRequest, opts ...grpc.CallOption) (*GetPaymentStatusResponse, error)
 	GetSubscription(ctx context.Context, in *GetSubscriptionRequest, opts ...grpc.CallOption) (*GetSubscriptionResponse, error)
+	// Charge now and extend the paid period. With a working saved card the charge
+	// is silent; otherwise this returns a checkout that also stores a new card,
+	// so it doubles as the "my card stopped working" path.
+	RenewNow(ctx context.Context, in *RenewNowRequest, opts ...grpc.CallOption) (*RenewNowResponse, error)
+	// Stop renewals and forget the saved card. YooKassa requires this to be
+	// self-service before it enables recurring charges at all.
+	CancelSubscription(ctx context.Context, in *CancelSubscriptionRequest, opts ...grpc.CallOption) (*CancelSubscriptionResponse, error)
 }
 
 type billingServiceClient struct {
@@ -74,16 +83,43 @@ func (c *billingServiceClient) GetSubscription(ctx context.Context, in *GetSubsc
 	return out, nil
 }
 
+func (c *billingServiceClient) RenewNow(ctx context.Context, in *RenewNowRequest, opts ...grpc.CallOption) (*RenewNowResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RenewNowResponse)
+	err := c.cc.Invoke(ctx, BillingService_RenewNow_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) CancelSubscription(ctx context.Context, in *CancelSubscriptionRequest, opts ...grpc.CallOption) (*CancelSubscriptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CancelSubscriptionResponse)
+	err := c.cc.Invoke(ctx, BillingService_CancelSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BillingServiceServer is the server API for BillingService service.
 // All implementations must embed UnimplementedBillingServiceServer
 // for forward compatibility.
 //
-// Self-service purchase. Subscribe and GetPaymentStatus require
-// org:manage_billing; GetSubscription needs only org:read.
+// Self-service purchase. Every RPC requires org:manage_billing except
+// GetSubscription, which needs only org:read.
 type BillingServiceServer interface {
 	Subscribe(context.Context, *SubscribeRequest) (*SubscribeResponse, error)
 	GetPaymentStatus(context.Context, *GetPaymentStatusRequest) (*GetPaymentStatusResponse, error)
 	GetSubscription(context.Context, *GetSubscriptionRequest) (*GetSubscriptionResponse, error)
+	// Charge now and extend the paid period. With a working saved card the charge
+	// is silent; otherwise this returns a checkout that also stores a new card,
+	// so it doubles as the "my card stopped working" path.
+	RenewNow(context.Context, *RenewNowRequest) (*RenewNowResponse, error)
+	// Stop renewals and forget the saved card. YooKassa requires this to be
+	// self-service before it enables recurring charges at all.
+	CancelSubscription(context.Context, *CancelSubscriptionRequest) (*CancelSubscriptionResponse, error)
 	mustEmbedUnimplementedBillingServiceServer()
 }
 
@@ -102,6 +138,12 @@ func (UnimplementedBillingServiceServer) GetPaymentStatus(context.Context, *GetP
 }
 func (UnimplementedBillingServiceServer) GetSubscription(context.Context, *GetSubscriptionRequest) (*GetSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSubscription not implemented")
+}
+func (UnimplementedBillingServiceServer) RenewNow(context.Context, *RenewNowRequest) (*RenewNowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RenewNow not implemented")
+}
+func (UnimplementedBillingServiceServer) CancelSubscription(context.Context, *CancelSubscriptionRequest) (*CancelSubscriptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelSubscription not implemented")
 }
 func (UnimplementedBillingServiceServer) mustEmbedUnimplementedBillingServiceServer() {}
 func (UnimplementedBillingServiceServer) testEmbeddedByValue()                        {}
@@ -178,6 +220,42 @@ func _BillingService_GetSubscription_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingService_RenewNow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RenewNowRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).RenewNow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_RenewNow_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).RenewNow(ctx, req.(*RenewNowRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_CancelSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CancelSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CancelSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CancelSubscription(ctx, req.(*CancelSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BillingService_ServiceDesc is the grpc.ServiceDesc for BillingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -196,6 +274,14 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSubscription",
 			Handler:    _BillingService_GetSubscription_Handler,
+		},
+		{
+			MethodName: "RenewNow",
+			Handler:    _BillingService_RenewNow_Handler,
+		},
+		{
+			MethodName: "CancelSubscription",
+			Handler:    _BillingService_CancelSubscription_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
