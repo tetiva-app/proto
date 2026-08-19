@@ -5,7 +5,8 @@ package gophercourier.billing.v1;
 import "google/protobuf/timestamp.proto";
 
 // Self-service purchase. Every RPC requires org:manage_billing except
-// GetSubscription, which needs only org:read.
+// GetSubscription, which needs only org:read, and ListOffers, which needs no
+// membership at all.
 service BillingService {
   rpc Subscribe(SubscribeRequest) returns (SubscribeResponse);
   rpc GetPaymentStatus(GetPaymentStatusRequest) returns (GetPaymentStatusResponse);
@@ -17,6 +18,10 @@ service BillingService {
   // Stop renewals and forget the saved card. YooKassa requires this to be
   // self-service before it enables recurring charges at all.
   rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse);
+  // Newest first. org:manage_billing.
+  rpc ListPayments(ListPaymentsRequest) returns (ListPaymentsResponse);
+  // Public price list for the current price version. Any authenticated user.
+  rpc ListOffers(ListOffersRequest) returns (ListOffersResponse);
 }
 
 message SubscribeRequest {
@@ -90,4 +95,49 @@ message Subscription {
   google.protobuf.Timestamp next_charge_at = 8;
   int32 charge_attempts = 9;
   google.protobuf.Timestamp canceled_at = 10;
+  // The version this subscription renews at, which is not the current list: a
+  // price change never reaches a subscription already sold.
+  string price_version = 11;
+  // What the next renewal costs, resolved from price_version.
+  int64 amount_minor = 12;
+  string currency = 13;
+}
+
+message ListPaymentsRequest {
+  string org_id = 1;
+  // 0 means 20; anything above 100 is capped.
+  int32 limit = 2;
+}
+
+message ListPaymentsResponse {
+  repeated Payment payments = 1;
+}
+
+// Payment is the customer-facing view of one ledger row. The provider ids, the
+// idempotence key and the checkout URLs stay server-side.
+message Payment {
+  string id = 1;
+  string kind = 2;             // initial | renewal
+  string tier = 3;
+  string period = 4;
+  int64 amount_minor = 5;
+  string currency = 6;
+  string status = 7;           // creating | pending | succeeded | canceled | needs_attention
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp paid_period_end = 9;
+  string cancel_reason = 10;
+}
+
+message ListOffersRequest {}
+
+message ListOffersResponse {
+  repeated Offer offers = 1;
+  string price_version = 2;
+}
+
+message Offer {
+  string tier = 1;             // pro | team
+  string period = 2;           // month | year
+  int64 amount_minor = 3;
+  string currency = 4;         // RUB
 }
