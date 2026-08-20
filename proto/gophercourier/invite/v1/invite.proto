@@ -14,6 +14,11 @@ service InviteService {
   // "POST /v1/orgs/join" from spec [04]. The new access token reflects the
   // accepted Org as active_org_id.
   rpc JoinOrg(JoinOrgRequest) returns (JoinOrgResponse);
+
+  // Anonymous — the /invite/<token> landing page calls it before rendering the
+  // sign-up form. Always answers OK; the verdict lives in the response so the
+  // page can show a plain message instead of decoding a transport error.
+  rpc PreviewInvite(PreviewInviteRequest) returns (PreviewInviteResponse);
 }
 
 message Invite {
@@ -60,6 +65,26 @@ message ListInvitesRequest {
 
 message ListInvitesResponse {
   repeated Invite invites = 1;
+}
+
+message PreviewInviteRequest {
+  string token = 1;
+}
+
+// Everything here is already known to whoever holds the token — the invite
+// email carries the org and the inviter. The invitee email is never returned,
+// only the fact that the link is bound to one.
+message PreviewInviteResponse {
+  bool valid = 1;
+  // Why the link is unusable, "" while it still works. Same vocabulary as
+  // Invite.status plus "not_found": "expired" | "revoked" | "exhausted".
+  string reason = 2;
+  // Set whenever the invite exists — an expired link still names its org.
+  string org_name = 3;
+  string inviter_name = 4;
+  string role_id = 5;
+  string role_name = 6;
+  bool email_bound = 7;
 }
 
 message JoinOrgRequest {

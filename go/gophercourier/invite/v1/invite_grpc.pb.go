@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	InviteService_CreateInvite_FullMethodName = "/gophercourier.invite.v1.InviteService/CreateInvite"
-	InviteService_RevokeInvite_FullMethodName = "/gophercourier.invite.v1.InviteService/RevokeInvite"
-	InviteService_ListInvites_FullMethodName  = "/gophercourier.invite.v1.InviteService/ListInvites"
-	InviteService_JoinOrg_FullMethodName      = "/gophercourier.invite.v1.InviteService/JoinOrg"
+	InviteService_CreateInvite_FullMethodName  = "/gophercourier.invite.v1.InviteService/CreateInvite"
+	InviteService_RevokeInvite_FullMethodName  = "/gophercourier.invite.v1.InviteService/RevokeInvite"
+	InviteService_ListInvites_FullMethodName   = "/gophercourier.invite.v1.InviteService/ListInvites"
+	InviteService_JoinOrg_FullMethodName       = "/gophercourier.invite.v1.InviteService/JoinOrg"
+	InviteService_PreviewInvite_FullMethodName = "/gophercourier.invite.v1.InviteService/PreviewInvite"
 )
 
 // InviteServiceClient is the client API for InviteService service.
@@ -37,6 +38,10 @@ type InviteServiceClient interface {
 	// "POST /v1/orgs/join" from spec [04]. The new access token reflects the
 	// accepted Org as active_org_id.
 	JoinOrg(ctx context.Context, in *JoinOrgRequest, opts ...grpc.CallOption) (*JoinOrgResponse, error)
+	// Anonymous — the /invite/<token> landing page calls it before rendering the
+	// sign-up form. Always answers OK; the verdict lives in the response so the
+	// page can show a plain message instead of decoding a transport error.
+	PreviewInvite(ctx context.Context, in *PreviewInviteRequest, opts ...grpc.CallOption) (*PreviewInviteResponse, error)
 }
 
 type inviteServiceClient struct {
@@ -87,6 +92,16 @@ func (c *inviteServiceClient) JoinOrg(ctx context.Context, in *JoinOrgRequest, o
 	return out, nil
 }
 
+func (c *inviteServiceClient) PreviewInvite(ctx context.Context, in *PreviewInviteRequest, opts ...grpc.CallOption) (*PreviewInviteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PreviewInviteResponse)
+	err := c.cc.Invoke(ctx, InviteService_PreviewInvite_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InviteServiceServer is the server API for InviteService service.
 // All implementations must embed UnimplementedInviteServiceServer
 // for forward compatibility.
@@ -99,6 +114,10 @@ type InviteServiceServer interface {
 	// "POST /v1/orgs/join" from spec [04]. The new access token reflects the
 	// accepted Org as active_org_id.
 	JoinOrg(context.Context, *JoinOrgRequest) (*JoinOrgResponse, error)
+	// Anonymous — the /invite/<token> landing page calls it before rendering the
+	// sign-up form. Always answers OK; the verdict lives in the response so the
+	// page can show a plain message instead of decoding a transport error.
+	PreviewInvite(context.Context, *PreviewInviteRequest) (*PreviewInviteResponse, error)
 	mustEmbedUnimplementedInviteServiceServer()
 }
 
@@ -120,6 +139,9 @@ func (UnimplementedInviteServiceServer) ListInvites(context.Context, *ListInvite
 }
 func (UnimplementedInviteServiceServer) JoinOrg(context.Context, *JoinOrgRequest) (*JoinOrgResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JoinOrg not implemented")
+}
+func (UnimplementedInviteServiceServer) PreviewInvite(context.Context, *PreviewInviteRequest) (*PreviewInviteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PreviewInvite not implemented")
 }
 func (UnimplementedInviteServiceServer) mustEmbedUnimplementedInviteServiceServer() {}
 func (UnimplementedInviteServiceServer) testEmbeddedByValue()                       {}
@@ -214,6 +236,24 @@ func _InviteService_JoinOrg_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InviteService_PreviewInvite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PreviewInviteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InviteServiceServer).PreviewInvite(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InviteService_PreviewInvite_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InviteServiceServer).PreviewInvite(ctx, req.(*PreviewInviteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // InviteService_ServiceDesc is the grpc.ServiceDesc for InviteService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -236,6 +276,10 @@ var InviteService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "JoinOrg",
 			Handler:    _InviteService_JoinOrg_Handler,
+		},
+		{
+			MethodName: "PreviewInvite",
+			Handler:    _InviteService_PreviewInvite_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

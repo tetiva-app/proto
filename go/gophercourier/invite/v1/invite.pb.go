@@ -719,6 +719,210 @@ func (b0 ListInvitesResponse_builder) Build() *ListInvitesResponse {
 	return m0
 }
 
+type PreviewInviteRequest struct {
+	state            protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Token string                 `protobuf:"bytes,1,opt,name=token,proto3"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *PreviewInviteRequest) Reset() {
+	*x = PreviewInviteRequest{}
+	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PreviewInviteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PreviewInviteRequest) ProtoMessage() {}
+
+func (x *PreviewInviteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PreviewInviteRequest) GetToken() string {
+	if x != nil {
+		return x.xxx_hidden_Token
+	}
+	return ""
+}
+
+func (x *PreviewInviteRequest) SetToken(v string) {
+	x.xxx_hidden_Token = v
+}
+
+type PreviewInviteRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Token string
+}
+
+func (b0 PreviewInviteRequest_builder) Build() *PreviewInviteRequest {
+	m0 := &PreviewInviteRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Token = b.Token
+	return m0
+}
+
+// Everything here is already known to whoever holds the token — the invite
+// email carries the org and the inviter. The invitee email is never returned,
+// only the fact that the link is bound to one.
+type PreviewInviteResponse struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Valid       bool                   `protobuf:"varint,1,opt,name=valid,proto3"`
+	xxx_hidden_Reason      string                 `protobuf:"bytes,2,opt,name=reason,proto3"`
+	xxx_hidden_OrgName     string                 `protobuf:"bytes,3,opt,name=org_name,json=orgName,proto3"`
+	xxx_hidden_InviterName string                 `protobuf:"bytes,4,opt,name=inviter_name,json=inviterName,proto3"`
+	xxx_hidden_RoleId      string                 `protobuf:"bytes,5,opt,name=role_id,json=roleId,proto3"`
+	xxx_hidden_RoleName    string                 `protobuf:"bytes,6,opt,name=role_name,json=roleName,proto3"`
+	xxx_hidden_EmailBound  bool                   `protobuf:"varint,7,opt,name=email_bound,json=emailBound,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *PreviewInviteResponse) Reset() {
+	*x = PreviewInviteResponse{}
+	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PreviewInviteResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PreviewInviteResponse) ProtoMessage() {}
+
+func (x *PreviewInviteResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PreviewInviteResponse) GetValid() bool {
+	if x != nil {
+		return x.xxx_hidden_Valid
+	}
+	return false
+}
+
+func (x *PreviewInviteResponse) GetReason() string {
+	if x != nil {
+		return x.xxx_hidden_Reason
+	}
+	return ""
+}
+
+func (x *PreviewInviteResponse) GetOrgName() string {
+	if x != nil {
+		return x.xxx_hidden_OrgName
+	}
+	return ""
+}
+
+func (x *PreviewInviteResponse) GetInviterName() string {
+	if x != nil {
+		return x.xxx_hidden_InviterName
+	}
+	return ""
+}
+
+func (x *PreviewInviteResponse) GetRoleId() string {
+	if x != nil {
+		return x.xxx_hidden_RoleId
+	}
+	return ""
+}
+
+func (x *PreviewInviteResponse) GetRoleName() string {
+	if x != nil {
+		return x.xxx_hidden_RoleName
+	}
+	return ""
+}
+
+func (x *PreviewInviteResponse) GetEmailBound() bool {
+	if x != nil {
+		return x.xxx_hidden_EmailBound
+	}
+	return false
+}
+
+func (x *PreviewInviteResponse) SetValid(v bool) {
+	x.xxx_hidden_Valid = v
+}
+
+func (x *PreviewInviteResponse) SetReason(v string) {
+	x.xxx_hidden_Reason = v
+}
+
+func (x *PreviewInviteResponse) SetOrgName(v string) {
+	x.xxx_hidden_OrgName = v
+}
+
+func (x *PreviewInviteResponse) SetInviterName(v string) {
+	x.xxx_hidden_InviterName = v
+}
+
+func (x *PreviewInviteResponse) SetRoleId(v string) {
+	x.xxx_hidden_RoleId = v
+}
+
+func (x *PreviewInviteResponse) SetRoleName(v string) {
+	x.xxx_hidden_RoleName = v
+}
+
+func (x *PreviewInviteResponse) SetEmailBound(v bool) {
+	x.xxx_hidden_EmailBound = v
+}
+
+type PreviewInviteResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Valid bool
+	// Why the link is unusable, "" while it still works. Same vocabulary as
+	// Invite.status plus "not_found": "expired" | "revoked" | "exhausted".
+	Reason string
+	// Set whenever the invite exists — an expired link still names its org.
+	OrgName     string
+	InviterName string
+	RoleId      string
+	RoleName    string
+	EmailBound  bool
+}
+
+func (b0 PreviewInviteResponse_builder) Build() *PreviewInviteResponse {
+	m0 := &PreviewInviteResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Valid = b.Valid
+	x.xxx_hidden_Reason = b.Reason
+	x.xxx_hidden_OrgName = b.OrgName
+	x.xxx_hidden_InviterName = b.InviterName
+	x.xxx_hidden_RoleId = b.RoleId
+	x.xxx_hidden_RoleName = b.RoleName
+	x.xxx_hidden_EmailBound = b.EmailBound
+	return m0
+}
+
 type JoinOrgRequest struct {
 	state            protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_Token string                 `protobuf:"bytes,1,opt,name=token,proto3"`
@@ -728,7 +932,7 @@ type JoinOrgRequest struct {
 
 func (x *JoinOrgRequest) Reset() {
 	*x = JoinOrgRequest{}
-	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[7]
+	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -740,7 +944,7 @@ func (x *JoinOrgRequest) String() string {
 func (*JoinOrgRequest) ProtoMessage() {}
 
 func (x *JoinOrgRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[7]
+	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -789,7 +993,7 @@ type JoinOrgResponse struct {
 
 func (x *JoinOrgResponse) Reset() {
 	*x = JoinOrgResponse{}
-	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[8]
+	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -801,7 +1005,7 @@ func (x *JoinOrgResponse) String() string {
 func (*JoinOrgResponse) ProtoMessage() {}
 
 func (x *JoinOrgResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[8]
+	mi := &file_gophercourier_invite_v1_invite_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -932,7 +1136,18 @@ const file_gophercourier_invite_v1_invite_proto_rawDesc = "" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12\x14\n" +
 	"\x05limit\x18\x03 \x01(\x05R\x05limit\"P\n" +
 	"\x13ListInvitesResponse\x129\n" +
-	"\ainvites\x18\x01 \x03(\v2\x1f.gophercourier.invite.v1.InviteR\ainvites\"&\n" +
+	"\ainvites\x18\x01 \x03(\v2\x1f.gophercourier.invite.v1.InviteR\ainvites\",\n" +
+	"\x14PreviewInviteRequest\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"\xda\x01\n" +
+	"\x15PreviewInviteResponse\x12\x14\n" +
+	"\x05valid\x18\x01 \x01(\bR\x05valid\x12\x16\n" +
+	"\x06reason\x18\x02 \x01(\tR\x06reason\x12\x19\n" +
+	"\borg_name\x18\x03 \x01(\tR\aorgName\x12!\n" +
+	"\finviter_name\x18\x04 \x01(\tR\vinviterName\x12\x17\n" +
+	"\arole_id\x18\x05 \x01(\tR\x06roleId\x12\x1b\n" +
+	"\trole_name\x18\x06 \x01(\tR\broleName\x12\x1f\n" +
+	"\vemail_bound\x18\a \x01(\bR\n" +
+	"emailBound\"&\n" +
 	"\x0eJoinOrgRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\"\xb7\x01\n" +
 	"\x0fJoinOrgResponse\x12\x15\n" +
@@ -940,15 +1155,16 @@ const file_gophercourier_invite_v1_invite_proto_rawDesc = "" +
 	"\arole_id\x18\x02 \x01(\tR\x06roleId\x12#\n" +
 	"\rmembership_id\x18\x03 \x01(\tR\fmembershipId\x12%\n" +
 	"\x0ealready_joined\x18\x04 \x01(\bR\ralreadyJoined\x12(\n" +
-	"\x10new_access_token\x18\x05 \x01(\tR\x0enewAccessToken2\xb1\x03\n" +
+	"\x10new_access_token\x18\x05 \x01(\tR\x0enewAccessToken2\xa1\x04\n" +
 	"\rInviteService\x12k\n" +
 	"\fCreateInvite\x12,.gophercourier.invite.v1.CreateInviteRequest\x1a-.gophercourier.invite.v1.CreateInviteResponse\x12k\n" +
 	"\fRevokeInvite\x12,.gophercourier.invite.v1.RevokeInviteRequest\x1a-.gophercourier.invite.v1.RevokeInviteResponse\x12h\n" +
 	"\vListInvites\x12+.gophercourier.invite.v1.ListInvitesRequest\x1a,.gophercourier.invite.v1.ListInvitesResponse\x12\\\n" +
-	"\aJoinOrg\x12'.gophercourier.invite.v1.JoinOrgRequest\x1a(.gophercourier.invite.v1.JoinOrgResponseB\xe9\x01\n" +
+	"\aJoinOrg\x12'.gophercourier.invite.v1.JoinOrgRequest\x1a(.gophercourier.invite.v1.JoinOrgResponse\x12n\n" +
+	"\rPreviewInvite\x12-.gophercourier.invite.v1.PreviewInviteRequest\x1a..gophercourier.invite.v1.PreviewInviteResponseB\xe9\x01\n" +
 	"\x1bcom.gophercourier.invite.v1B\vInviteProtoP\x01Z?github.com/tetiva-app/proto/go/gophercourier/invite/v1;invitev1\xa2\x02\x03GIX\xaa\x02\x17Gophercourier.Invite.V1\xca\x02\x17Gophercourier\\Invite\\V1\xe2\x02#Gophercourier\\Invite\\V1\\GPBMetadata\xea\x02\x19Gophercourier::Invite::V1b\x06proto3"
 
-var file_gophercourier_invite_v1_invite_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_gophercourier_invite_v1_invite_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_gophercourier_invite_v1_invite_proto_goTypes = []any{
 	(*Invite)(nil),                // 0: gophercourier.invite.v1.Invite
 	(*CreateInviteRequest)(nil),   // 1: gophercourier.invite.v1.CreateInviteRequest
@@ -957,29 +1173,33 @@ var file_gophercourier_invite_v1_invite_proto_goTypes = []any{
 	(*RevokeInviteResponse)(nil),  // 4: gophercourier.invite.v1.RevokeInviteResponse
 	(*ListInvitesRequest)(nil),    // 5: gophercourier.invite.v1.ListInvitesRequest
 	(*ListInvitesResponse)(nil),   // 6: gophercourier.invite.v1.ListInvitesResponse
-	(*JoinOrgRequest)(nil),        // 7: gophercourier.invite.v1.JoinOrgRequest
-	(*JoinOrgResponse)(nil),       // 8: gophercourier.invite.v1.JoinOrgResponse
-	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
+	(*PreviewInviteRequest)(nil),  // 7: gophercourier.invite.v1.PreviewInviteRequest
+	(*PreviewInviteResponse)(nil), // 8: gophercourier.invite.v1.PreviewInviteResponse
+	(*JoinOrgRequest)(nil),        // 9: gophercourier.invite.v1.JoinOrgRequest
+	(*JoinOrgResponse)(nil),       // 10: gophercourier.invite.v1.JoinOrgResponse
+	(*timestamppb.Timestamp)(nil), // 11: google.protobuf.Timestamp
 }
 var file_gophercourier_invite_v1_invite_proto_depIdxs = []int32{
-	9, // 0: gophercourier.invite.v1.Invite.expires_at:type_name -> google.protobuf.Timestamp
-	9, // 1: gophercourier.invite.v1.Invite.revoked_at:type_name -> google.protobuf.Timestamp
-	9, // 2: gophercourier.invite.v1.Invite.created_at:type_name -> google.protobuf.Timestamp
-	0, // 3: gophercourier.invite.v1.CreateInviteResponse.invite:type_name -> gophercourier.invite.v1.Invite
-	0, // 4: gophercourier.invite.v1.ListInvitesResponse.invites:type_name -> gophercourier.invite.v1.Invite
-	1, // 5: gophercourier.invite.v1.InviteService.CreateInvite:input_type -> gophercourier.invite.v1.CreateInviteRequest
-	3, // 6: gophercourier.invite.v1.InviteService.RevokeInvite:input_type -> gophercourier.invite.v1.RevokeInviteRequest
-	5, // 7: gophercourier.invite.v1.InviteService.ListInvites:input_type -> gophercourier.invite.v1.ListInvitesRequest
-	7, // 8: gophercourier.invite.v1.InviteService.JoinOrg:input_type -> gophercourier.invite.v1.JoinOrgRequest
-	2, // 9: gophercourier.invite.v1.InviteService.CreateInvite:output_type -> gophercourier.invite.v1.CreateInviteResponse
-	4, // 10: gophercourier.invite.v1.InviteService.RevokeInvite:output_type -> gophercourier.invite.v1.RevokeInviteResponse
-	6, // 11: gophercourier.invite.v1.InviteService.ListInvites:output_type -> gophercourier.invite.v1.ListInvitesResponse
-	8, // 12: gophercourier.invite.v1.InviteService.JoinOrg:output_type -> gophercourier.invite.v1.JoinOrgResponse
-	9, // [9:13] is the sub-list for method output_type
-	5, // [5:9] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	11, // 0: gophercourier.invite.v1.Invite.expires_at:type_name -> google.protobuf.Timestamp
+	11, // 1: gophercourier.invite.v1.Invite.revoked_at:type_name -> google.protobuf.Timestamp
+	11, // 2: gophercourier.invite.v1.Invite.created_at:type_name -> google.protobuf.Timestamp
+	0,  // 3: gophercourier.invite.v1.CreateInviteResponse.invite:type_name -> gophercourier.invite.v1.Invite
+	0,  // 4: gophercourier.invite.v1.ListInvitesResponse.invites:type_name -> gophercourier.invite.v1.Invite
+	1,  // 5: gophercourier.invite.v1.InviteService.CreateInvite:input_type -> gophercourier.invite.v1.CreateInviteRequest
+	3,  // 6: gophercourier.invite.v1.InviteService.RevokeInvite:input_type -> gophercourier.invite.v1.RevokeInviteRequest
+	5,  // 7: gophercourier.invite.v1.InviteService.ListInvites:input_type -> gophercourier.invite.v1.ListInvitesRequest
+	9,  // 8: gophercourier.invite.v1.InviteService.JoinOrg:input_type -> gophercourier.invite.v1.JoinOrgRequest
+	7,  // 9: gophercourier.invite.v1.InviteService.PreviewInvite:input_type -> gophercourier.invite.v1.PreviewInviteRequest
+	2,  // 10: gophercourier.invite.v1.InviteService.CreateInvite:output_type -> gophercourier.invite.v1.CreateInviteResponse
+	4,  // 11: gophercourier.invite.v1.InviteService.RevokeInvite:output_type -> gophercourier.invite.v1.RevokeInviteResponse
+	6,  // 12: gophercourier.invite.v1.InviteService.ListInvites:output_type -> gophercourier.invite.v1.ListInvitesResponse
+	10, // 13: gophercourier.invite.v1.InviteService.JoinOrg:output_type -> gophercourier.invite.v1.JoinOrgResponse
+	8,  // 14: gophercourier.invite.v1.InviteService.PreviewInvite:output_type -> gophercourier.invite.v1.PreviewInviteResponse
+	10, // [10:15] is the sub-list for method output_type
+	5,  // [5:10] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_gophercourier_invite_v1_invite_proto_init() }
@@ -993,7 +1213,7 @@ func file_gophercourier_invite_v1_invite_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_gophercourier_invite_v1_invite_proto_rawDesc), len(file_gophercourier_invite_v1_invite_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
