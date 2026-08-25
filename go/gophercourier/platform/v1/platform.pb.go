@@ -22,14 +22,16 @@ const (
 )
 
 type PlatformServiceListOrgsRequest struct {
-	state                      protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_IncludePersonal bool                   `protobuf:"varint,1,opt,name=include_personal,json=includePersonal,proto3"`
-	xxx_hidden_IncludeDeleted  bool                   `protobuf:"varint,2,opt,name=include_deleted,json=includeDeleted,proto3"`
-	xxx_hidden_Cursor          string                 `protobuf:"bytes,3,opt,name=cursor,proto3"`
-	xxx_hidden_Limit           int32                  `protobuf:"varint,4,opt,name=limit,proto3"`
-	xxx_hidden_NameSubstring   string                 `protobuf:"bytes,5,opt,name=name_substring,json=nameSubstring,proto3"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
+	state                         protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_IncludePersonal    bool                   `protobuf:"varint,1,opt,name=include_personal,json=includePersonal,proto3"`
+	xxx_hidden_IncludeDeleted     bool                   `protobuf:"varint,2,opt,name=include_deleted,json=includeDeleted,proto3"`
+	xxx_hidden_Cursor             string                 `protobuf:"bytes,3,opt,name=cursor,proto3"`
+	xxx_hidden_Limit              int32                  `protobuf:"varint,4,opt,name=limit,proto3"`
+	xxx_hidden_NameSubstring      string                 `protobuf:"bytes,5,opt,name=name_substring,json=nameSubstring,proto3"`
+	xxx_hidden_Plan               string                 `protobuf:"bytes,6,opt,name=plan,proto3"`
+	xxx_hidden_SubscriptionStatus string                 `protobuf:"bytes,7,opt,name=subscription_status,json=subscriptionStatus,proto3"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
 }
 
 func (x *PlatformServiceListOrgsRequest) Reset() {
@@ -92,6 +94,20 @@ func (x *PlatformServiceListOrgsRequest) GetNameSubstring() string {
 	return ""
 }
 
+func (x *PlatformServiceListOrgsRequest) GetPlan() string {
+	if x != nil {
+		return x.xxx_hidden_Plan
+	}
+	return ""
+}
+
+func (x *PlatformServiceListOrgsRequest) GetSubscriptionStatus() string {
+	if x != nil {
+		return x.xxx_hidden_SubscriptionStatus
+	}
+	return ""
+}
+
 func (x *PlatformServiceListOrgsRequest) SetIncludePersonal(v bool) {
 	x.xxx_hidden_IncludePersonal = v
 }
@@ -112,6 +128,14 @@ func (x *PlatformServiceListOrgsRequest) SetNameSubstring(v string) {
 	x.xxx_hidden_NameSubstring = v
 }
 
+func (x *PlatformServiceListOrgsRequest) SetPlan(v string) {
+	x.xxx_hidden_Plan = v
+}
+
+func (x *PlatformServiceListOrgsRequest) SetSubscriptionStatus(v string) {
+	x.xxx_hidden_SubscriptionStatus = v
+}
+
 type PlatformServiceListOrgsRequest_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
@@ -121,6 +145,10 @@ type PlatformServiceListOrgsRequest_builder struct {
 	Limit           int32
 	// Case-insensitive substring match over the org name or its slug.
 	NameSubstring string
+	// "" = off. free|pro|team|business, matched against the stored plan.
+	Plan string
+	// "" = off. active|past_due|canceled|expired|none, by the newest subscription.
+	SubscriptionStatus string
 }
 
 func (b0 PlatformServiceListOrgsRequest_builder) Build() *PlatformServiceListOrgsRequest {
@@ -132,6 +160,8 @@ func (b0 PlatformServiceListOrgsRequest_builder) Build() *PlatformServiceListOrg
 	x.xxx_hidden_Cursor = b.Cursor
 	x.xxx_hidden_Limit = b.Limit
 	x.xxx_hidden_NameSubstring = b.NameSubstring
+	x.xxx_hidden_Plan = b.Plan
+	x.xxx_hidden_SubscriptionStatus = b.SubscriptionStatus
 	return m0
 }
 
@@ -1508,15 +1538,17 @@ func (b0 PlatformServiceGetOrgResponse_builder) Build() *PlatformServiceGetOrgRe
 }
 
 type PlatformServiceListUsersRequest struct {
-	state                       protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_EmailSubstring   string                 `protobuf:"bytes,1,opt,name=email_substring,json=emailSubstring,proto3"`
-	xxx_hidden_IncludeDeleted   bool                   `protobuf:"varint,2,opt,name=include_deleted,json=includeDeleted,proto3"`
-	xxx_hidden_Cursor           string                 `protobuf:"bytes,3,opt,name=cursor,proto3"`
-	xxx_hidden_Limit            int32                  `protobuf:"varint,4,opt,name=limit,proto3"`
-	xxx_hidden_Sort             string                 `protobuf:"bytes,5,opt,name=sort,proto3"`
-	xxx_hidden_ActiveWithinDays int32                  `protobuf:"varint,6,opt,name=active_within_days,json=activeWithinDays,proto3"`
-	unknownFields               protoimpl.UnknownFields
-	sizeCache                   protoimpl.SizeCache
+	state                        protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_EmailSubstring    string                 `protobuf:"bytes,1,opt,name=email_substring,json=emailSubstring,proto3"`
+	xxx_hidden_IncludeDeleted    bool                   `protobuf:"varint,2,opt,name=include_deleted,json=includeDeleted,proto3"`
+	xxx_hidden_Cursor            string                 `protobuf:"bytes,3,opt,name=cursor,proto3"`
+	xxx_hidden_Limit             int32                  `protobuf:"varint,4,opt,name=limit,proto3"`
+	xxx_hidden_Sort              string                 `protobuf:"bytes,5,opt,name=sort,proto3"`
+	xxx_hidden_ActiveWithinDays  int32                  `protobuf:"varint,6,opt,name=active_within_days,json=activeWithinDays,proto3"`
+	xxx_hidden_CreatedWithinDays int32                  `protobuf:"varint,7,opt,name=created_within_days,json=createdWithinDays,proto3"`
+	xxx_hidden_UnverifiedOnly    bool                   `protobuf:"varint,8,opt,name=unverified_only,json=unverifiedOnly,proto3"`
+	unknownFields                protoimpl.UnknownFields
+	sizeCache                    protoimpl.SizeCache
 }
 
 func (x *PlatformServiceListUsersRequest) Reset() {
@@ -1586,6 +1618,20 @@ func (x *PlatformServiceListUsersRequest) GetActiveWithinDays() int32 {
 	return 0
 }
 
+func (x *PlatformServiceListUsersRequest) GetCreatedWithinDays() int32 {
+	if x != nil {
+		return x.xxx_hidden_CreatedWithinDays
+	}
+	return 0
+}
+
+func (x *PlatformServiceListUsersRequest) GetUnverifiedOnly() bool {
+	if x != nil {
+		return x.xxx_hidden_UnverifiedOnly
+	}
+	return false
+}
+
 func (x *PlatformServiceListUsersRequest) SetEmailSubstring(v string) {
 	x.xxx_hidden_EmailSubstring = v
 }
@@ -1610,6 +1656,14 @@ func (x *PlatformServiceListUsersRequest) SetActiveWithinDays(v int32) {
 	x.xxx_hidden_ActiveWithinDays = v
 }
 
+func (x *PlatformServiceListUsersRequest) SetCreatedWithinDays(v int32) {
+	x.xxx_hidden_CreatedWithinDays = v
+}
+
+func (x *PlatformServiceListUsersRequest) SetUnverifiedOnly(v bool) {
+	x.xxx_hidden_UnverifiedOnly = v
+}
+
 type PlatformServiceListUsersRequest_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
@@ -1621,6 +1675,11 @@ type PlatformServiceListUsersRequest_builder struct {
 	Sort string
 	// 0 = off. Keeps only users whose last_activity_at >= now - N days.
 	ActiveWithinDays int32
+	// 0 = off. Keeps only users registered within the last N days; >365 is
+	// clamped to 365.
+	CreatedWithinDays int32
+	// Keeps only users whose email is not verified.
+	UnverifiedOnly bool
 }
 
 func (b0 PlatformServiceListUsersRequest_builder) Build() *PlatformServiceListUsersRequest {
@@ -1633,6 +1692,8 @@ func (b0 PlatformServiceListUsersRequest_builder) Build() *PlatformServiceListUs
 	x.xxx_hidden_Limit = b.Limit
 	x.xxx_hidden_Sort = b.Sort
 	x.xxx_hidden_ActiveWithinDays = b.ActiveWithinDays
+	x.xxx_hidden_CreatedWithinDays = b.CreatedWithinDays
+	x.xxx_hidden_UnverifiedOnly = b.UnverifiedOnly
 	return m0
 }
 
@@ -5622,13 +5683,15 @@ var File_gophercourier_platform_v1_platform_proto protoreflect.FileDescriptor
 
 const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\n" +
-	"(gophercourier/platform/v1/platform.proto\x12\x19gophercourier.platform.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc9\x01\n" +
+	"(gophercourier/platform/v1/platform.proto\x12\x19gophercourier.platform.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8e\x02\n" +
 	"\x1ePlatformServiceListOrgsRequest\x12)\n" +
 	"\x10include_personal\x18\x01 \x01(\bR\x0fincludePersonal\x12'\n" +
 	"\x0finclude_deleted\x18\x02 \x01(\bR\x0eincludeDeleted\x12\x16\n" +
 	"\x06cursor\x18\x03 \x01(\tR\x06cursor\x12\x14\n" +
 	"\x05limit\x18\x04 \x01(\x05R\x05limit\x12%\n" +
-	"\x0ename_substring\x18\x05 \x01(\tR\rnameSubstring\"\xd7\x05\n" +
+	"\x0ename_substring\x18\x05 \x01(\tR\rnameSubstring\x12\x12\n" +
+	"\x04plan\x18\x06 \x01(\tR\x04plan\x12/\n" +
+	"\x13subscription_status\x18\a \x01(\tR\x12subscriptionStatus\"\xd7\x05\n" +
 	"\x15PlatformServiceOrgRow\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -5718,14 +5781,16 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\n" +
 	"workspaces\x18\x03 \x03(\v23.gophercourier.platform.v1.PlatformServiceWorkspaceR\n" +
 	"workspaces\x12J\n" +
-	"\ainvites\x18\x04 \x03(\v20.gophercourier.platform.v1.PlatformServiceInviteR\ainvites\"\xe3\x01\n" +
+	"\ainvites\x18\x04 \x03(\v20.gophercourier.platform.v1.PlatformServiceInviteR\ainvites\"\xbc\x02\n" +
 	"\x1fPlatformServiceListUsersRequest\x12'\n" +
 	"\x0femail_substring\x18\x01 \x01(\tR\x0eemailSubstring\x12'\n" +
 	"\x0finclude_deleted\x18\x02 \x01(\bR\x0eincludeDeleted\x12\x16\n" +
 	"\x06cursor\x18\x03 \x01(\tR\x06cursor\x12\x14\n" +
 	"\x05limit\x18\x04 \x01(\x05R\x05limit\x12\x12\n" +
 	"\x04sort\x18\x05 \x01(\tR\x04sort\x12,\n" +
-	"\x12active_within_days\x18\x06 \x01(\x05R\x10activeWithinDays\"\xa4\x04\n" +
+	"\x12active_within_days\x18\x06 \x01(\x05R\x10activeWithinDays\x12.\n" +
+	"\x13created_within_days\x18\a \x01(\x05R\x11createdWithinDays\x12'\n" +
+	"\x0funverified_only\x18\b \x01(\bR\x0eunverifiedOnly\"\xa4\x04\n" +
 	"\x16PlatformServiceUserRow\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x12\n" +
