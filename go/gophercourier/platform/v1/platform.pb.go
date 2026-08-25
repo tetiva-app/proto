@@ -27,6 +27,7 @@ type PlatformServiceListOrgsRequest struct {
 	xxx_hidden_IncludeDeleted  bool                   `protobuf:"varint,2,opt,name=include_deleted,json=includeDeleted,proto3"`
 	xxx_hidden_Cursor          string                 `protobuf:"bytes,3,opt,name=cursor,proto3"`
 	xxx_hidden_Limit           int32                  `protobuf:"varint,4,opt,name=limit,proto3"`
+	xxx_hidden_NameSubstring   string                 `protobuf:"bytes,5,opt,name=name_substring,json=nameSubstring,proto3"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -84,6 +85,13 @@ func (x *PlatformServiceListOrgsRequest) GetLimit() int32 {
 	return 0
 }
 
+func (x *PlatformServiceListOrgsRequest) GetNameSubstring() string {
+	if x != nil {
+		return x.xxx_hidden_NameSubstring
+	}
+	return ""
+}
+
 func (x *PlatformServiceListOrgsRequest) SetIncludePersonal(v bool) {
 	x.xxx_hidden_IncludePersonal = v
 }
@@ -100,6 +108,10 @@ func (x *PlatformServiceListOrgsRequest) SetLimit(v int32) {
 	x.xxx_hidden_Limit = v
 }
 
+func (x *PlatformServiceListOrgsRequest) SetNameSubstring(v string) {
+	x.xxx_hidden_NameSubstring = v
+}
+
 type PlatformServiceListOrgsRequest_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
@@ -107,6 +119,8 @@ type PlatformServiceListOrgsRequest_builder struct {
 	IncludeDeleted  bool
 	Cursor          string
 	Limit           int32
+	// Case-insensitive substring match over the org name or its slug.
+	NameSubstring string
 }
 
 func (b0 PlatformServiceListOrgsRequest_builder) Build() *PlatformServiceListOrgsRequest {
@@ -117,6 +131,7 @@ func (b0 PlatformServiceListOrgsRequest_builder) Build() *PlatformServiceListOrg
 	x.xxx_hidden_IncludeDeleted = b.IncludeDeleted
 	x.xxx_hidden_Cursor = b.Cursor
 	x.xxx_hidden_Limit = b.Limit
+	x.xxx_hidden_NameSubstring = b.NameSubstring
 	return m0
 }
 
@@ -1869,7 +1884,8 @@ type PlatformServiceUserRow_builder struct {
 	LastActivityAt *timestamppb.Timestamp
 	// revoked_at unset && expires_at > now.
 	ActiveSessions int32
-	// Distinct client_id across all sessions.
+	// Distinct client_id over sessions retained within the refresh-token TTL
+	// (30 days in prod) — older devices fall out with their sessions.
 	DeviceCount int32
 	// Best plan across the user's orgs, grace-aware. free|pro|team|business.
 	MaxPlan string
@@ -2584,9 +2600,11 @@ type PlatformServiceUser_builder struct {
 	LastLoginAt     *timestamppb.Timestamp
 	LastActivityAt  *timestamppb.Timestamp
 	ActiveSessions  int32
-	DeviceCount     int32
-	MaxPlan         string
-	HasPaid         bool
+	// Distinct client_id over sessions retained within the refresh-token TTL
+	// (30 days in prod) — older devices fall out with their sessions.
+	DeviceCount int32
+	MaxPlan     string
+	HasPaid     bool
 }
 
 func (b0 PlatformServiceUser_builder) Build() *PlatformServiceUser {
@@ -3801,6 +3819,176 @@ func (b0 PlatformServiceForceRevokeSessionsResponse_builder) Build() *PlatformSe
 	return m0
 }
 
+type PlatformServiceForceRevokeSessionRequest struct {
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_TargetUserId string                 `protobuf:"bytes,1,opt,name=target_user_id,json=targetUserId,proto3"`
+	xxx_hidden_SessionId    string                 `protobuf:"bytes,2,opt,name=session_id,json=sessionId,proto3"`
+	xxx_hidden_Reason       string                 `protobuf:"bytes,3,opt,name=reason,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *PlatformServiceForceRevokeSessionRequest) Reset() {
+	*x = PlatformServiceForceRevokeSessionRequest{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServiceForceRevokeSessionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServiceForceRevokeSessionRequest) ProtoMessage() {}
+
+func (x *PlatformServiceForceRevokeSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlatformServiceForceRevokeSessionRequest) GetTargetUserId() string {
+	if x != nil {
+		return x.xxx_hidden_TargetUserId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRevokeSessionRequest) GetSessionId() string {
+	if x != nil {
+		return x.xxx_hidden_SessionId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRevokeSessionRequest) GetReason() string {
+	if x != nil {
+		return x.xxx_hidden_Reason
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRevokeSessionRequest) SetTargetUserId(v string) {
+	x.xxx_hidden_TargetUserId = v
+}
+
+func (x *PlatformServiceForceRevokeSessionRequest) SetSessionId(v string) {
+	x.xxx_hidden_SessionId = v
+}
+
+func (x *PlatformServiceForceRevokeSessionRequest) SetReason(v string) {
+	x.xxx_hidden_Reason = v
+}
+
+type PlatformServiceForceRevokeSessionRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	TargetUserId string
+	SessionId    string
+	Reason       string
+}
+
+func (b0 PlatformServiceForceRevokeSessionRequest_builder) Build() *PlatformServiceForceRevokeSessionRequest {
+	m0 := &PlatformServiceForceRevokeSessionRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_TargetUserId = b.TargetUserId
+	x.xxx_hidden_SessionId = b.SessionId
+	x.xxx_hidden_Reason = b.Reason
+	return m0
+}
+
+type PlatformServiceForceRevokeSessionResponse struct {
+	state                        protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_UserId            string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_SessionId         string                 `protobuf:"bytes,2,opt,name=session_id,json=sessionId,proto3"`
+	xxx_hidden_WasAlreadyRevoked bool                   `protobuf:"varint,3,opt,name=was_already_revoked,json=wasAlreadyRevoked,proto3"`
+	unknownFields                protoimpl.UnknownFields
+	sizeCache                    protoimpl.SizeCache
+}
+
+func (x *PlatformServiceForceRevokeSessionResponse) Reset() {
+	*x = PlatformServiceForceRevokeSessionResponse{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServiceForceRevokeSessionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServiceForceRevokeSessionResponse) ProtoMessage() {}
+
+func (x *PlatformServiceForceRevokeSessionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlatformServiceForceRevokeSessionResponse) GetUserId() string {
+	if x != nil {
+		return x.xxx_hidden_UserId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRevokeSessionResponse) GetSessionId() string {
+	if x != nil {
+		return x.xxx_hidden_SessionId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRevokeSessionResponse) GetWasAlreadyRevoked() bool {
+	if x != nil {
+		return x.xxx_hidden_WasAlreadyRevoked
+	}
+	return false
+}
+
+func (x *PlatformServiceForceRevokeSessionResponse) SetUserId(v string) {
+	x.xxx_hidden_UserId = v
+}
+
+func (x *PlatformServiceForceRevokeSessionResponse) SetSessionId(v string) {
+	x.xxx_hidden_SessionId = v
+}
+
+func (x *PlatformServiceForceRevokeSessionResponse) SetWasAlreadyRevoked(v bool) {
+	x.xxx_hidden_WasAlreadyRevoked = v
+}
+
+type PlatformServiceForceRevokeSessionResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	UserId            string
+	SessionId         string
+	WasAlreadyRevoked bool
+}
+
+func (b0 PlatformServiceForceRevokeSessionResponse_builder) Build() *PlatformServiceForceRevokeSessionResponse {
+	m0 := &PlatformServiceForceRevokeSessionResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_SessionId = b.SessionId
+	x.xxx_hidden_WasAlreadyRevoked = b.WasAlreadyRevoked
+	return m0
+}
+
 type PlatformServiceForceDeleteUserRequest struct {
 	state                   protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_TargetUserId string                 `protobuf:"bytes,1,opt,name=target_user_id,json=targetUserId,proto3"`
@@ -3811,7 +3999,7 @@ type PlatformServiceForceDeleteUserRequest struct {
 
 func (x *PlatformServiceForceDeleteUserRequest) Reset() {
 	*x = PlatformServiceForceDeleteUserRequest{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[27]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3823,7 +4011,7 @@ func (x *PlatformServiceForceDeleteUserRequest) String() string {
 func (*PlatformServiceForceDeleteUserRequest) ProtoMessage() {}
 
 func (x *PlatformServiceForceDeleteUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[27]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3884,7 +4072,7 @@ type PlatformServiceForceDeleteUserResponse struct {
 
 func (x *PlatformServiceForceDeleteUserResponse) Reset() {
 	*x = PlatformServiceForceDeleteUserResponse{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[28]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3896,7 +4084,7 @@ func (x *PlatformServiceForceDeleteUserResponse) String() string {
 func (*PlatformServiceForceDeleteUserResponse) ProtoMessage() {}
 
 func (x *PlatformServiceForceDeleteUserResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[28]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3981,7 +4169,7 @@ type PlatformServiceForceDeleteOrgRequest struct {
 
 func (x *PlatformServiceForceDeleteOrgRequest) Reset() {
 	*x = PlatformServiceForceDeleteOrgRequest{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[29]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3993,7 +4181,7 @@ func (x *PlatformServiceForceDeleteOrgRequest) String() string {
 func (*PlatformServiceForceDeleteOrgRequest) ProtoMessage() {}
 
 func (x *PlatformServiceForceDeleteOrgRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[29]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4053,7 +4241,7 @@ type PlatformServiceForceDeleteOrgResponse struct {
 
 func (x *PlatformServiceForceDeleteOrgResponse) Reset() {
 	*x = PlatformServiceForceDeleteOrgResponse{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[30]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4065,7 +4253,7 @@ func (x *PlatformServiceForceDeleteOrgResponse) String() string {
 func (*PlatformServiceForceDeleteOrgResponse) ProtoMessage() {}
 
 func (x *PlatformServiceForceDeleteOrgResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[30]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4136,7 +4324,7 @@ type PlatformServiceAdminVerifyEmailRequest struct {
 
 func (x *PlatformServiceAdminVerifyEmailRequest) Reset() {
 	*x = PlatformServiceAdminVerifyEmailRequest{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[31]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4148,7 +4336,7 @@ func (x *PlatformServiceAdminVerifyEmailRequest) String() string {
 func (*PlatformServiceAdminVerifyEmailRequest) ProtoMessage() {}
 
 func (x *PlatformServiceAdminVerifyEmailRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[31]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4194,7 +4382,7 @@ type PlatformServiceAdminVerifyEmailResponse struct {
 
 func (x *PlatformServiceAdminVerifyEmailResponse) Reset() {
 	*x = PlatformServiceAdminVerifyEmailResponse{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[32]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4206,7 +4394,7 @@ func (x *PlatformServiceAdminVerifyEmailResponse) String() string {
 func (*PlatformServiceAdminVerifyEmailResponse) ProtoMessage() {}
 
 func (x *PlatformServiceAdminVerifyEmailResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[32]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4268,7 +4456,7 @@ type PlatformServiceSetPlanRequest struct {
 
 func (x *PlatformServiceSetPlanRequest) Reset() {
 	*x = PlatformServiceSetPlanRequest{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[33]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4280,7 +4468,7 @@ func (x *PlatformServiceSetPlanRequest) String() string {
 func (*PlatformServiceSetPlanRequest) ProtoMessage() {}
 
 func (x *PlatformServiceSetPlanRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[33]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4392,7 +4580,7 @@ type PlatformServiceSetPlanResponse struct {
 
 func (x *PlatformServiceSetPlanResponse) Reset() {
 	*x = PlatformServiceSetPlanResponse{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[34]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4404,7 +4592,7 @@ func (x *PlatformServiceSetPlanResponse) String() string {
 func (*PlatformServiceSetPlanResponse) ProtoMessage() {}
 
 func (x *PlatformServiceSetPlanResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[34]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4511,7 +4699,7 @@ type PlatformServiceGetOverviewRequest struct {
 
 func (x *PlatformServiceGetOverviewRequest) Reset() {
 	*x = PlatformServiceGetOverviewRequest{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[35]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4523,7 +4711,7 @@ func (x *PlatformServiceGetOverviewRequest) String() string {
 func (*PlatformServiceGetOverviewRequest) ProtoMessage() {}
 
 func (x *PlatformServiceGetOverviewRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[35]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4556,7 +4744,7 @@ type PlatformServicePlanCount struct {
 
 func (x *PlatformServicePlanCount) Reset() {
 	*x = PlatformServicePlanCount{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[36]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4568,7 +4756,7 @@ func (x *PlatformServicePlanCount) String() string {
 func (*PlatformServicePlanCount) ProtoMessage() {}
 
 func (x *PlatformServicePlanCount) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[36]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4637,7 +4825,7 @@ type PlatformServiceGetOverviewResponse struct {
 
 func (x *PlatformServiceGetOverviewResponse) Reset() {
 	*x = PlatformServiceGetOverviewResponse{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[37]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4649,7 +4837,7 @@ func (x *PlatformServiceGetOverviewResponse) String() string {
 func (*PlatformServiceGetOverviewResponse) ProtoMessage() {}
 
 func (x *PlatformServiceGetOverviewResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[37]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4848,7 +5036,7 @@ type PlatformServiceForceAddOrgMemberRequest struct {
 
 func (x *PlatformServiceForceAddOrgMemberRequest) Reset() {
 	*x = PlatformServiceForceAddOrgMemberRequest{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[38]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4860,7 +5048,7 @@ func (x *PlatformServiceForceAddOrgMemberRequest) String() string {
 func (*PlatformServiceForceAddOrgMemberRequest) ProtoMessage() {}
 
 func (x *PlatformServiceForceAddOrgMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[38]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4948,7 +5136,7 @@ type PlatformServiceForceAddOrgMemberResponse struct {
 
 func (x *PlatformServiceForceAddOrgMemberResponse) Reset() {
 	*x = PlatformServiceForceAddOrgMemberResponse{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[39]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4960,7 +5148,7 @@ func (x *PlatformServiceForceAddOrgMemberResponse) String() string {
 func (*PlatformServiceForceAddOrgMemberResponse) ProtoMessage() {}
 
 func (x *PlatformServiceForceAddOrgMemberResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[39]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5060,7 +5248,7 @@ type PlatformServiceForceChangeOrgMemberRoleRequest struct {
 
 func (x *PlatformServiceForceChangeOrgMemberRoleRequest) Reset() {
 	*x = PlatformServiceForceChangeOrgMemberRoleRequest{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[40]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5072,7 +5260,7 @@ func (x *PlatformServiceForceChangeOrgMemberRoleRequest) String() string {
 func (*PlatformServiceForceChangeOrgMemberRoleRequest) ProtoMessage() {}
 
 func (x *PlatformServiceForceChangeOrgMemberRoleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[40]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5159,7 +5347,7 @@ type PlatformServiceForceChangeOrgMemberRoleResponse struct {
 
 func (x *PlatformServiceForceChangeOrgMemberRoleResponse) Reset() {
 	*x = PlatformServiceForceChangeOrgMemberRoleResponse{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[41]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5171,7 +5359,7 @@ func (x *PlatformServiceForceChangeOrgMemberRoleResponse) String() string {
 func (*PlatformServiceForceChangeOrgMemberRoleResponse) ProtoMessage() {}
 
 func (x *PlatformServiceForceChangeOrgMemberRoleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[41]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5257,7 +5445,7 @@ type PlatformServiceForceRemoveOrgMemberRequest struct {
 
 func (x *PlatformServiceForceRemoveOrgMemberRequest) Reset() {
 	*x = PlatformServiceForceRemoveOrgMemberRequest{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[42]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5269,7 +5457,7 @@ func (x *PlatformServiceForceRemoveOrgMemberRequest) String() string {
 func (*PlatformServiceForceRemoveOrgMemberRequest) ProtoMessage() {}
 
 func (x *PlatformServiceForceRemoveOrgMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[42]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5343,7 +5531,7 @@ type PlatformServiceForceRemoveOrgMemberResponse struct {
 
 func (x *PlatformServiceForceRemoveOrgMemberResponse) Reset() {
 	*x = PlatformServiceForceRemoveOrgMemberResponse{}
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[43]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5355,7 +5543,7 @@ func (x *PlatformServiceForceRemoveOrgMemberResponse) String() string {
 func (*PlatformServiceForceRemoveOrgMemberResponse) ProtoMessage() {}
 
 func (x *PlatformServiceForceRemoveOrgMemberResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[43]
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5434,12 +5622,13 @@ var File_gophercourier_platform_v1_platform_proto protoreflect.FileDescriptor
 
 const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\n" +
-	"(gophercourier/platform/v1/platform.proto\x12\x19gophercourier.platform.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa2\x01\n" +
+	"(gophercourier/platform/v1/platform.proto\x12\x19gophercourier.platform.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc9\x01\n" +
 	"\x1ePlatformServiceListOrgsRequest\x12)\n" +
 	"\x10include_personal\x18\x01 \x01(\bR\x0fincludePersonal\x12'\n" +
 	"\x0finclude_deleted\x18\x02 \x01(\bR\x0eincludeDeleted\x12\x16\n" +
 	"\x06cursor\x18\x03 \x01(\tR\x06cursor\x12\x14\n" +
-	"\x05limit\x18\x04 \x01(\x05R\x05limit\"\xd7\x05\n" +
+	"\x05limit\x18\x04 \x01(\x05R\x05limit\x12%\n" +
+	"\x0ename_substring\x18\x05 \x01(\tR\rnameSubstring\"\xd7\x05\n" +
 	"\x15PlatformServiceOrgRow\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -5663,7 +5852,17 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\"p\n" +
 	"*PlatformServiceForceRevokeSessionsResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12)\n" +
-	"\x10sessions_revoked\x18\x02 \x01(\x05R\x0fsessionsRevoked\"e\n" +
+	"\x10sessions_revoked\x18\x02 \x01(\x05R\x0fsessionsRevoked\"\x87\x01\n" +
+	"(PlatformServiceForceRevokeSessionRequest\x12$\n" +
+	"\x0etarget_user_id\x18\x01 \x01(\tR\ftargetUserId\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x02 \x01(\tR\tsessionId\x12\x16\n" +
+	"\x06reason\x18\x03 \x01(\tR\x06reason\"\x93\x01\n" +
+	")PlatformServiceForceRevokeSessionResponse\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x02 \x01(\tR\tsessionId\x12.\n" +
+	"\x13was_already_revoked\x18\x03 \x01(\bR\x11wasAlreadyRevoked\"e\n" +
 	"%PlatformServiceForceDeleteUserRequest\x12$\n" +
 	"\x0etarget_user_id\x18\x01 \x01(\tR\ftargetUserId\x12\x16\n" +
 	"\x06reason\x18\x02 \x01(\tR\x06reason\"\xc9\x01\n" +
@@ -5751,7 +5950,7 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x19\n" +
 	"\bhad_role\x18\x03 \x01(\tR\ahadRole\x124\n" +
-	"\x16ws_memberships_removed\x18\x04 \x01(\x03R\x14wsMembershipsRemoved2\xd6\x12\n" +
+	"\x16ws_memberships_removed\x18\x04 \x01(\x03R\x14wsMembershipsRemoved2\xf8\x13\n" +
 	"\x0fPlatformService\x12\x81\x01\n" +
 	"\bListOrgs\x129.gophercourier.platform.v1.PlatformServiceListOrgsRequest\x1a:.gophercourier.platform.v1.PlatformServiceListOrgsResponse\x12{\n" +
 	"\x06GetOrg\x127.gophercourier.platform.v1.PlatformServiceGetOrgRequest\x1a8.gophercourier.platform.v1.PlatformServiceGetOrgResponse\x12\x84\x01\n" +
@@ -5760,7 +5959,8 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\tListAudit\x12:.gophercourier.platform.v1.PlatformServiceListAuditRequest\x1a;.gophercourier.platform.v1.PlatformServiceListAuditResponse\x12\x9f\x01\n" +
 	"\x12ForceResetPassword\x12C.gophercourier.platform.v1.PlatformServiceForceResetPasswordRequest\x1aD.gophercourier.platform.v1.PlatformServiceForceResetPasswordResponse\x12\x99\x01\n" +
 	"\x10ForceTransferOrg\x12A.gophercourier.platform.v1.PlatformServiceForceTransferOrgRequest\x1aB.gophercourier.platform.v1.PlatformServiceForceTransferOrgResponse\x12\xa2\x01\n" +
-	"\x13ForceRevokeSessions\x12D.gophercourier.platform.v1.PlatformServiceForceRevokeSessionsRequest\x1aE.gophercourier.platform.v1.PlatformServiceForceRevokeSessionsResponse\x12\x96\x01\n" +
+	"\x13ForceRevokeSessions\x12D.gophercourier.platform.v1.PlatformServiceForceRevokeSessionsRequest\x1aE.gophercourier.platform.v1.PlatformServiceForceRevokeSessionsResponse\x12\x9f\x01\n" +
+	"\x12ForceRevokeSession\x12C.gophercourier.platform.v1.PlatformServiceForceRevokeSessionRequest\x1aD.gophercourier.platform.v1.PlatformServiceForceRevokeSessionResponse\x12\x96\x01\n" +
 	"\x0fForceDeleteUser\x12@.gophercourier.platform.v1.PlatformServiceForceDeleteUserRequest\x1aA.gophercourier.platform.v1.PlatformServiceForceDeleteUserResponse\x12\x93\x01\n" +
 	"\x0eForceDeleteOrg\x12?.gophercourier.platform.v1.PlatformServiceForceDeleteOrgRequest\x1a@.gophercourier.platform.v1.PlatformServiceForceDeleteOrgResponse\x12\x99\x01\n" +
 	"\x10AdminVerifyEmail\x12A.gophercourier.platform.v1.PlatformServiceAdminVerifyEmailRequest\x1aB.gophercourier.platform.v1.PlatformServiceAdminVerifyEmailResponse\x12~\n" +
@@ -5771,7 +5971,7 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\x14ForceRemoveOrgMember\x12E.gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberRequest\x1aF.gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberResponseB\xf9\x01\n" +
 	"\x1dcom.gophercourier.platform.v1B\rPlatformProtoP\x01ZCgithub.com/tetiva-app/proto/go/gophercourier/platform/v1;platformv1\xa2\x02\x03GPX\xaa\x02\x19Gophercourier.Platform.V1\xca\x02\x19Gophercourier\\Platform\\V1\xe2\x02%Gophercourier\\Platform\\V1\\GPBMetadata\xea\x02\x1bGophercourier::Platform::V1b\x06proto3"
 
-var file_gophercourier_platform_v1_platform_proto_msgTypes = make([]protoimpl.MessageInfo, 44)
+var file_gophercourier_platform_v1_platform_proto_msgTypes = make([]protoimpl.MessageInfo, 46)
 var file_gophercourier_platform_v1_platform_proto_goTypes = []any{
 	(*PlatformServiceListOrgsRequest)(nil),                  // 0: gophercourier.platform.v1.PlatformServiceListOrgsRequest
 	(*PlatformServiceOrgRow)(nil),                           // 1: gophercourier.platform.v1.PlatformServiceOrgRow
@@ -5800,67 +6000,69 @@ var file_gophercourier_platform_v1_platform_proto_goTypes = []any{
 	(*PlatformServiceForceTransferOrgResponse)(nil),         // 24: gophercourier.platform.v1.PlatformServiceForceTransferOrgResponse
 	(*PlatformServiceForceRevokeSessionsRequest)(nil),       // 25: gophercourier.platform.v1.PlatformServiceForceRevokeSessionsRequest
 	(*PlatformServiceForceRevokeSessionsResponse)(nil),      // 26: gophercourier.platform.v1.PlatformServiceForceRevokeSessionsResponse
-	(*PlatformServiceForceDeleteUserRequest)(nil),           // 27: gophercourier.platform.v1.PlatformServiceForceDeleteUserRequest
-	(*PlatformServiceForceDeleteUserResponse)(nil),          // 28: gophercourier.platform.v1.PlatformServiceForceDeleteUserResponse
-	(*PlatformServiceForceDeleteOrgRequest)(nil),            // 29: gophercourier.platform.v1.PlatformServiceForceDeleteOrgRequest
-	(*PlatformServiceForceDeleteOrgResponse)(nil),           // 30: gophercourier.platform.v1.PlatformServiceForceDeleteOrgResponse
-	(*PlatformServiceAdminVerifyEmailRequest)(nil),          // 31: gophercourier.platform.v1.PlatformServiceAdminVerifyEmailRequest
-	(*PlatformServiceAdminVerifyEmailResponse)(nil),         // 32: gophercourier.platform.v1.PlatformServiceAdminVerifyEmailResponse
-	(*PlatformServiceSetPlanRequest)(nil),                   // 33: gophercourier.platform.v1.PlatformServiceSetPlanRequest
-	(*PlatformServiceSetPlanResponse)(nil),                  // 34: gophercourier.platform.v1.PlatformServiceSetPlanResponse
-	(*PlatformServiceGetOverviewRequest)(nil),               // 35: gophercourier.platform.v1.PlatformServiceGetOverviewRequest
-	(*PlatformServicePlanCount)(nil),                        // 36: gophercourier.platform.v1.PlatformServicePlanCount
-	(*PlatformServiceGetOverviewResponse)(nil),              // 37: gophercourier.platform.v1.PlatformServiceGetOverviewResponse
-	(*PlatformServiceForceAddOrgMemberRequest)(nil),         // 38: gophercourier.platform.v1.PlatformServiceForceAddOrgMemberRequest
-	(*PlatformServiceForceAddOrgMemberResponse)(nil),        // 39: gophercourier.platform.v1.PlatformServiceForceAddOrgMemberResponse
-	(*PlatformServiceForceChangeOrgMemberRoleRequest)(nil),  // 40: gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleRequest
-	(*PlatformServiceForceChangeOrgMemberRoleResponse)(nil), // 41: gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleResponse
-	(*PlatformServiceForceRemoveOrgMemberRequest)(nil),      // 42: gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberRequest
-	(*PlatformServiceForceRemoveOrgMemberResponse)(nil),     // 43: gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberResponse
-	(*timestamppb.Timestamp)(nil),                           // 44: google.protobuf.Timestamp
+	(*PlatformServiceForceRevokeSessionRequest)(nil),        // 27: gophercourier.platform.v1.PlatformServiceForceRevokeSessionRequest
+	(*PlatformServiceForceRevokeSessionResponse)(nil),       // 28: gophercourier.platform.v1.PlatformServiceForceRevokeSessionResponse
+	(*PlatformServiceForceDeleteUserRequest)(nil),           // 29: gophercourier.platform.v1.PlatformServiceForceDeleteUserRequest
+	(*PlatformServiceForceDeleteUserResponse)(nil),          // 30: gophercourier.platform.v1.PlatformServiceForceDeleteUserResponse
+	(*PlatformServiceForceDeleteOrgRequest)(nil),            // 31: gophercourier.platform.v1.PlatformServiceForceDeleteOrgRequest
+	(*PlatformServiceForceDeleteOrgResponse)(nil),           // 32: gophercourier.platform.v1.PlatformServiceForceDeleteOrgResponse
+	(*PlatformServiceAdminVerifyEmailRequest)(nil),          // 33: gophercourier.platform.v1.PlatformServiceAdminVerifyEmailRequest
+	(*PlatformServiceAdminVerifyEmailResponse)(nil),         // 34: gophercourier.platform.v1.PlatformServiceAdminVerifyEmailResponse
+	(*PlatformServiceSetPlanRequest)(nil),                   // 35: gophercourier.platform.v1.PlatformServiceSetPlanRequest
+	(*PlatformServiceSetPlanResponse)(nil),                  // 36: gophercourier.platform.v1.PlatformServiceSetPlanResponse
+	(*PlatformServiceGetOverviewRequest)(nil),               // 37: gophercourier.platform.v1.PlatformServiceGetOverviewRequest
+	(*PlatformServicePlanCount)(nil),                        // 38: gophercourier.platform.v1.PlatformServicePlanCount
+	(*PlatformServiceGetOverviewResponse)(nil),              // 39: gophercourier.platform.v1.PlatformServiceGetOverviewResponse
+	(*PlatformServiceForceAddOrgMemberRequest)(nil),         // 40: gophercourier.platform.v1.PlatformServiceForceAddOrgMemberRequest
+	(*PlatformServiceForceAddOrgMemberResponse)(nil),        // 41: gophercourier.platform.v1.PlatformServiceForceAddOrgMemberResponse
+	(*PlatformServiceForceChangeOrgMemberRoleRequest)(nil),  // 42: gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleRequest
+	(*PlatformServiceForceChangeOrgMemberRoleResponse)(nil), // 43: gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleResponse
+	(*PlatformServiceForceRemoveOrgMemberRequest)(nil),      // 44: gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberRequest
+	(*PlatformServiceForceRemoveOrgMemberResponse)(nil),     // 45: gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberResponse
+	(*timestamppb.Timestamp)(nil),                           // 46: google.protobuf.Timestamp
 }
 var file_gophercourier_platform_v1_platform_proto_depIdxs = []int32{
-	44, // 0: gophercourier.platform.v1.PlatformServiceOrgRow.last_activity_at:type_name -> google.protobuf.Timestamp
-	44, // 1: gophercourier.platform.v1.PlatformServiceOrgRow.created_at:type_name -> google.protobuf.Timestamp
-	44, // 2: gophercourier.platform.v1.PlatformServiceOrgRow.updated_at:type_name -> google.protobuf.Timestamp
-	44, // 3: gophercourier.platform.v1.PlatformServiceOrgRow.plan_until:type_name -> google.protobuf.Timestamp
-	44, // 4: gophercourier.platform.v1.PlatformServiceOrgRow.current_period_end:type_name -> google.protobuf.Timestamp
+	46, // 0: gophercourier.platform.v1.PlatformServiceOrgRow.last_activity_at:type_name -> google.protobuf.Timestamp
+	46, // 1: gophercourier.platform.v1.PlatformServiceOrgRow.created_at:type_name -> google.protobuf.Timestamp
+	46, // 2: gophercourier.platform.v1.PlatformServiceOrgRow.updated_at:type_name -> google.protobuf.Timestamp
+	46, // 3: gophercourier.platform.v1.PlatformServiceOrgRow.plan_until:type_name -> google.protobuf.Timestamp
+	46, // 4: gophercourier.platform.v1.PlatformServiceOrgRow.current_period_end:type_name -> google.protobuf.Timestamp
 	1,  // 5: gophercourier.platform.v1.PlatformServiceListOrgsResponse.orgs:type_name -> gophercourier.platform.v1.PlatformServiceOrgRow
-	44, // 6: gophercourier.platform.v1.PlatformServiceOrgMember.joined_at:type_name -> google.protobuf.Timestamp
-	44, // 7: gophercourier.platform.v1.PlatformServiceOrgMember.last_login_at:type_name -> google.protobuf.Timestamp
-	44, // 8: gophercourier.platform.v1.PlatformServiceWorkspace.last_sync_at:type_name -> google.protobuf.Timestamp
-	44, // 9: gophercourier.platform.v1.PlatformServiceInvite.expires_at:type_name -> google.protobuf.Timestamp
-	44, // 10: gophercourier.platform.v1.PlatformServiceOrg.created_at:type_name -> google.protobuf.Timestamp
-	44, // 11: gophercourier.platform.v1.PlatformServiceOrg.updated_at:type_name -> google.protobuf.Timestamp
-	44, // 12: gophercourier.platform.v1.PlatformServiceOrg.plan_until:type_name -> google.protobuf.Timestamp
-	44, // 13: gophercourier.platform.v1.PlatformServiceOrg.current_period_end:type_name -> google.protobuf.Timestamp
+	46, // 6: gophercourier.platform.v1.PlatformServiceOrgMember.joined_at:type_name -> google.protobuf.Timestamp
+	46, // 7: gophercourier.platform.v1.PlatformServiceOrgMember.last_login_at:type_name -> google.protobuf.Timestamp
+	46, // 8: gophercourier.platform.v1.PlatformServiceWorkspace.last_sync_at:type_name -> google.protobuf.Timestamp
+	46, // 9: gophercourier.platform.v1.PlatformServiceInvite.expires_at:type_name -> google.protobuf.Timestamp
+	46, // 10: gophercourier.platform.v1.PlatformServiceOrg.created_at:type_name -> google.protobuf.Timestamp
+	46, // 11: gophercourier.platform.v1.PlatformServiceOrg.updated_at:type_name -> google.protobuf.Timestamp
+	46, // 12: gophercourier.platform.v1.PlatformServiceOrg.plan_until:type_name -> google.protobuf.Timestamp
+	46, // 13: gophercourier.platform.v1.PlatformServiceOrg.current_period_end:type_name -> google.protobuf.Timestamp
 	7,  // 14: gophercourier.platform.v1.PlatformServiceGetOrgResponse.org:type_name -> gophercourier.platform.v1.PlatformServiceOrg
 	4,  // 15: gophercourier.platform.v1.PlatformServiceGetOrgResponse.members:type_name -> gophercourier.platform.v1.PlatformServiceOrgMember
 	5,  // 16: gophercourier.platform.v1.PlatformServiceGetOrgResponse.workspaces:type_name -> gophercourier.platform.v1.PlatformServiceWorkspace
 	6,  // 17: gophercourier.platform.v1.PlatformServiceGetOrgResponse.invites:type_name -> gophercourier.platform.v1.PlatformServiceInvite
-	44, // 18: gophercourier.platform.v1.PlatformServiceUserRow.created_at:type_name -> google.protobuf.Timestamp
-	44, // 19: gophercourier.platform.v1.PlatformServiceUserRow.last_login_at:type_name -> google.protobuf.Timestamp
-	44, // 20: gophercourier.platform.v1.PlatformServiceUserRow.last_activity_at:type_name -> google.protobuf.Timestamp
+	46, // 18: gophercourier.platform.v1.PlatformServiceUserRow.created_at:type_name -> google.protobuf.Timestamp
+	46, // 19: gophercourier.platform.v1.PlatformServiceUserRow.last_login_at:type_name -> google.protobuf.Timestamp
+	46, // 20: gophercourier.platform.v1.PlatformServiceUserRow.last_activity_at:type_name -> google.protobuf.Timestamp
 	10, // 21: gophercourier.platform.v1.PlatformServiceListUsersResponse.users:type_name -> gophercourier.platform.v1.PlatformServiceUserRow
-	44, // 22: gophercourier.platform.v1.PlatformServiceUserMembership.joined_at:type_name -> google.protobuf.Timestamp
-	44, // 23: gophercourier.platform.v1.PlatformServiceUserSession.last_used_at:type_name -> google.protobuf.Timestamp
-	44, // 24: gophercourier.platform.v1.PlatformServiceUserSession.revoked_at:type_name -> google.protobuf.Timestamp
-	44, // 25: gophercourier.platform.v1.PlatformServiceUserSession.created_at:type_name -> google.protobuf.Timestamp
-	44, // 26: gophercourier.platform.v1.PlatformServiceUserSession.expires_at:type_name -> google.protobuf.Timestamp
-	44, // 27: gophercourier.platform.v1.PlatformServiceUser.created_at:type_name -> google.protobuf.Timestamp
-	44, // 28: gophercourier.platform.v1.PlatformServiceUser.last_login_at:type_name -> google.protobuf.Timestamp
-	44, // 29: gophercourier.platform.v1.PlatformServiceUser.last_activity_at:type_name -> google.protobuf.Timestamp
+	46, // 22: gophercourier.platform.v1.PlatformServiceUserMembership.joined_at:type_name -> google.protobuf.Timestamp
+	46, // 23: gophercourier.platform.v1.PlatformServiceUserSession.last_used_at:type_name -> google.protobuf.Timestamp
+	46, // 24: gophercourier.platform.v1.PlatformServiceUserSession.revoked_at:type_name -> google.protobuf.Timestamp
+	46, // 25: gophercourier.platform.v1.PlatformServiceUserSession.created_at:type_name -> google.protobuf.Timestamp
+	46, // 26: gophercourier.platform.v1.PlatformServiceUserSession.expires_at:type_name -> google.protobuf.Timestamp
+	46, // 27: gophercourier.platform.v1.PlatformServiceUser.created_at:type_name -> google.protobuf.Timestamp
+	46, // 28: gophercourier.platform.v1.PlatformServiceUser.last_login_at:type_name -> google.protobuf.Timestamp
+	46, // 29: gophercourier.platform.v1.PlatformServiceUser.last_activity_at:type_name -> google.protobuf.Timestamp
 	15, // 30: gophercourier.platform.v1.PlatformServiceGetUserResponse.user:type_name -> gophercourier.platform.v1.PlatformServiceUser
 	13, // 31: gophercourier.platform.v1.PlatformServiceGetUserResponse.memberships:type_name -> gophercourier.platform.v1.PlatformServiceUserMembership
 	14, // 32: gophercourier.platform.v1.PlatformServiceGetUserResponse.sessions:type_name -> gophercourier.platform.v1.PlatformServiceUserSession
-	44, // 33: gophercourier.platform.v1.PlatformServiceAuditFilter.from:type_name -> google.protobuf.Timestamp
-	44, // 34: gophercourier.platform.v1.PlatformServiceAuditFilter.to:type_name -> google.protobuf.Timestamp
-	44, // 35: gophercourier.platform.v1.PlatformServiceAuditEntry.timestamp:type_name -> google.protobuf.Timestamp
+	46, // 33: gophercourier.platform.v1.PlatformServiceAuditFilter.from:type_name -> google.protobuf.Timestamp
+	46, // 34: gophercourier.platform.v1.PlatformServiceAuditFilter.to:type_name -> google.protobuf.Timestamp
+	46, // 35: gophercourier.platform.v1.PlatformServiceAuditEntry.timestamp:type_name -> google.protobuf.Timestamp
 	17, // 36: gophercourier.platform.v1.PlatformServiceListAuditRequest.filter:type_name -> gophercourier.platform.v1.PlatformServiceAuditFilter
 	18, // 37: gophercourier.platform.v1.PlatformServiceListAuditResponse.entries:type_name -> gophercourier.platform.v1.PlatformServiceAuditEntry
-	44, // 38: gophercourier.platform.v1.PlatformServiceSetPlanRequest.plan_until:type_name -> google.protobuf.Timestamp
-	44, // 39: gophercourier.platform.v1.PlatformServiceSetPlanResponse.plan_until:type_name -> google.protobuf.Timestamp
-	36, // 40: gophercourier.platform.v1.PlatformServiceGetOverviewResponse.orgs_by_plan:type_name -> gophercourier.platform.v1.PlatformServicePlanCount
+	46, // 38: gophercourier.platform.v1.PlatformServiceSetPlanRequest.plan_until:type_name -> google.protobuf.Timestamp
+	46, // 39: gophercourier.platform.v1.PlatformServiceSetPlanResponse.plan_until:type_name -> google.protobuf.Timestamp
+	38, // 40: gophercourier.platform.v1.PlatformServiceGetOverviewResponse.orgs_by_plan:type_name -> gophercourier.platform.v1.PlatformServicePlanCount
 	10, // 41: gophercourier.platform.v1.PlatformServiceGetOverviewResponse.recent_signups:type_name -> gophercourier.platform.v1.PlatformServiceUserRow
 	0,  // 42: gophercourier.platform.v1.PlatformService.ListOrgs:input_type -> gophercourier.platform.v1.PlatformServiceListOrgsRequest
 	3,  // 43: gophercourier.platform.v1.PlatformService.GetOrg:input_type -> gophercourier.platform.v1.PlatformServiceGetOrgRequest
@@ -5870,32 +6072,34 @@ var file_gophercourier_platform_v1_platform_proto_depIdxs = []int32{
 	21, // 47: gophercourier.platform.v1.PlatformService.ForceResetPassword:input_type -> gophercourier.platform.v1.PlatformServiceForceResetPasswordRequest
 	23, // 48: gophercourier.platform.v1.PlatformService.ForceTransferOrg:input_type -> gophercourier.platform.v1.PlatformServiceForceTransferOrgRequest
 	25, // 49: gophercourier.platform.v1.PlatformService.ForceRevokeSessions:input_type -> gophercourier.platform.v1.PlatformServiceForceRevokeSessionsRequest
-	27, // 50: gophercourier.platform.v1.PlatformService.ForceDeleteUser:input_type -> gophercourier.platform.v1.PlatformServiceForceDeleteUserRequest
-	29, // 51: gophercourier.platform.v1.PlatformService.ForceDeleteOrg:input_type -> gophercourier.platform.v1.PlatformServiceForceDeleteOrgRequest
-	31, // 52: gophercourier.platform.v1.PlatformService.AdminVerifyEmail:input_type -> gophercourier.platform.v1.PlatformServiceAdminVerifyEmailRequest
-	33, // 53: gophercourier.platform.v1.PlatformService.SetPlan:input_type -> gophercourier.platform.v1.PlatformServiceSetPlanRequest
-	35, // 54: gophercourier.platform.v1.PlatformService.GetOverview:input_type -> gophercourier.platform.v1.PlatformServiceGetOverviewRequest
-	38, // 55: gophercourier.platform.v1.PlatformService.ForceAddOrgMember:input_type -> gophercourier.platform.v1.PlatformServiceForceAddOrgMemberRequest
-	40, // 56: gophercourier.platform.v1.PlatformService.ForceChangeOrgMemberRole:input_type -> gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleRequest
-	42, // 57: gophercourier.platform.v1.PlatformService.ForceRemoveOrgMember:input_type -> gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberRequest
-	2,  // 58: gophercourier.platform.v1.PlatformService.ListOrgs:output_type -> gophercourier.platform.v1.PlatformServiceListOrgsResponse
-	8,  // 59: gophercourier.platform.v1.PlatformService.GetOrg:output_type -> gophercourier.platform.v1.PlatformServiceGetOrgResponse
-	11, // 60: gophercourier.platform.v1.PlatformService.ListUsers:output_type -> gophercourier.platform.v1.PlatformServiceListUsersResponse
-	16, // 61: gophercourier.platform.v1.PlatformService.GetUser:output_type -> gophercourier.platform.v1.PlatformServiceGetUserResponse
-	20, // 62: gophercourier.platform.v1.PlatformService.ListAudit:output_type -> gophercourier.platform.v1.PlatformServiceListAuditResponse
-	22, // 63: gophercourier.platform.v1.PlatformService.ForceResetPassword:output_type -> gophercourier.platform.v1.PlatformServiceForceResetPasswordResponse
-	24, // 64: gophercourier.platform.v1.PlatformService.ForceTransferOrg:output_type -> gophercourier.platform.v1.PlatformServiceForceTransferOrgResponse
-	26, // 65: gophercourier.platform.v1.PlatformService.ForceRevokeSessions:output_type -> gophercourier.platform.v1.PlatformServiceForceRevokeSessionsResponse
-	28, // 66: gophercourier.platform.v1.PlatformService.ForceDeleteUser:output_type -> gophercourier.platform.v1.PlatformServiceForceDeleteUserResponse
-	30, // 67: gophercourier.platform.v1.PlatformService.ForceDeleteOrg:output_type -> gophercourier.platform.v1.PlatformServiceForceDeleteOrgResponse
-	32, // 68: gophercourier.platform.v1.PlatformService.AdminVerifyEmail:output_type -> gophercourier.platform.v1.PlatformServiceAdminVerifyEmailResponse
-	34, // 69: gophercourier.platform.v1.PlatformService.SetPlan:output_type -> gophercourier.platform.v1.PlatformServiceSetPlanResponse
-	37, // 70: gophercourier.platform.v1.PlatformService.GetOverview:output_type -> gophercourier.platform.v1.PlatformServiceGetOverviewResponse
-	39, // 71: gophercourier.platform.v1.PlatformService.ForceAddOrgMember:output_type -> gophercourier.platform.v1.PlatformServiceForceAddOrgMemberResponse
-	41, // 72: gophercourier.platform.v1.PlatformService.ForceChangeOrgMemberRole:output_type -> gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleResponse
-	43, // 73: gophercourier.platform.v1.PlatformService.ForceRemoveOrgMember:output_type -> gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberResponse
-	58, // [58:74] is the sub-list for method output_type
-	42, // [42:58] is the sub-list for method input_type
+	27, // 50: gophercourier.platform.v1.PlatformService.ForceRevokeSession:input_type -> gophercourier.platform.v1.PlatformServiceForceRevokeSessionRequest
+	29, // 51: gophercourier.platform.v1.PlatformService.ForceDeleteUser:input_type -> gophercourier.platform.v1.PlatformServiceForceDeleteUserRequest
+	31, // 52: gophercourier.platform.v1.PlatformService.ForceDeleteOrg:input_type -> gophercourier.platform.v1.PlatformServiceForceDeleteOrgRequest
+	33, // 53: gophercourier.platform.v1.PlatformService.AdminVerifyEmail:input_type -> gophercourier.platform.v1.PlatformServiceAdminVerifyEmailRequest
+	35, // 54: gophercourier.platform.v1.PlatformService.SetPlan:input_type -> gophercourier.platform.v1.PlatformServiceSetPlanRequest
+	37, // 55: gophercourier.platform.v1.PlatformService.GetOverview:input_type -> gophercourier.platform.v1.PlatformServiceGetOverviewRequest
+	40, // 56: gophercourier.platform.v1.PlatformService.ForceAddOrgMember:input_type -> gophercourier.platform.v1.PlatformServiceForceAddOrgMemberRequest
+	42, // 57: gophercourier.platform.v1.PlatformService.ForceChangeOrgMemberRole:input_type -> gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleRequest
+	44, // 58: gophercourier.platform.v1.PlatformService.ForceRemoveOrgMember:input_type -> gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberRequest
+	2,  // 59: gophercourier.platform.v1.PlatformService.ListOrgs:output_type -> gophercourier.platform.v1.PlatformServiceListOrgsResponse
+	8,  // 60: gophercourier.platform.v1.PlatformService.GetOrg:output_type -> gophercourier.platform.v1.PlatformServiceGetOrgResponse
+	11, // 61: gophercourier.platform.v1.PlatformService.ListUsers:output_type -> gophercourier.platform.v1.PlatformServiceListUsersResponse
+	16, // 62: gophercourier.platform.v1.PlatformService.GetUser:output_type -> gophercourier.platform.v1.PlatformServiceGetUserResponse
+	20, // 63: gophercourier.platform.v1.PlatformService.ListAudit:output_type -> gophercourier.platform.v1.PlatformServiceListAuditResponse
+	22, // 64: gophercourier.platform.v1.PlatformService.ForceResetPassword:output_type -> gophercourier.platform.v1.PlatformServiceForceResetPasswordResponse
+	24, // 65: gophercourier.platform.v1.PlatformService.ForceTransferOrg:output_type -> gophercourier.platform.v1.PlatformServiceForceTransferOrgResponse
+	26, // 66: gophercourier.platform.v1.PlatformService.ForceRevokeSessions:output_type -> gophercourier.platform.v1.PlatformServiceForceRevokeSessionsResponse
+	28, // 67: gophercourier.platform.v1.PlatformService.ForceRevokeSession:output_type -> gophercourier.platform.v1.PlatformServiceForceRevokeSessionResponse
+	30, // 68: gophercourier.platform.v1.PlatformService.ForceDeleteUser:output_type -> gophercourier.platform.v1.PlatformServiceForceDeleteUserResponse
+	32, // 69: gophercourier.platform.v1.PlatformService.ForceDeleteOrg:output_type -> gophercourier.platform.v1.PlatformServiceForceDeleteOrgResponse
+	34, // 70: gophercourier.platform.v1.PlatformService.AdminVerifyEmail:output_type -> gophercourier.platform.v1.PlatformServiceAdminVerifyEmailResponse
+	36, // 71: gophercourier.platform.v1.PlatformService.SetPlan:output_type -> gophercourier.platform.v1.PlatformServiceSetPlanResponse
+	39, // 72: gophercourier.platform.v1.PlatformService.GetOverview:output_type -> gophercourier.platform.v1.PlatformServiceGetOverviewResponse
+	41, // 73: gophercourier.platform.v1.PlatformService.ForceAddOrgMember:output_type -> gophercourier.platform.v1.PlatformServiceForceAddOrgMemberResponse
+	43, // 74: gophercourier.platform.v1.PlatformService.ForceChangeOrgMemberRole:output_type -> gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleResponse
+	45, // 75: gophercourier.platform.v1.PlatformService.ForceRemoveOrgMember:output_type -> gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberResponse
+	59, // [59:76] is the sub-list for method output_type
+	42, // [42:59] is the sub-list for method input_type
 	42, // [42:42] is the sub-list for extension type_name
 	42, // [42:42] is the sub-list for extension extendee
 	0,  // [0:42] is the sub-list for field type_name
@@ -5912,7 +6116,7 @@ func file_gophercourier_platform_v1_platform_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_gophercourier_platform_v1_platform_proto_rawDesc), len(file_gophercourier_platform_v1_platform_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   44,
+			NumMessages:   46,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -27,6 +27,7 @@ const (
 	PlatformService_ForceResetPassword_FullMethodName       = "/gophercourier.platform.v1.PlatformService/ForceResetPassword"
 	PlatformService_ForceTransferOrg_FullMethodName         = "/gophercourier.platform.v1.PlatformService/ForceTransferOrg"
 	PlatformService_ForceRevokeSessions_FullMethodName      = "/gophercourier.platform.v1.PlatformService/ForceRevokeSessions"
+	PlatformService_ForceRevokeSession_FullMethodName       = "/gophercourier.platform.v1.PlatformService/ForceRevokeSession"
 	PlatformService_ForceDeleteUser_FullMethodName          = "/gophercourier.platform.v1.PlatformService/ForceDeleteUser"
 	PlatformService_ForceDeleteOrg_FullMethodName           = "/gophercourier.platform.v1.PlatformService/ForceDeleteOrg"
 	PlatformService_AdminVerifyEmail_FullMethodName         = "/gophercourier.platform.v1.PlatformService/AdminVerifyEmail"
@@ -62,6 +63,9 @@ type PlatformServiceClient interface {
 	ForceResetPassword(ctx context.Context, in *PlatformServiceForceResetPasswordRequest, opts ...grpc.CallOption) (*PlatformServiceForceResetPasswordResponse, error)
 	ForceTransferOrg(ctx context.Context, in *PlatformServiceForceTransferOrgRequest, opts ...grpc.CallOption) (*PlatformServiceForceTransferOrgResponse, error)
 	ForceRevokeSessions(ctx context.Context, in *PlatformServiceForceRevokeSessionsRequest, opts ...grpc.CallOption) (*PlatformServiceForceRevokeSessionsResponse, error)
+	// ForceRevokeSession kills one session of the target user. Idempotent — an
+	// already-revoked session returns was_already_revoked=true without error.
+	ForceRevokeSession(ctx context.Context, in *PlatformServiceForceRevokeSessionRequest, opts ...grpc.CallOption) (*PlatformServiceForceRevokeSessionResponse, error)
 	ForceDeleteUser(ctx context.Context, in *PlatformServiceForceDeleteUserRequest, opts ...grpc.CallOption) (*PlatformServiceForceDeleteUserResponse, error)
 	// ForceDeleteOrg soft-deletes a non-personal org with cascade. Personal orgs
 	// are rejected with FailedPrecondition. Reason is required (10..500 chars).
@@ -164,6 +168,16 @@ func (c *platformServiceClient) ForceRevokeSessions(ctx context.Context, in *Pla
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PlatformServiceForceRevokeSessionsResponse)
 	err := c.cc.Invoke(ctx, PlatformService_ForceRevokeSessions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *platformServiceClient) ForceRevokeSession(ctx context.Context, in *PlatformServiceForceRevokeSessionRequest, opts ...grpc.CallOption) (*PlatformServiceForceRevokeSessionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PlatformServiceForceRevokeSessionResponse)
+	err := c.cc.Invoke(ctx, PlatformService_ForceRevokeSession_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -275,6 +289,9 @@ type PlatformServiceServer interface {
 	ForceResetPassword(context.Context, *PlatformServiceForceResetPasswordRequest) (*PlatformServiceForceResetPasswordResponse, error)
 	ForceTransferOrg(context.Context, *PlatformServiceForceTransferOrgRequest) (*PlatformServiceForceTransferOrgResponse, error)
 	ForceRevokeSessions(context.Context, *PlatformServiceForceRevokeSessionsRequest) (*PlatformServiceForceRevokeSessionsResponse, error)
+	// ForceRevokeSession kills one session of the target user. Idempotent — an
+	// already-revoked session returns was_already_revoked=true without error.
+	ForceRevokeSession(context.Context, *PlatformServiceForceRevokeSessionRequest) (*PlatformServiceForceRevokeSessionResponse, error)
 	ForceDeleteUser(context.Context, *PlatformServiceForceDeleteUserRequest) (*PlatformServiceForceDeleteUserResponse, error)
 	// ForceDeleteOrg soft-deletes a non-personal org with cascade. Personal orgs
 	// are rejected with FailedPrecondition. Reason is required (10..500 chars).
@@ -326,6 +343,9 @@ func (UnimplementedPlatformServiceServer) ForceTransferOrg(context.Context, *Pla
 }
 func (UnimplementedPlatformServiceServer) ForceRevokeSessions(context.Context, *PlatformServiceForceRevokeSessionsRequest) (*PlatformServiceForceRevokeSessionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ForceRevokeSessions not implemented")
+}
+func (UnimplementedPlatformServiceServer) ForceRevokeSession(context.Context, *PlatformServiceForceRevokeSessionRequest) (*PlatformServiceForceRevokeSessionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForceRevokeSession not implemented")
 }
 func (UnimplementedPlatformServiceServer) ForceDeleteUser(context.Context, *PlatformServiceForceDeleteUserRequest) (*PlatformServiceForceDeleteUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ForceDeleteUser not implemented")
@@ -516,6 +536,24 @@ func _PlatformService_ForceRevokeSessions_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PlatformService_ForceRevokeSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformServiceForceRevokeSessionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlatformServiceServer).ForceRevokeSession(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlatformService_ForceRevokeSession_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlatformServiceServer).ForceRevokeSession(ctx, req.(*PlatformServiceForceRevokeSessionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _PlatformService_ForceDeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PlatformServiceForceDeleteUserRequest)
 	if err := dec(in); err != nil {
@@ -698,6 +736,10 @@ var PlatformService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ForceRevokeSessions",
 			Handler:    _PlatformService_ForceRevokeSessions_Handler,
+		},
+		{
+			MethodName: "ForceRevokeSession",
+			Handler:    _PlatformService_ForceRevokeSession_Handler,
 		},
 		{
 			MethodName: "ForceDeleteUser",

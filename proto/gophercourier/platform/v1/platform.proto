@@ -29,6 +29,11 @@ service PlatformService {
       returns (PlatformServiceForceTransferOrgResponse);
   rpc ForceRevokeSessions(PlatformServiceForceRevokeSessionsRequest)
       returns (PlatformServiceForceRevokeSessionsResponse);
+
+  // ForceRevokeSession kills one session of the target user. Idempotent — an
+  // already-revoked session returns was_already_revoked=true without error.
+  rpc ForceRevokeSession(PlatformServiceForceRevokeSessionRequest)
+      returns (PlatformServiceForceRevokeSessionResponse);
   rpc ForceDeleteUser(PlatformServiceForceDeleteUserRequest)
       returns (PlatformServiceForceDeleteUserResponse);
 
@@ -69,6 +74,8 @@ message PlatformServiceListOrgsRequest {
   bool include_deleted = 2;
   string cursor = 3;
   int32 limit = 4;
+  // Case-insensitive substring match over the org name or its slug.
+  string name_substring = 5;
 }
 
 message PlatformServiceOrgRow {
@@ -193,7 +200,8 @@ message PlatformServiceUserRow {
   google.protobuf.Timestamp last_activity_at = 10;
   // revoked_at unset && expires_at > now.
   int32 active_sessions = 11;
-  // Distinct client_id across all sessions.
+  // Distinct client_id over sessions retained within the refresh-token TTL
+  // (30 days in prod) — older devices fall out with their sessions.
   int32 device_count = 12;
   // Best plan across the user's orgs, grace-aware. free|pro|team|business.
   string max_plan = 13;
@@ -240,6 +248,8 @@ message PlatformServiceUser {
   google.protobuf.Timestamp last_login_at = 8;
   google.protobuf.Timestamp last_activity_at = 9;
   int32 active_sessions = 10;
+  // Distinct client_id over sessions retained within the refresh-token TTL
+  // (30 days in prod) — older devices fall out with their sessions.
   int32 device_count = 11;
   string max_plan = 12;
   bool has_paid = 13;
@@ -323,6 +333,18 @@ message PlatformServiceForceRevokeSessionsRequest {
 message PlatformServiceForceRevokeSessionsResponse {
   string user_id = 1;
   int32 sessions_revoked = 2;
+}
+
+message PlatformServiceForceRevokeSessionRequest {
+  string target_user_id = 1;
+  string session_id = 2;
+  string reason = 3;
+}
+
+message PlatformServiceForceRevokeSessionResponse {
+  string user_id = 1;
+  string session_id = 2;
+  bool was_already_revoked = 3;
 }
 
 message PlatformServiceForceDeleteUserRequest {
