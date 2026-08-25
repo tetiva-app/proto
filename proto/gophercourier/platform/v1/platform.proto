@@ -76,6 +76,10 @@ message PlatformServiceListOrgsRequest {
   int32 limit = 4;
   // Case-insensitive substring match over the org name or its slug.
   string name_substring = 5;
+  // "" = off. free|pro|team|business, matched against the stored plan.
+  string plan = 6;
+  // "" = off. active|past_due|canceled|expired|none, by the newest subscription.
+  string subscription_status = 7;
 }
 
 message PlatformServiceOrgRow {
@@ -184,6 +188,11 @@ message PlatformServiceListUsersRequest {
   string sort = 5;
   // 0 = off. Keeps only users whose last_activity_at >= now - N days.
   int32 active_within_days = 6;
+  // 0 = off. Keeps only users registered within the last N days; >365 is
+  // clamped to 365.
+  int32 created_within_days = 7;
+  // Keeps only users whose email is not verified.
+  bool unverified_only = 8;
 }
 
 message PlatformServiceUserRow {
