@@ -47,6 +47,19 @@ service PlatformService {
   // through this single call; nothing is deleted on downgrade.
   rpc SetPlan(PlatformServiceSetPlanRequest)
       returns (PlatformServiceSetPlanResponse);
+
+  // GetOverview returns instance-wide counters for the platform dashboard.
+  rpc GetOverview(PlatformServiceGetOverviewRequest)
+      returns (PlatformServiceGetOverviewResponse);
+
+  // Force member ops bypass org RBAC. Personal orgs are rejected; the last
+  // admin and the owner's own role are protected.
+  rpc ForceAddOrgMember(PlatformServiceForceAddOrgMemberRequest)
+      returns (PlatformServiceForceAddOrgMemberResponse);
+  rpc ForceChangeOrgMemberRole(PlatformServiceForceChangeOrgMemberRoleRequest)
+      returns (PlatformServiceForceChangeOrgMemberRoleResponse);
+  rpc ForceRemoveOrgMember(PlatformServiceForceRemoveOrgMemberRequest)
+      returns (PlatformServiceForceRemoveOrgMemberResponse);
 }
 
 // ---- Request / Response shapes ----
@@ -73,6 +86,17 @@ message PlatformServiceOrgRow {
   // Owner's email at the time of listing. Empty string if the owner user
   // is deleted or missing.
   string owner_email = 12;
+  // Assigned billing tier; empty is normalized to "free" on the wire. Judge
+  // whether it is still live by plan_until — this is not grace-adjusted.
+  string plan = 13;
+  int32 seats = 14;
+  google.protobuf.Timestamp plan_until = 15;
+  // none | active | past_due | canceled | expired — status of the newest
+  // subscription, "none" if the org never had one.
+  string subscription_status = 16;
+  google.protobuf.Timestamp current_period_end = 17;
+  // True if the org ever had a subscription, i.e. ever paid.
+  bool has_paid = 18;
 }
 
 message PlatformServiceListOrgsResponse {
@@ -129,6 +153,12 @@ message PlatformServiceOrg {
   int32 version = 7;
   google.protobuf.Timestamp created_at = 8;
   google.protobuf.Timestamp updated_at = 9;
+  string plan = 10;
+  int32 seats = 11;
+  google.protobuf.Timestamp plan_until = 12;
+  string subscription_status = 13;
+  google.protobuf.Timestamp current_period_end = 14;
+  bool has_paid = 15;
 }
 
 message PlatformServiceGetOrgResponse {
@@ -143,6 +173,10 @@ message PlatformServiceListUsersRequest {
   bool include_deleted = 2;
   string cursor = 3;
   int32 limit = 4;
+  // "" | "created_desc" (default) | "activity_desc"
+  string sort = 5;
+  // 0 = off. Keeps only users whose last_activity_at >= now - N days.
+  int32 active_within_days = 6;
 }
 
 message PlatformServiceUserRow {
@@ -155,6 +189,16 @@ message PlatformServiceUserRow {
   google.protobuf.Timestamp created_at = 7;
   google.protobuf.Timestamp last_login_at = 8;
   int32 org_count = 9;
+  // max(last_login_at, MAX(sessions.created_at)); unset if never active.
+  google.protobuf.Timestamp last_activity_at = 10;
+  // revoked_at unset && expires_at > now.
+  int32 active_sessions = 11;
+  // Distinct client_id across all sessions.
+  int32 device_count = 12;
+  // Best plan across the user's orgs, grace-aware. free|pro|team|business.
+  string max_plan = 13;
+  // True if the user is the billing customer of any subscription.
+  bool has_paid = 14;
 }
 
 message PlatformServiceListUsersResponse {
@@ -181,6 +225,8 @@ message PlatformServiceUserSession {
   string ip = 4;
   google.protobuf.Timestamp last_used_at = 5;
   google.protobuf.Timestamp revoked_at = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp expires_at = 8;
 }
 
 message PlatformServiceUser {
@@ -192,6 +238,11 @@ message PlatformServiceUser {
   bool is_deleted = 6;
   google.protobuf.Timestamp created_at = 7;
   google.protobuf.Timestamp last_login_at = 8;
+  google.protobuf.Timestamp last_activity_at = 9;
+  int32 active_sessions = 10;
+  int32 device_count = 11;
+  string max_plan = 12;
+  bool has_paid = 13;
 }
 
 message PlatformServiceGetUserResponse {
@@ -320,4 +371,72 @@ message PlatformServiceSetPlanResponse {
   int32 seats = 3;
   google.protobuf.Timestamp plan_until = 4;
   int32 org_version = 5;
+}
+
+message PlatformServiceGetOverviewRequest {}
+
+message PlatformServicePlanCount {
+  string plan = 1;
+  int32 count = 2;
+}
+
+message PlatformServiceGetOverviewResponse {
+  int32 users_total = 1;
+  int32 users_new_7d = 2;
+  int32 users_new_30d = 3;
+  int32 users_active_7d = 4;
+  int32 users_active_30d = 5;
+  int32 users_unverified = 6;
+  // Non-personal, non-deleted.
+  int32 orgs_total = 7;
+  // All non-deleted orgs including personal ones; every tier is present.
+  repeated PlatformServicePlanCount orgs_by_plan = 8;
+  int32 subscriptions_active = 9;
+  int32 subscriptions_past_due = 10;
+  // Distinct orgs that ever had a subscription, i.e. ever paid.
+  int32 paying_orgs = 11;
+  // 8 newest non-deleted users with the same enrichment as ListUsers.
+  repeated PlatformServiceUserRow recent_signups = 12;
+}
+
+message PlatformServiceForceAddOrgMemberRequest {
+  string org_id = 1;
+  string target_user_id = 2;
+  string role_id = 3;
+  string reason = 4;
+}
+
+message PlatformServiceForceAddOrgMemberResponse {
+  string org_id = 1;
+  string user_id = 2;
+  string role_id = 3;
+  bool already_member = 4;
+  string previous_role = 5;
+}
+
+message PlatformServiceForceChangeOrgMemberRoleRequest {
+  string org_id = 1;
+  string target_user_id = 2;
+  string new_role_id = 3;
+  string reason = 4;
+}
+
+message PlatformServiceForceChangeOrgMemberRoleResponse {
+  string org_id = 1;
+  string user_id = 2;
+  string previous_role = 3;
+  string new_role = 4;
+}
+
+message PlatformServiceForceRemoveOrgMemberRequest {
+  string org_id = 1;
+  string target_user_id = 2;
+  string reason = 3;
+}
+
+message PlatformServiceForceRemoveOrgMemberResponse {
+  string org_id = 1;
+  string user_id = 2;
+  string had_role = 3;
+  int64 ws_memberships_removed = 4;
 }

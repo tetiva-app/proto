@@ -121,21 +121,27 @@ func (b0 PlatformServiceListOrgsRequest_builder) Build() *PlatformServiceListOrg
 }
 
 type PlatformServiceOrgRow struct {
-	state                     protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Id             string                 `protobuf:"bytes,1,opt,name=id,proto3"`
-	xxx_hidden_Name           string                 `protobuf:"bytes,2,opt,name=name,proto3"`
-	xxx_hidden_Slug           string                 `protobuf:"bytes,3,opt,name=slug,proto3"`
-	xxx_hidden_OwnerUserId    string                 `protobuf:"bytes,4,opt,name=owner_user_id,json=ownerUserId,proto3"`
-	xxx_hidden_IsPersonal     bool                   `protobuf:"varint,5,opt,name=is_personal,json=isPersonal,proto3"`
-	xxx_hidden_MemberCount    int32                  `protobuf:"varint,6,opt,name=member_count,json=memberCount,proto3"`
-	xxx_hidden_WorkspaceCount int32                  `protobuf:"varint,7,opt,name=workspace_count,json=workspaceCount,proto3"`
-	xxx_hidden_LastActivityAt *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=last_activity_at,json=lastActivityAt,proto3"`
-	xxx_hidden_IsDeleted      bool                   `protobuf:"varint,9,opt,name=is_deleted,json=isDeleted,proto3"`
-	xxx_hidden_CreatedAt      *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3"`
-	xxx_hidden_UpdatedAt      *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3"`
-	xxx_hidden_OwnerEmail     string                 `protobuf:"bytes,12,opt,name=owner_email,json=ownerEmail,proto3"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
+	state                         protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_Name               string                 `protobuf:"bytes,2,opt,name=name,proto3"`
+	xxx_hidden_Slug               string                 `protobuf:"bytes,3,opt,name=slug,proto3"`
+	xxx_hidden_OwnerUserId        string                 `protobuf:"bytes,4,opt,name=owner_user_id,json=ownerUserId,proto3"`
+	xxx_hidden_IsPersonal         bool                   `protobuf:"varint,5,opt,name=is_personal,json=isPersonal,proto3"`
+	xxx_hidden_MemberCount        int32                  `protobuf:"varint,6,opt,name=member_count,json=memberCount,proto3"`
+	xxx_hidden_WorkspaceCount     int32                  `protobuf:"varint,7,opt,name=workspace_count,json=workspaceCount,proto3"`
+	xxx_hidden_LastActivityAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=last_activity_at,json=lastActivityAt,proto3"`
+	xxx_hidden_IsDeleted          bool                   `protobuf:"varint,9,opt,name=is_deleted,json=isDeleted,proto3"`
+	xxx_hidden_CreatedAt          *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3"`
+	xxx_hidden_UpdatedAt          *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3"`
+	xxx_hidden_OwnerEmail         string                 `protobuf:"bytes,12,opt,name=owner_email,json=ownerEmail,proto3"`
+	xxx_hidden_Plan               string                 `protobuf:"bytes,13,opt,name=plan,proto3"`
+	xxx_hidden_Seats              int32                  `protobuf:"varint,14,opt,name=seats,proto3"`
+	xxx_hidden_PlanUntil          *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=plan_until,json=planUntil,proto3"`
+	xxx_hidden_SubscriptionStatus string                 `protobuf:"bytes,16,opt,name=subscription_status,json=subscriptionStatus,proto3"`
+	xxx_hidden_CurrentPeriodEnd   *timestamppb.Timestamp `protobuf:"bytes,17,opt,name=current_period_end,json=currentPeriodEnd,proto3"`
+	xxx_hidden_HasPaid            bool                   `protobuf:"varint,18,opt,name=has_paid,json=hasPaid,proto3"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
 }
 
 func (x *PlatformServiceOrgRow) Reset() {
@@ -247,6 +253,48 @@ func (x *PlatformServiceOrgRow) GetOwnerEmail() string {
 	return ""
 }
 
+func (x *PlatformServiceOrgRow) GetPlan() string {
+	if x != nil {
+		return x.xxx_hidden_Plan
+	}
+	return ""
+}
+
+func (x *PlatformServiceOrgRow) GetSeats() int32 {
+	if x != nil {
+		return x.xxx_hidden_Seats
+	}
+	return 0
+}
+
+func (x *PlatformServiceOrgRow) GetPlanUntil() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_PlanUntil
+	}
+	return nil
+}
+
+func (x *PlatformServiceOrgRow) GetSubscriptionStatus() string {
+	if x != nil {
+		return x.xxx_hidden_SubscriptionStatus
+	}
+	return ""
+}
+
+func (x *PlatformServiceOrgRow) GetCurrentPeriodEnd() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_CurrentPeriodEnd
+	}
+	return nil
+}
+
+func (x *PlatformServiceOrgRow) GetHasPaid() bool {
+	if x != nil {
+		return x.xxx_hidden_HasPaid
+	}
+	return false
+}
+
 func (x *PlatformServiceOrgRow) SetId(v string) {
 	x.xxx_hidden_Id = v
 }
@@ -295,6 +343,30 @@ func (x *PlatformServiceOrgRow) SetOwnerEmail(v string) {
 	x.xxx_hidden_OwnerEmail = v
 }
 
+func (x *PlatformServiceOrgRow) SetPlan(v string) {
+	x.xxx_hidden_Plan = v
+}
+
+func (x *PlatformServiceOrgRow) SetSeats(v int32) {
+	x.xxx_hidden_Seats = v
+}
+
+func (x *PlatformServiceOrgRow) SetPlanUntil(v *timestamppb.Timestamp) {
+	x.xxx_hidden_PlanUntil = v
+}
+
+func (x *PlatformServiceOrgRow) SetSubscriptionStatus(v string) {
+	x.xxx_hidden_SubscriptionStatus = v
+}
+
+func (x *PlatformServiceOrgRow) SetCurrentPeriodEnd(v *timestamppb.Timestamp) {
+	x.xxx_hidden_CurrentPeriodEnd = v
+}
+
+func (x *PlatformServiceOrgRow) SetHasPaid(v bool) {
+	x.xxx_hidden_HasPaid = v
+}
+
 func (x *PlatformServiceOrgRow) HasLastActivityAt() bool {
 	if x == nil {
 		return false
@@ -316,6 +388,20 @@ func (x *PlatformServiceOrgRow) HasUpdatedAt() bool {
 	return x.xxx_hidden_UpdatedAt != nil
 }
 
+func (x *PlatformServiceOrgRow) HasPlanUntil() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_PlanUntil != nil
+}
+
+func (x *PlatformServiceOrgRow) HasCurrentPeriodEnd() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_CurrentPeriodEnd != nil
+}
+
 func (x *PlatformServiceOrgRow) ClearLastActivityAt() {
 	x.xxx_hidden_LastActivityAt = nil
 }
@@ -326,6 +412,14 @@ func (x *PlatformServiceOrgRow) ClearCreatedAt() {
 
 func (x *PlatformServiceOrgRow) ClearUpdatedAt() {
 	x.xxx_hidden_UpdatedAt = nil
+}
+
+func (x *PlatformServiceOrgRow) ClearPlanUntil() {
+	x.xxx_hidden_PlanUntil = nil
+}
+
+func (x *PlatformServiceOrgRow) ClearCurrentPeriodEnd() {
+	x.xxx_hidden_CurrentPeriodEnd = nil
 }
 
 type PlatformServiceOrgRow_builder struct {
@@ -345,6 +439,17 @@ type PlatformServiceOrgRow_builder struct {
 	// Owner's email at the time of listing. Empty string if the owner user
 	// is deleted or missing.
 	OwnerEmail string
+	// Assigned billing tier; empty is normalized to "free" on the wire. Judge
+	// whether it is still live by plan_until — this is not grace-adjusted.
+	Plan      string
+	Seats     int32
+	PlanUntil *timestamppb.Timestamp
+	// none | active | past_due | canceled | expired — status of the newest
+	// subscription, "none" if the org never had one.
+	SubscriptionStatus string
+	CurrentPeriodEnd   *timestamppb.Timestamp
+	// True if the org ever had a subscription, i.e. ever paid.
+	HasPaid bool
 }
 
 func (b0 PlatformServiceOrgRow_builder) Build() *PlatformServiceOrgRow {
@@ -363,6 +468,12 @@ func (b0 PlatformServiceOrgRow_builder) Build() *PlatformServiceOrgRow {
 	x.xxx_hidden_CreatedAt = b.CreatedAt
 	x.xxx_hidden_UpdatedAt = b.UpdatedAt
 	x.xxx_hidden_OwnerEmail = b.OwnerEmail
+	x.xxx_hidden_Plan = b.Plan
+	x.xxx_hidden_Seats = b.Seats
+	x.xxx_hidden_PlanUntil = b.PlanUntil
+	x.xxx_hidden_SubscriptionStatus = b.SubscriptionStatus
+	x.xxx_hidden_CurrentPeriodEnd = b.CurrentPeriodEnd
+	x.xxx_hidden_HasPaid = b.HasPaid
 	return m0
 }
 
@@ -969,18 +1080,24 @@ func (b0 PlatformServiceInvite_builder) Build() *PlatformServiceInvite {
 }
 
 type PlatformServiceOrg struct {
-	state                  protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Id          string                 `protobuf:"bytes,1,opt,name=id,proto3"`
-	xxx_hidden_Name        string                 `protobuf:"bytes,2,opt,name=name,proto3"`
-	xxx_hidden_Slug        string                 `protobuf:"bytes,3,opt,name=slug,proto3"`
-	xxx_hidden_OwnerUserId string                 `protobuf:"bytes,4,opt,name=owner_user_id,json=ownerUserId,proto3"`
-	xxx_hidden_IsPersonal  bool                   `protobuf:"varint,5,opt,name=is_personal,json=isPersonal,proto3"`
-	xxx_hidden_IsDeleted   bool                   `protobuf:"varint,6,opt,name=is_deleted,json=isDeleted,proto3"`
-	xxx_hidden_Version     int32                  `protobuf:"varint,7,opt,name=version,proto3"`
-	xxx_hidden_CreatedAt   *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3"`
-	xxx_hidden_UpdatedAt   *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=updated_at,json=updatedAt,proto3"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
+	state                         protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3"`
+	xxx_hidden_Name               string                 `protobuf:"bytes,2,opt,name=name,proto3"`
+	xxx_hidden_Slug               string                 `protobuf:"bytes,3,opt,name=slug,proto3"`
+	xxx_hidden_OwnerUserId        string                 `protobuf:"bytes,4,opt,name=owner_user_id,json=ownerUserId,proto3"`
+	xxx_hidden_IsPersonal         bool                   `protobuf:"varint,5,opt,name=is_personal,json=isPersonal,proto3"`
+	xxx_hidden_IsDeleted          bool                   `protobuf:"varint,6,opt,name=is_deleted,json=isDeleted,proto3"`
+	xxx_hidden_Version            int32                  `protobuf:"varint,7,opt,name=version,proto3"`
+	xxx_hidden_CreatedAt          *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3"`
+	xxx_hidden_UpdatedAt          *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=updated_at,json=updatedAt,proto3"`
+	xxx_hidden_Plan               string                 `protobuf:"bytes,10,opt,name=plan,proto3"`
+	xxx_hidden_Seats              int32                  `protobuf:"varint,11,opt,name=seats,proto3"`
+	xxx_hidden_PlanUntil          *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=plan_until,json=planUntil,proto3"`
+	xxx_hidden_SubscriptionStatus string                 `protobuf:"bytes,13,opt,name=subscription_status,json=subscriptionStatus,proto3"`
+	xxx_hidden_CurrentPeriodEnd   *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=current_period_end,json=currentPeriodEnd,proto3"`
+	xxx_hidden_HasPaid            bool                   `protobuf:"varint,15,opt,name=has_paid,json=hasPaid,proto3"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
 }
 
 func (x *PlatformServiceOrg) Reset() {
@@ -1071,6 +1188,48 @@ func (x *PlatformServiceOrg) GetUpdatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *PlatformServiceOrg) GetPlan() string {
+	if x != nil {
+		return x.xxx_hidden_Plan
+	}
+	return ""
+}
+
+func (x *PlatformServiceOrg) GetSeats() int32 {
+	if x != nil {
+		return x.xxx_hidden_Seats
+	}
+	return 0
+}
+
+func (x *PlatformServiceOrg) GetPlanUntil() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_PlanUntil
+	}
+	return nil
+}
+
+func (x *PlatformServiceOrg) GetSubscriptionStatus() string {
+	if x != nil {
+		return x.xxx_hidden_SubscriptionStatus
+	}
+	return ""
+}
+
+func (x *PlatformServiceOrg) GetCurrentPeriodEnd() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_CurrentPeriodEnd
+	}
+	return nil
+}
+
+func (x *PlatformServiceOrg) GetHasPaid() bool {
+	if x != nil {
+		return x.xxx_hidden_HasPaid
+	}
+	return false
+}
+
 func (x *PlatformServiceOrg) SetId(v string) {
 	x.xxx_hidden_Id = v
 }
@@ -1107,6 +1266,30 @@ func (x *PlatformServiceOrg) SetUpdatedAt(v *timestamppb.Timestamp) {
 	x.xxx_hidden_UpdatedAt = v
 }
 
+func (x *PlatformServiceOrg) SetPlan(v string) {
+	x.xxx_hidden_Plan = v
+}
+
+func (x *PlatformServiceOrg) SetSeats(v int32) {
+	x.xxx_hidden_Seats = v
+}
+
+func (x *PlatformServiceOrg) SetPlanUntil(v *timestamppb.Timestamp) {
+	x.xxx_hidden_PlanUntil = v
+}
+
+func (x *PlatformServiceOrg) SetSubscriptionStatus(v string) {
+	x.xxx_hidden_SubscriptionStatus = v
+}
+
+func (x *PlatformServiceOrg) SetCurrentPeriodEnd(v *timestamppb.Timestamp) {
+	x.xxx_hidden_CurrentPeriodEnd = v
+}
+
+func (x *PlatformServiceOrg) SetHasPaid(v bool) {
+	x.xxx_hidden_HasPaid = v
+}
+
 func (x *PlatformServiceOrg) HasCreatedAt() bool {
 	if x == nil {
 		return false
@@ -1121,6 +1304,20 @@ func (x *PlatformServiceOrg) HasUpdatedAt() bool {
 	return x.xxx_hidden_UpdatedAt != nil
 }
 
+func (x *PlatformServiceOrg) HasPlanUntil() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_PlanUntil != nil
+}
+
+func (x *PlatformServiceOrg) HasCurrentPeriodEnd() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_CurrentPeriodEnd != nil
+}
+
 func (x *PlatformServiceOrg) ClearCreatedAt() {
 	x.xxx_hidden_CreatedAt = nil
 }
@@ -1129,18 +1326,32 @@ func (x *PlatformServiceOrg) ClearUpdatedAt() {
 	x.xxx_hidden_UpdatedAt = nil
 }
 
+func (x *PlatformServiceOrg) ClearPlanUntil() {
+	x.xxx_hidden_PlanUntil = nil
+}
+
+func (x *PlatformServiceOrg) ClearCurrentPeriodEnd() {
+	x.xxx_hidden_CurrentPeriodEnd = nil
+}
+
 type PlatformServiceOrg_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	Id          string
-	Name        string
-	Slug        string
-	OwnerUserId string
-	IsPersonal  bool
-	IsDeleted   bool
-	Version     int32
-	CreatedAt   *timestamppb.Timestamp
-	UpdatedAt   *timestamppb.Timestamp
+	Id                 string
+	Name               string
+	Slug               string
+	OwnerUserId        string
+	IsPersonal         bool
+	IsDeleted          bool
+	Version            int32
+	CreatedAt          *timestamppb.Timestamp
+	UpdatedAt          *timestamppb.Timestamp
+	Plan               string
+	Seats              int32
+	PlanUntil          *timestamppb.Timestamp
+	SubscriptionStatus string
+	CurrentPeriodEnd   *timestamppb.Timestamp
+	HasPaid            bool
 }
 
 func (b0 PlatformServiceOrg_builder) Build() *PlatformServiceOrg {
@@ -1156,6 +1367,12 @@ func (b0 PlatformServiceOrg_builder) Build() *PlatformServiceOrg {
 	x.xxx_hidden_Version = b.Version
 	x.xxx_hidden_CreatedAt = b.CreatedAt
 	x.xxx_hidden_UpdatedAt = b.UpdatedAt
+	x.xxx_hidden_Plan = b.Plan
+	x.xxx_hidden_Seats = b.Seats
+	x.xxx_hidden_PlanUntil = b.PlanUntil
+	x.xxx_hidden_SubscriptionStatus = b.SubscriptionStatus
+	x.xxx_hidden_CurrentPeriodEnd = b.CurrentPeriodEnd
+	x.xxx_hidden_HasPaid = b.HasPaid
 	return m0
 }
 
@@ -1276,13 +1493,15 @@ func (b0 PlatformServiceGetOrgResponse_builder) Build() *PlatformServiceGetOrgRe
 }
 
 type PlatformServiceListUsersRequest struct {
-	state                     protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_EmailSubstring string                 `protobuf:"bytes,1,opt,name=email_substring,json=emailSubstring,proto3"`
-	xxx_hidden_IncludeDeleted bool                   `protobuf:"varint,2,opt,name=include_deleted,json=includeDeleted,proto3"`
-	xxx_hidden_Cursor         string                 `protobuf:"bytes,3,opt,name=cursor,proto3"`
-	xxx_hidden_Limit          int32                  `protobuf:"varint,4,opt,name=limit,proto3"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
+	state                       protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_EmailSubstring   string                 `protobuf:"bytes,1,opt,name=email_substring,json=emailSubstring,proto3"`
+	xxx_hidden_IncludeDeleted   bool                   `protobuf:"varint,2,opt,name=include_deleted,json=includeDeleted,proto3"`
+	xxx_hidden_Cursor           string                 `protobuf:"bytes,3,opt,name=cursor,proto3"`
+	xxx_hidden_Limit            int32                  `protobuf:"varint,4,opt,name=limit,proto3"`
+	xxx_hidden_Sort             string                 `protobuf:"bytes,5,opt,name=sort,proto3"`
+	xxx_hidden_ActiveWithinDays int32                  `protobuf:"varint,6,opt,name=active_within_days,json=activeWithinDays,proto3"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *PlatformServiceListUsersRequest) Reset() {
@@ -1338,6 +1557,20 @@ func (x *PlatformServiceListUsersRequest) GetLimit() int32 {
 	return 0
 }
 
+func (x *PlatformServiceListUsersRequest) GetSort() string {
+	if x != nil {
+		return x.xxx_hidden_Sort
+	}
+	return ""
+}
+
+func (x *PlatformServiceListUsersRequest) GetActiveWithinDays() int32 {
+	if x != nil {
+		return x.xxx_hidden_ActiveWithinDays
+	}
+	return 0
+}
+
 func (x *PlatformServiceListUsersRequest) SetEmailSubstring(v string) {
 	x.xxx_hidden_EmailSubstring = v
 }
@@ -1354,6 +1587,14 @@ func (x *PlatformServiceListUsersRequest) SetLimit(v int32) {
 	x.xxx_hidden_Limit = v
 }
 
+func (x *PlatformServiceListUsersRequest) SetSort(v string) {
+	x.xxx_hidden_Sort = v
+}
+
+func (x *PlatformServiceListUsersRequest) SetActiveWithinDays(v int32) {
+	x.xxx_hidden_ActiveWithinDays = v
+}
+
 type PlatformServiceListUsersRequest_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
@@ -1361,6 +1602,10 @@ type PlatformServiceListUsersRequest_builder struct {
 	IncludeDeleted bool
 	Cursor         string
 	Limit          int32
+	// "" | "created_desc" (default) | "activity_desc"
+	Sort string
+	// 0 = off. Keeps only users whose last_activity_at >= now - N days.
+	ActiveWithinDays int32
 }
 
 func (b0 PlatformServiceListUsersRequest_builder) Build() *PlatformServiceListUsersRequest {
@@ -1371,6 +1616,8 @@ func (b0 PlatformServiceListUsersRequest_builder) Build() *PlatformServiceListUs
 	x.xxx_hidden_IncludeDeleted = b.IncludeDeleted
 	x.xxx_hidden_Cursor = b.Cursor
 	x.xxx_hidden_Limit = b.Limit
+	x.xxx_hidden_Sort = b.Sort
+	x.xxx_hidden_ActiveWithinDays = b.ActiveWithinDays
 	return m0
 }
 
@@ -1385,6 +1632,11 @@ type PlatformServiceUserRow struct {
 	xxx_hidden_CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3"`
 	xxx_hidden_LastLoginAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=last_login_at,json=lastLoginAt,proto3"`
 	xxx_hidden_OrgCount        int32                  `protobuf:"varint,9,opt,name=org_count,json=orgCount,proto3"`
+	xxx_hidden_LastActivityAt  *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=last_activity_at,json=lastActivityAt,proto3"`
+	xxx_hidden_ActiveSessions  int32                  `protobuf:"varint,11,opt,name=active_sessions,json=activeSessions,proto3"`
+	xxx_hidden_DeviceCount     int32                  `protobuf:"varint,12,opt,name=device_count,json=deviceCount,proto3"`
+	xxx_hidden_MaxPlan         string                 `protobuf:"bytes,13,opt,name=max_plan,json=maxPlan,proto3"`
+	xxx_hidden_HasPaid         bool                   `protobuf:"varint,14,opt,name=has_paid,json=hasPaid,proto3"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -1477,6 +1729,41 @@ func (x *PlatformServiceUserRow) GetOrgCount() int32 {
 	return 0
 }
 
+func (x *PlatformServiceUserRow) GetLastActivityAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_LastActivityAt
+	}
+	return nil
+}
+
+func (x *PlatformServiceUserRow) GetActiveSessions() int32 {
+	if x != nil {
+		return x.xxx_hidden_ActiveSessions
+	}
+	return 0
+}
+
+func (x *PlatformServiceUserRow) GetDeviceCount() int32 {
+	if x != nil {
+		return x.xxx_hidden_DeviceCount
+	}
+	return 0
+}
+
+func (x *PlatformServiceUserRow) GetMaxPlan() string {
+	if x != nil {
+		return x.xxx_hidden_MaxPlan
+	}
+	return ""
+}
+
+func (x *PlatformServiceUserRow) GetHasPaid() bool {
+	if x != nil {
+		return x.xxx_hidden_HasPaid
+	}
+	return false
+}
+
 func (x *PlatformServiceUserRow) SetId(v string) {
 	x.xxx_hidden_Id = v
 }
@@ -1513,6 +1800,26 @@ func (x *PlatformServiceUserRow) SetOrgCount(v int32) {
 	x.xxx_hidden_OrgCount = v
 }
 
+func (x *PlatformServiceUserRow) SetLastActivityAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_LastActivityAt = v
+}
+
+func (x *PlatformServiceUserRow) SetActiveSessions(v int32) {
+	x.xxx_hidden_ActiveSessions = v
+}
+
+func (x *PlatformServiceUserRow) SetDeviceCount(v int32) {
+	x.xxx_hidden_DeviceCount = v
+}
+
+func (x *PlatformServiceUserRow) SetMaxPlan(v string) {
+	x.xxx_hidden_MaxPlan = v
+}
+
+func (x *PlatformServiceUserRow) SetHasPaid(v bool) {
+	x.xxx_hidden_HasPaid = v
+}
+
 func (x *PlatformServiceUserRow) HasCreatedAt() bool {
 	if x == nil {
 		return false
@@ -1527,12 +1834,23 @@ func (x *PlatformServiceUserRow) HasLastLoginAt() bool {
 	return x.xxx_hidden_LastLoginAt != nil
 }
 
+func (x *PlatformServiceUserRow) HasLastActivityAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_LastActivityAt != nil
+}
+
 func (x *PlatformServiceUserRow) ClearCreatedAt() {
 	x.xxx_hidden_CreatedAt = nil
 }
 
 func (x *PlatformServiceUserRow) ClearLastLoginAt() {
 	x.xxx_hidden_LastLoginAt = nil
+}
+
+func (x *PlatformServiceUserRow) ClearLastActivityAt() {
+	x.xxx_hidden_LastActivityAt = nil
 }
 
 type PlatformServiceUserRow_builder struct {
@@ -1547,6 +1865,16 @@ type PlatformServiceUserRow_builder struct {
 	CreatedAt       *timestamppb.Timestamp
 	LastLoginAt     *timestamppb.Timestamp
 	OrgCount        int32
+	// max(last_login_at, MAX(sessions.created_at)); unset if never active.
+	LastActivityAt *timestamppb.Timestamp
+	// revoked_at unset && expires_at > now.
+	ActiveSessions int32
+	// Distinct client_id across all sessions.
+	DeviceCount int32
+	// Best plan across the user's orgs, grace-aware. free|pro|team|business.
+	MaxPlan string
+	// True if the user is the billing customer of any subscription.
+	HasPaid bool
 }
 
 func (b0 PlatformServiceUserRow_builder) Build() *PlatformServiceUserRow {
@@ -1562,6 +1890,11 @@ func (b0 PlatformServiceUserRow_builder) Build() *PlatformServiceUserRow {
 	x.xxx_hidden_CreatedAt = b.CreatedAt
 	x.xxx_hidden_LastLoginAt = b.LastLoginAt
 	x.xxx_hidden_OrgCount = b.OrgCount
+	x.xxx_hidden_LastActivityAt = b.LastActivityAt
+	x.xxx_hidden_ActiveSessions = b.ActiveSessions
+	x.xxx_hidden_DeviceCount = b.DeviceCount
+	x.xxx_hidden_MaxPlan = b.MaxPlan
+	x.xxx_hidden_HasPaid = b.HasPaid
 	return m0
 }
 
@@ -1827,6 +2160,8 @@ type PlatformServiceUserSession struct {
 	xxx_hidden_Ip         string                 `protobuf:"bytes,4,opt,name=ip,proto3"`
 	xxx_hidden_LastUsedAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=last_used_at,json=lastUsedAt,proto3"`
 	xxx_hidden_RevokedAt  *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=revoked_at,json=revokedAt,proto3"`
+	xxx_hidden_CreatedAt  *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3"`
+	xxx_hidden_ExpiresAt  *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=expires_at,json=expiresAt,proto3"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -1898,6 +2233,20 @@ func (x *PlatformServiceUserSession) GetRevokedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *PlatformServiceUserSession) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_CreatedAt
+	}
+	return nil
+}
+
+func (x *PlatformServiceUserSession) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_ExpiresAt
+	}
+	return nil
+}
+
 func (x *PlatformServiceUserSession) SetId(v string) {
 	x.xxx_hidden_Id = v
 }
@@ -1922,6 +2271,14 @@ func (x *PlatformServiceUserSession) SetRevokedAt(v *timestamppb.Timestamp) {
 	x.xxx_hidden_RevokedAt = v
 }
 
+func (x *PlatformServiceUserSession) SetCreatedAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_CreatedAt = v
+}
+
+func (x *PlatformServiceUserSession) SetExpiresAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_ExpiresAt = v
+}
+
 func (x *PlatformServiceUserSession) HasLastUsedAt() bool {
 	if x == nil {
 		return false
@@ -1936,12 +2293,34 @@ func (x *PlatformServiceUserSession) HasRevokedAt() bool {
 	return x.xxx_hidden_RevokedAt != nil
 }
 
+func (x *PlatformServiceUserSession) HasCreatedAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_CreatedAt != nil
+}
+
+func (x *PlatformServiceUserSession) HasExpiresAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_ExpiresAt != nil
+}
+
 func (x *PlatformServiceUserSession) ClearLastUsedAt() {
 	x.xxx_hidden_LastUsedAt = nil
 }
 
 func (x *PlatformServiceUserSession) ClearRevokedAt() {
 	x.xxx_hidden_RevokedAt = nil
+}
+
+func (x *PlatformServiceUserSession) ClearCreatedAt() {
+	x.xxx_hidden_CreatedAt = nil
+}
+
+func (x *PlatformServiceUserSession) ClearExpiresAt() {
+	x.xxx_hidden_ExpiresAt = nil
 }
 
 type PlatformServiceUserSession_builder struct {
@@ -1953,6 +2332,8 @@ type PlatformServiceUserSession_builder struct {
 	Ip         string
 	LastUsedAt *timestamppb.Timestamp
 	RevokedAt  *timestamppb.Timestamp
+	CreatedAt  *timestamppb.Timestamp
+	ExpiresAt  *timestamppb.Timestamp
 }
 
 func (b0 PlatformServiceUserSession_builder) Build() *PlatformServiceUserSession {
@@ -1965,6 +2346,8 @@ func (b0 PlatformServiceUserSession_builder) Build() *PlatformServiceUserSession
 	x.xxx_hidden_Ip = b.Ip
 	x.xxx_hidden_LastUsedAt = b.LastUsedAt
 	x.xxx_hidden_RevokedAt = b.RevokedAt
+	x.xxx_hidden_CreatedAt = b.CreatedAt
+	x.xxx_hidden_ExpiresAt = b.ExpiresAt
 	return m0
 }
 
@@ -1978,6 +2361,11 @@ type PlatformServiceUser struct {
 	xxx_hidden_IsDeleted       bool                   `protobuf:"varint,6,opt,name=is_deleted,json=isDeleted,proto3"`
 	xxx_hidden_CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3"`
 	xxx_hidden_LastLoginAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=last_login_at,json=lastLoginAt,proto3"`
+	xxx_hidden_LastActivityAt  *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=last_activity_at,json=lastActivityAt,proto3"`
+	xxx_hidden_ActiveSessions  int32                  `protobuf:"varint,10,opt,name=active_sessions,json=activeSessions,proto3"`
+	xxx_hidden_DeviceCount     int32                  `protobuf:"varint,11,opt,name=device_count,json=deviceCount,proto3"`
+	xxx_hidden_MaxPlan         string                 `protobuf:"bytes,12,opt,name=max_plan,json=maxPlan,proto3"`
+	xxx_hidden_HasPaid         bool                   `protobuf:"varint,13,opt,name=has_paid,json=hasPaid,proto3"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -2063,6 +2451,41 @@ func (x *PlatformServiceUser) GetLastLoginAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *PlatformServiceUser) GetLastActivityAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_LastActivityAt
+	}
+	return nil
+}
+
+func (x *PlatformServiceUser) GetActiveSessions() int32 {
+	if x != nil {
+		return x.xxx_hidden_ActiveSessions
+	}
+	return 0
+}
+
+func (x *PlatformServiceUser) GetDeviceCount() int32 {
+	if x != nil {
+		return x.xxx_hidden_DeviceCount
+	}
+	return 0
+}
+
+func (x *PlatformServiceUser) GetMaxPlan() string {
+	if x != nil {
+		return x.xxx_hidden_MaxPlan
+	}
+	return ""
+}
+
+func (x *PlatformServiceUser) GetHasPaid() bool {
+	if x != nil {
+		return x.xxx_hidden_HasPaid
+	}
+	return false
+}
+
 func (x *PlatformServiceUser) SetId(v string) {
 	x.xxx_hidden_Id = v
 }
@@ -2095,6 +2518,26 @@ func (x *PlatformServiceUser) SetLastLoginAt(v *timestamppb.Timestamp) {
 	x.xxx_hidden_LastLoginAt = v
 }
 
+func (x *PlatformServiceUser) SetLastActivityAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_LastActivityAt = v
+}
+
+func (x *PlatformServiceUser) SetActiveSessions(v int32) {
+	x.xxx_hidden_ActiveSessions = v
+}
+
+func (x *PlatformServiceUser) SetDeviceCount(v int32) {
+	x.xxx_hidden_DeviceCount = v
+}
+
+func (x *PlatformServiceUser) SetMaxPlan(v string) {
+	x.xxx_hidden_MaxPlan = v
+}
+
+func (x *PlatformServiceUser) SetHasPaid(v bool) {
+	x.xxx_hidden_HasPaid = v
+}
+
 func (x *PlatformServiceUser) HasCreatedAt() bool {
 	if x == nil {
 		return false
@@ -2109,12 +2552,23 @@ func (x *PlatformServiceUser) HasLastLoginAt() bool {
 	return x.xxx_hidden_LastLoginAt != nil
 }
 
+func (x *PlatformServiceUser) HasLastActivityAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_LastActivityAt != nil
+}
+
 func (x *PlatformServiceUser) ClearCreatedAt() {
 	x.xxx_hidden_CreatedAt = nil
 }
 
 func (x *PlatformServiceUser) ClearLastLoginAt() {
 	x.xxx_hidden_LastLoginAt = nil
+}
+
+func (x *PlatformServiceUser) ClearLastActivityAt() {
+	x.xxx_hidden_LastActivityAt = nil
 }
 
 type PlatformServiceUser_builder struct {
@@ -2128,6 +2582,11 @@ type PlatformServiceUser_builder struct {
 	IsDeleted       bool
 	CreatedAt       *timestamppb.Timestamp
 	LastLoginAt     *timestamppb.Timestamp
+	LastActivityAt  *timestamppb.Timestamp
+	ActiveSessions  int32
+	DeviceCount     int32
+	MaxPlan         string
+	HasPaid         bool
 }
 
 func (b0 PlatformServiceUser_builder) Build() *PlatformServiceUser {
@@ -2142,6 +2601,11 @@ func (b0 PlatformServiceUser_builder) Build() *PlatformServiceUser {
 	x.xxx_hidden_IsDeleted = b.IsDeleted
 	x.xxx_hidden_CreatedAt = b.CreatedAt
 	x.xxx_hidden_LastLoginAt = b.LastLoginAt
+	x.xxx_hidden_LastActivityAt = b.LastActivityAt
+	x.xxx_hidden_ActiveSessions = b.ActiveSessions
+	x.xxx_hidden_DeviceCount = b.DeviceCount
+	x.xxx_hidden_MaxPlan = b.MaxPlan
+	x.xxx_hidden_HasPaid = b.HasPaid
 	return m0
 }
 
@@ -4039,6 +4503,933 @@ func (b0 PlatformServiceSetPlanResponse_builder) Build() *PlatformServiceSetPlan
 	return m0
 }
 
+type PlatformServiceGetOverviewRequest struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PlatformServiceGetOverviewRequest) Reset() {
+	*x = PlatformServiceGetOverviewRequest{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServiceGetOverviewRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServiceGetOverviewRequest) ProtoMessage() {}
+
+func (x *PlatformServiceGetOverviewRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+type PlatformServiceGetOverviewRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+}
+
+func (b0 PlatformServiceGetOverviewRequest_builder) Build() *PlatformServiceGetOverviewRequest {
+	m0 := &PlatformServiceGetOverviewRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	return m0
+}
+
+type PlatformServicePlanCount struct {
+	state            protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Plan  string                 `protobuf:"bytes,1,opt,name=plan,proto3"`
+	xxx_hidden_Count int32                  `protobuf:"varint,2,opt,name=count,proto3"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *PlatformServicePlanCount) Reset() {
+	*x = PlatformServicePlanCount{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServicePlanCount) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServicePlanCount) ProtoMessage() {}
+
+func (x *PlatformServicePlanCount) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlatformServicePlanCount) GetPlan() string {
+	if x != nil {
+		return x.xxx_hidden_Plan
+	}
+	return ""
+}
+
+func (x *PlatformServicePlanCount) GetCount() int32 {
+	if x != nil {
+		return x.xxx_hidden_Count
+	}
+	return 0
+}
+
+func (x *PlatformServicePlanCount) SetPlan(v string) {
+	x.xxx_hidden_Plan = v
+}
+
+func (x *PlatformServicePlanCount) SetCount(v int32) {
+	x.xxx_hidden_Count = v
+}
+
+type PlatformServicePlanCount_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Plan  string
+	Count int32
+}
+
+func (b0 PlatformServicePlanCount_builder) Build() *PlatformServicePlanCount {
+	m0 := &PlatformServicePlanCount{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Plan = b.Plan
+	x.xxx_hidden_Count = b.Count
+	return m0
+}
+
+type PlatformServiceGetOverviewResponse struct {
+	state                           protoimpl.MessageState       `protogen:"opaque.v1"`
+	xxx_hidden_UsersTotal           int32                        `protobuf:"varint,1,opt,name=users_total,json=usersTotal,proto3"`
+	xxx_hidden_UsersNew_7D          int32                        `protobuf:"varint,2,opt,name=users_new_7d,json=usersNew7d,proto3"`
+	xxx_hidden_UsersNew_30D         int32                        `protobuf:"varint,3,opt,name=users_new_30d,json=usersNew30d,proto3"`
+	xxx_hidden_UsersActive_7D       int32                        `protobuf:"varint,4,opt,name=users_active_7d,json=usersActive7d,proto3"`
+	xxx_hidden_UsersActive_30D      int32                        `protobuf:"varint,5,opt,name=users_active_30d,json=usersActive30d,proto3"`
+	xxx_hidden_UsersUnverified      int32                        `protobuf:"varint,6,opt,name=users_unverified,json=usersUnverified,proto3"`
+	xxx_hidden_OrgsTotal            int32                        `protobuf:"varint,7,opt,name=orgs_total,json=orgsTotal,proto3"`
+	xxx_hidden_OrgsByPlan           *[]*PlatformServicePlanCount `protobuf:"bytes,8,rep,name=orgs_by_plan,json=orgsByPlan,proto3"`
+	xxx_hidden_SubscriptionsActive  int32                        `protobuf:"varint,9,opt,name=subscriptions_active,json=subscriptionsActive,proto3"`
+	xxx_hidden_SubscriptionsPastDue int32                        `protobuf:"varint,10,opt,name=subscriptions_past_due,json=subscriptionsPastDue,proto3"`
+	xxx_hidden_PayingOrgs           int32                        `protobuf:"varint,11,opt,name=paying_orgs,json=payingOrgs,proto3"`
+	xxx_hidden_RecentSignups        *[]*PlatformServiceUserRow   `protobuf:"bytes,12,rep,name=recent_signups,json=recentSignups,proto3"`
+	unknownFields                   protoimpl.UnknownFields
+	sizeCache                       protoimpl.SizeCache
+}
+
+func (x *PlatformServiceGetOverviewResponse) Reset() {
+	*x = PlatformServiceGetOverviewResponse{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServiceGetOverviewResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServiceGetOverviewResponse) ProtoMessage() {}
+
+func (x *PlatformServiceGetOverviewResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetUsersTotal() int32 {
+	if x != nil {
+		return x.xxx_hidden_UsersTotal
+	}
+	return 0
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetUsersNew_7D() int32 {
+	if x != nil {
+		return x.xxx_hidden_UsersNew_7D
+	}
+	return 0
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetUsersNew_30D() int32 {
+	if x != nil {
+		return x.xxx_hidden_UsersNew_30D
+	}
+	return 0
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetUsersActive_7D() int32 {
+	if x != nil {
+		return x.xxx_hidden_UsersActive_7D
+	}
+	return 0
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetUsersActive_30D() int32 {
+	if x != nil {
+		return x.xxx_hidden_UsersActive_30D
+	}
+	return 0
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetUsersUnverified() int32 {
+	if x != nil {
+		return x.xxx_hidden_UsersUnverified
+	}
+	return 0
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetOrgsTotal() int32 {
+	if x != nil {
+		return x.xxx_hidden_OrgsTotal
+	}
+	return 0
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetOrgsByPlan() []*PlatformServicePlanCount {
+	if x != nil {
+		if x.xxx_hidden_OrgsByPlan != nil {
+			return *x.xxx_hidden_OrgsByPlan
+		}
+	}
+	return nil
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetSubscriptionsActive() int32 {
+	if x != nil {
+		return x.xxx_hidden_SubscriptionsActive
+	}
+	return 0
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetSubscriptionsPastDue() int32 {
+	if x != nil {
+		return x.xxx_hidden_SubscriptionsPastDue
+	}
+	return 0
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetPayingOrgs() int32 {
+	if x != nil {
+		return x.xxx_hidden_PayingOrgs
+	}
+	return 0
+}
+
+func (x *PlatformServiceGetOverviewResponse) GetRecentSignups() []*PlatformServiceUserRow {
+	if x != nil {
+		if x.xxx_hidden_RecentSignups != nil {
+			return *x.xxx_hidden_RecentSignups
+		}
+	}
+	return nil
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetUsersTotal(v int32) {
+	x.xxx_hidden_UsersTotal = v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetUsersNew_7D(v int32) {
+	x.xxx_hidden_UsersNew_7D = v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetUsersNew_30D(v int32) {
+	x.xxx_hidden_UsersNew_30D = v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetUsersActive_7D(v int32) {
+	x.xxx_hidden_UsersActive_7D = v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetUsersActive_30D(v int32) {
+	x.xxx_hidden_UsersActive_30D = v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetUsersUnverified(v int32) {
+	x.xxx_hidden_UsersUnverified = v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetOrgsTotal(v int32) {
+	x.xxx_hidden_OrgsTotal = v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetOrgsByPlan(v []*PlatformServicePlanCount) {
+	x.xxx_hidden_OrgsByPlan = &v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetSubscriptionsActive(v int32) {
+	x.xxx_hidden_SubscriptionsActive = v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetSubscriptionsPastDue(v int32) {
+	x.xxx_hidden_SubscriptionsPastDue = v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetPayingOrgs(v int32) {
+	x.xxx_hidden_PayingOrgs = v
+}
+
+func (x *PlatformServiceGetOverviewResponse) SetRecentSignups(v []*PlatformServiceUserRow) {
+	x.xxx_hidden_RecentSignups = &v
+}
+
+type PlatformServiceGetOverviewResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	UsersTotal      int32
+	UsersNew_7D     int32
+	UsersNew_30D    int32
+	UsersActive_7D  int32
+	UsersActive_30D int32
+	UsersUnverified int32
+	// Non-personal, non-deleted.
+	OrgsTotal int32
+	// All non-deleted orgs including personal ones; every tier is present.
+	OrgsByPlan           []*PlatformServicePlanCount
+	SubscriptionsActive  int32
+	SubscriptionsPastDue int32
+	// Distinct orgs that ever had a subscription, i.e. ever paid.
+	PayingOrgs int32
+	// 8 newest non-deleted users with the same enrichment as ListUsers.
+	RecentSignups []*PlatformServiceUserRow
+}
+
+func (b0 PlatformServiceGetOverviewResponse_builder) Build() *PlatformServiceGetOverviewResponse {
+	m0 := &PlatformServiceGetOverviewResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_UsersTotal = b.UsersTotal
+	x.xxx_hidden_UsersNew_7D = b.UsersNew_7D
+	x.xxx_hidden_UsersNew_30D = b.UsersNew_30D
+	x.xxx_hidden_UsersActive_7D = b.UsersActive_7D
+	x.xxx_hidden_UsersActive_30D = b.UsersActive_30D
+	x.xxx_hidden_UsersUnverified = b.UsersUnverified
+	x.xxx_hidden_OrgsTotal = b.OrgsTotal
+	x.xxx_hidden_OrgsByPlan = &b.OrgsByPlan
+	x.xxx_hidden_SubscriptionsActive = b.SubscriptionsActive
+	x.xxx_hidden_SubscriptionsPastDue = b.SubscriptionsPastDue
+	x.xxx_hidden_PayingOrgs = b.PayingOrgs
+	x.xxx_hidden_RecentSignups = &b.RecentSignups
+	return m0
+}
+
+type PlatformServiceForceAddOrgMemberRequest struct {
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_OrgId        string                 `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3"`
+	xxx_hidden_TargetUserId string                 `protobuf:"bytes,2,opt,name=target_user_id,json=targetUserId,proto3"`
+	xxx_hidden_RoleId       string                 `protobuf:"bytes,3,opt,name=role_id,json=roleId,proto3"`
+	xxx_hidden_Reason       string                 `protobuf:"bytes,4,opt,name=reason,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) Reset() {
+	*x = PlatformServiceForceAddOrgMemberRequest{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServiceForceAddOrgMemberRequest) ProtoMessage() {}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) GetOrgId() string {
+	if x != nil {
+		return x.xxx_hidden_OrgId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) GetTargetUserId() string {
+	if x != nil {
+		return x.xxx_hidden_TargetUserId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) GetRoleId() string {
+	if x != nil {
+		return x.xxx_hidden_RoleId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) GetReason() string {
+	if x != nil {
+		return x.xxx_hidden_Reason
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) SetOrgId(v string) {
+	x.xxx_hidden_OrgId = v
+}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) SetTargetUserId(v string) {
+	x.xxx_hidden_TargetUserId = v
+}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) SetRoleId(v string) {
+	x.xxx_hidden_RoleId = v
+}
+
+func (x *PlatformServiceForceAddOrgMemberRequest) SetReason(v string) {
+	x.xxx_hidden_Reason = v
+}
+
+type PlatformServiceForceAddOrgMemberRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	OrgId        string
+	TargetUserId string
+	RoleId       string
+	Reason       string
+}
+
+func (b0 PlatformServiceForceAddOrgMemberRequest_builder) Build() *PlatformServiceForceAddOrgMemberRequest {
+	m0 := &PlatformServiceForceAddOrgMemberRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_OrgId = b.OrgId
+	x.xxx_hidden_TargetUserId = b.TargetUserId
+	x.xxx_hidden_RoleId = b.RoleId
+	x.xxx_hidden_Reason = b.Reason
+	return m0
+}
+
+type PlatformServiceForceAddOrgMemberResponse struct {
+	state                    protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_OrgId         string                 `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3"`
+	xxx_hidden_UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_RoleId        string                 `protobuf:"bytes,3,opt,name=role_id,json=roleId,proto3"`
+	xxx_hidden_AlreadyMember bool                   `protobuf:"varint,4,opt,name=already_member,json=alreadyMember,proto3"`
+	xxx_hidden_PreviousRole  string                 `protobuf:"bytes,5,opt,name=previous_role,json=previousRole,proto3"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) Reset() {
+	*x = PlatformServiceForceAddOrgMemberResponse{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServiceForceAddOrgMemberResponse) ProtoMessage() {}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) GetOrgId() string {
+	if x != nil {
+		return x.xxx_hidden_OrgId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) GetUserId() string {
+	if x != nil {
+		return x.xxx_hidden_UserId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) GetRoleId() string {
+	if x != nil {
+		return x.xxx_hidden_RoleId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) GetAlreadyMember() bool {
+	if x != nil {
+		return x.xxx_hidden_AlreadyMember
+	}
+	return false
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) GetPreviousRole() string {
+	if x != nil {
+		return x.xxx_hidden_PreviousRole
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) SetOrgId(v string) {
+	x.xxx_hidden_OrgId = v
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) SetUserId(v string) {
+	x.xxx_hidden_UserId = v
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) SetRoleId(v string) {
+	x.xxx_hidden_RoleId = v
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) SetAlreadyMember(v bool) {
+	x.xxx_hidden_AlreadyMember = v
+}
+
+func (x *PlatformServiceForceAddOrgMemberResponse) SetPreviousRole(v string) {
+	x.xxx_hidden_PreviousRole = v
+}
+
+type PlatformServiceForceAddOrgMemberResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	OrgId         string
+	UserId        string
+	RoleId        string
+	AlreadyMember bool
+	PreviousRole  string
+}
+
+func (b0 PlatformServiceForceAddOrgMemberResponse_builder) Build() *PlatformServiceForceAddOrgMemberResponse {
+	m0 := &PlatformServiceForceAddOrgMemberResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_OrgId = b.OrgId
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_RoleId = b.RoleId
+	x.xxx_hidden_AlreadyMember = b.AlreadyMember
+	x.xxx_hidden_PreviousRole = b.PreviousRole
+	return m0
+}
+
+type PlatformServiceForceChangeOrgMemberRoleRequest struct {
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_OrgId        string                 `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3"`
+	xxx_hidden_TargetUserId string                 `protobuf:"bytes,2,opt,name=target_user_id,json=targetUserId,proto3"`
+	xxx_hidden_NewRoleId    string                 `protobuf:"bytes,3,opt,name=new_role_id,json=newRoleId,proto3"`
+	xxx_hidden_Reason       string                 `protobuf:"bytes,4,opt,name=reason,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) Reset() {
+	*x = PlatformServiceForceChangeOrgMemberRoleRequest{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServiceForceChangeOrgMemberRoleRequest) ProtoMessage() {}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) GetOrgId() string {
+	if x != nil {
+		return x.xxx_hidden_OrgId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) GetTargetUserId() string {
+	if x != nil {
+		return x.xxx_hidden_TargetUserId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) GetNewRoleId() string {
+	if x != nil {
+		return x.xxx_hidden_NewRoleId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) GetReason() string {
+	if x != nil {
+		return x.xxx_hidden_Reason
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) SetOrgId(v string) {
+	x.xxx_hidden_OrgId = v
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) SetTargetUserId(v string) {
+	x.xxx_hidden_TargetUserId = v
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) SetNewRoleId(v string) {
+	x.xxx_hidden_NewRoleId = v
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleRequest) SetReason(v string) {
+	x.xxx_hidden_Reason = v
+}
+
+type PlatformServiceForceChangeOrgMemberRoleRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	OrgId        string
+	TargetUserId string
+	NewRoleId    string
+	Reason       string
+}
+
+func (b0 PlatformServiceForceChangeOrgMemberRoleRequest_builder) Build() *PlatformServiceForceChangeOrgMemberRoleRequest {
+	m0 := &PlatformServiceForceChangeOrgMemberRoleRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_OrgId = b.OrgId
+	x.xxx_hidden_TargetUserId = b.TargetUserId
+	x.xxx_hidden_NewRoleId = b.NewRoleId
+	x.xxx_hidden_Reason = b.Reason
+	return m0
+}
+
+type PlatformServiceForceChangeOrgMemberRoleResponse struct {
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_OrgId        string                 `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3"`
+	xxx_hidden_UserId       string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_PreviousRole string                 `protobuf:"bytes,3,opt,name=previous_role,json=previousRole,proto3"`
+	xxx_hidden_NewRole      string                 `protobuf:"bytes,4,opt,name=new_role,json=newRole,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) Reset() {
+	*x = PlatformServiceForceChangeOrgMemberRoleResponse{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServiceForceChangeOrgMemberRoleResponse) ProtoMessage() {}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) GetOrgId() string {
+	if x != nil {
+		return x.xxx_hidden_OrgId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) GetUserId() string {
+	if x != nil {
+		return x.xxx_hidden_UserId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) GetPreviousRole() string {
+	if x != nil {
+		return x.xxx_hidden_PreviousRole
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) GetNewRole() string {
+	if x != nil {
+		return x.xxx_hidden_NewRole
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) SetOrgId(v string) {
+	x.xxx_hidden_OrgId = v
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) SetUserId(v string) {
+	x.xxx_hidden_UserId = v
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) SetPreviousRole(v string) {
+	x.xxx_hidden_PreviousRole = v
+}
+
+func (x *PlatformServiceForceChangeOrgMemberRoleResponse) SetNewRole(v string) {
+	x.xxx_hidden_NewRole = v
+}
+
+type PlatformServiceForceChangeOrgMemberRoleResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	OrgId        string
+	UserId       string
+	PreviousRole string
+	NewRole      string
+}
+
+func (b0 PlatformServiceForceChangeOrgMemberRoleResponse_builder) Build() *PlatformServiceForceChangeOrgMemberRoleResponse {
+	m0 := &PlatformServiceForceChangeOrgMemberRoleResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_OrgId = b.OrgId
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_PreviousRole = b.PreviousRole
+	x.xxx_hidden_NewRole = b.NewRole
+	return m0
+}
+
+type PlatformServiceForceRemoveOrgMemberRequest struct {
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_OrgId        string                 `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3"`
+	xxx_hidden_TargetUserId string                 `protobuf:"bytes,2,opt,name=target_user_id,json=targetUserId,proto3"`
+	xxx_hidden_Reason       string                 `protobuf:"bytes,3,opt,name=reason,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberRequest) Reset() {
+	*x = PlatformServiceForceRemoveOrgMemberRequest{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[42]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServiceForceRemoveOrgMemberRequest) ProtoMessage() {}
+
+func (x *PlatformServiceForceRemoveOrgMemberRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[42]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberRequest) GetOrgId() string {
+	if x != nil {
+		return x.xxx_hidden_OrgId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberRequest) GetTargetUserId() string {
+	if x != nil {
+		return x.xxx_hidden_TargetUserId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberRequest) GetReason() string {
+	if x != nil {
+		return x.xxx_hidden_Reason
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberRequest) SetOrgId(v string) {
+	x.xxx_hidden_OrgId = v
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberRequest) SetTargetUserId(v string) {
+	x.xxx_hidden_TargetUserId = v
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberRequest) SetReason(v string) {
+	x.xxx_hidden_Reason = v
+}
+
+type PlatformServiceForceRemoveOrgMemberRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	OrgId        string
+	TargetUserId string
+	Reason       string
+}
+
+func (b0 PlatformServiceForceRemoveOrgMemberRequest_builder) Build() *PlatformServiceForceRemoveOrgMemberRequest {
+	m0 := &PlatformServiceForceRemoveOrgMemberRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_OrgId = b.OrgId
+	x.xxx_hidden_TargetUserId = b.TargetUserId
+	x.xxx_hidden_Reason = b.Reason
+	return m0
+}
+
+type PlatformServiceForceRemoveOrgMemberResponse struct {
+	state                           protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_OrgId                string                 `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3"`
+	xxx_hidden_UserId               string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3"`
+	xxx_hidden_HadRole              string                 `protobuf:"bytes,3,opt,name=had_role,json=hadRole,proto3"`
+	xxx_hidden_WsMembershipsRemoved int64                  `protobuf:"varint,4,opt,name=ws_memberships_removed,json=wsMembershipsRemoved,proto3"`
+	unknownFields                   protoimpl.UnknownFields
+	sizeCache                       protoimpl.SizeCache
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) Reset() {
+	*x = PlatformServiceForceRemoveOrgMemberResponse{}
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlatformServiceForceRemoveOrgMemberResponse) ProtoMessage() {}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_platform_v1_platform_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) GetOrgId() string {
+	if x != nil {
+		return x.xxx_hidden_OrgId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) GetUserId() string {
+	if x != nil {
+		return x.xxx_hidden_UserId
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) GetHadRole() string {
+	if x != nil {
+		return x.xxx_hidden_HadRole
+	}
+	return ""
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) GetWsMembershipsRemoved() int64 {
+	if x != nil {
+		return x.xxx_hidden_WsMembershipsRemoved
+	}
+	return 0
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) SetOrgId(v string) {
+	x.xxx_hidden_OrgId = v
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) SetUserId(v string) {
+	x.xxx_hidden_UserId = v
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) SetHadRole(v string) {
+	x.xxx_hidden_HadRole = v
+}
+
+func (x *PlatformServiceForceRemoveOrgMemberResponse) SetWsMembershipsRemoved(v int64) {
+	x.xxx_hidden_WsMembershipsRemoved = v
+}
+
+type PlatformServiceForceRemoveOrgMemberResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	OrgId                string
+	UserId               string
+	HadRole              string
+	WsMembershipsRemoved int64
+}
+
+func (b0 PlatformServiceForceRemoveOrgMemberResponse_builder) Build() *PlatformServiceForceRemoveOrgMemberResponse {
+	m0 := &PlatformServiceForceRemoveOrgMemberResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_OrgId = b.OrgId
+	x.xxx_hidden_UserId = b.UserId
+	x.xxx_hidden_HadRole = b.HadRole
+	x.xxx_hidden_WsMembershipsRemoved = b.WsMembershipsRemoved
+	return m0
+}
+
 var File_gophercourier_platform_v1_platform_proto protoreflect.FileDescriptor
 
 const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
@@ -4048,7 +5439,7 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\x10include_personal\x18\x01 \x01(\bR\x0fincludePersonal\x12'\n" +
 	"\x0finclude_deleted\x18\x02 \x01(\bR\x0eincludeDeleted\x12\x16\n" +
 	"\x06cursor\x18\x03 \x01(\tR\x06cursor\x12\x14\n" +
-	"\x05limit\x18\x04 \x01(\x05R\x05limit\"\xdc\x03\n" +
+	"\x05limit\x18\x04 \x01(\x05R\x05limit\"\xd7\x05\n" +
 	"\x15PlatformServiceOrgRow\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -4067,7 +5458,14 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\n" +
 	"updated_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x1f\n" +
 	"\vowner_email\x18\f \x01(\tR\n" +
-	"ownerEmail\"\x88\x01\n" +
+	"ownerEmail\x12\x12\n" +
+	"\x04plan\x18\r \x01(\tR\x04plan\x12\x14\n" +
+	"\x05seats\x18\x0e \x01(\x05R\x05seats\x129\n" +
+	"\n" +
+	"plan_until\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\tplanUntil\x12/\n" +
+	"\x13subscription_status\x18\x10 \x01(\tR\x12subscriptionStatus\x12H\n" +
+	"\x12current_period_end\x18\x11 \x01(\v2\x1a.google.protobuf.TimestampR\x10currentPeriodEnd\x12\x19\n" +
+	"\bhas_paid\x18\x12 \x01(\bR\ahasPaid\"\x88\x01\n" +
 	"\x1fPlatformServiceListOrgsResponse\x12D\n" +
 	"\x04orgs\x18\x01 \x03(\v20.gophercourier.platform.v1.PlatformServiceOrgRowR\x04orgs\x12\x1f\n" +
 	"\vnext_cursor\x18\x02 \x01(\tR\n" +
@@ -4102,7 +5500,7 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\n" +
 	"expires_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12\x16\n" +
 	"\x06status\x18\a \x01(\tR\x06status\x12\x1b\n" +
-	"\trole_name\x18\b \x01(\tR\broleName\"\xc0\x02\n" +
+	"\trole_name\x18\b \x01(\tR\broleName\"\xbb\x04\n" +
 	"\x12PlatformServiceOrg\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -4116,19 +5514,29 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xd0\x02\n" +
+	"updated_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x12\n" +
+	"\x04plan\x18\n" +
+	" \x01(\tR\x04plan\x12\x14\n" +
+	"\x05seats\x18\v \x01(\x05R\x05seats\x129\n" +
+	"\n" +
+	"plan_until\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tplanUntil\x12/\n" +
+	"\x13subscription_status\x18\r \x01(\tR\x12subscriptionStatus\x12H\n" +
+	"\x12current_period_end\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\x10currentPeriodEnd\x12\x19\n" +
+	"\bhas_paid\x18\x0f \x01(\bR\ahasPaid\"\xd0\x02\n" +
 	"\x1dPlatformServiceGetOrgResponse\x12?\n" +
 	"\x03org\x18\x01 \x01(\v2-.gophercourier.platform.v1.PlatformServiceOrgR\x03org\x12M\n" +
 	"\amembers\x18\x02 \x03(\v23.gophercourier.platform.v1.PlatformServiceOrgMemberR\amembers\x12S\n" +
 	"\n" +
 	"workspaces\x18\x03 \x03(\v23.gophercourier.platform.v1.PlatformServiceWorkspaceR\n" +
 	"workspaces\x12J\n" +
-	"\ainvites\x18\x04 \x03(\v20.gophercourier.platform.v1.PlatformServiceInviteR\ainvites\"\xa1\x01\n" +
+	"\ainvites\x18\x04 \x03(\v20.gophercourier.platform.v1.PlatformServiceInviteR\ainvites\"\xe3\x01\n" +
 	"\x1fPlatformServiceListUsersRequest\x12'\n" +
 	"\x0femail_substring\x18\x01 \x01(\tR\x0eemailSubstring\x12'\n" +
 	"\x0finclude_deleted\x18\x02 \x01(\bR\x0eincludeDeleted\x12\x16\n" +
 	"\x06cursor\x18\x03 \x01(\tR\x06cursor\x12\x14\n" +
-	"\x05limit\x18\x04 \x01(\x05R\x05limit\"\xdc\x02\n" +
+	"\x05limit\x18\x04 \x01(\x05R\x05limit\x12\x12\n" +
+	"\x04sort\x18\x05 \x01(\tR\x04sort\x12,\n" +
+	"\x12active_within_days\x18\x06 \x01(\x05R\x10activeWithinDays\"\xa4\x04\n" +
 	"\x16PlatformServiceUserRow\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x12\n" +
@@ -4140,7 +5548,13 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12>\n" +
 	"\rlast_login_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\vlastLoginAt\x12\x1b\n" +
-	"\torg_count\x18\t \x01(\x05R\borgCount\"\x8c\x01\n" +
+	"\torg_count\x18\t \x01(\x05R\borgCount\x12D\n" +
+	"\x10last_activity_at\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\x0elastActivityAt\x12'\n" +
+	"\x0factive_sessions\x18\v \x01(\x05R\x0eactiveSessions\x12!\n" +
+	"\fdevice_count\x18\f \x01(\x05R\vdeviceCount\x12\x19\n" +
+	"\bmax_plan\x18\r \x01(\tR\amaxPlan\x12\x19\n" +
+	"\bhas_paid\x18\x0e \x01(\bR\ahasPaid\"\x8c\x01\n" +
 	" PlatformServiceListUsersResponse\x12G\n" +
 	"\x05users\x18\x01 \x03(\v21.gophercourier.platform.v1.PlatformServiceUserRowR\x05users\x12\x1f\n" +
 	"\vnext_cursor\x18\x02 \x01(\tR\n" +
@@ -4152,7 +5566,7 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\borg_name\x18\x02 \x01(\tR\aorgName\x12\x17\n" +
 	"\arole_id\x18\x03 \x01(\tR\x06roleId\x12\x1b\n" +
 	"\trole_name\x18\x04 \x01(\tR\broleName\x127\n" +
-	"\tjoined_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\bjoinedAt\"\xf1\x01\n" +
+	"\tjoined_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\bjoinedAt\"\xe7\x02\n" +
 	"\x1aPlatformServiceUserSession\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12\x1d\n" +
@@ -4162,7 +5576,11 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\flast_used_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"lastUsedAt\x129\n" +
 	"\n" +
-	"revoked_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\"\xbc\x02\n" +
+	"revoked_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\trevokedAt\x129\n" +
+	"\n" +
+	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"expires_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\"\x84\x04\n" +
 	"\x13PlatformServiceUser\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x12\n" +
@@ -4173,7 +5591,13 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"is_deleted\x18\x06 \x01(\bR\tisDeleted\x129\n" +
 	"\n" +
 	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12>\n" +
-	"\rlast_login_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\vlastLoginAt\"\x93\x02\n" +
+	"\rlast_login_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\vlastLoginAt\x12D\n" +
+	"\x10last_activity_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\x0elastActivityAt\x12'\n" +
+	"\x0factive_sessions\x18\n" +
+	" \x01(\x05R\x0eactiveSessions\x12!\n" +
+	"\fdevice_count\x18\v \x01(\x05R\vdeviceCount\x12\x19\n" +
+	"\bmax_plan\x18\f \x01(\tR\amaxPlan\x12\x19\n" +
+	"\bhas_paid\x18\r \x01(\bR\ahasPaid\"\x93\x02\n" +
 	"\x1ePlatformServiceGetUserResponse\x12B\n" +
 	"\x04user\x18\x01 \x01(\v2..gophercourier.platform.v1.PlatformServiceUserR\x04user\x12Z\n" +
 	"\vmemberships\x18\x02 \x03(\v28.gophercourier.platform.v1.PlatformServiceUserMembershipR\vmemberships\x12Q\n" +
@@ -4274,7 +5698,60 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\n" +
 	"plan_until\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tplanUntil\x12\x1f\n" +
 	"\vorg_version\x18\x05 \x01(\x05R\n" +
-	"orgVersion2\xce\r\n" +
+	"orgVersion\"#\n" +
+	"!PlatformServiceGetOverviewRequest\"D\n" +
+	"\x18PlatformServicePlanCount\x12\x12\n" +
+	"\x04plan\x18\x01 \x01(\tR\x04plan\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"\xe2\x04\n" +
+	"\"PlatformServiceGetOverviewResponse\x12\x1f\n" +
+	"\vusers_total\x18\x01 \x01(\x05R\n" +
+	"usersTotal\x12 \n" +
+	"\fusers_new_7d\x18\x02 \x01(\x05R\n" +
+	"usersNew7d\x12\"\n" +
+	"\rusers_new_30d\x18\x03 \x01(\x05R\vusersNew30d\x12&\n" +
+	"\x0fusers_active_7d\x18\x04 \x01(\x05R\rusersActive7d\x12(\n" +
+	"\x10users_active_30d\x18\x05 \x01(\x05R\x0eusersActive30d\x12)\n" +
+	"\x10users_unverified\x18\x06 \x01(\x05R\x0fusersUnverified\x12\x1d\n" +
+	"\n" +
+	"orgs_total\x18\a \x01(\x05R\torgsTotal\x12U\n" +
+	"\forgs_by_plan\x18\b \x03(\v23.gophercourier.platform.v1.PlatformServicePlanCountR\n" +
+	"orgsByPlan\x121\n" +
+	"\x14subscriptions_active\x18\t \x01(\x05R\x13subscriptionsActive\x124\n" +
+	"\x16subscriptions_past_due\x18\n" +
+	" \x01(\x05R\x14subscriptionsPastDue\x12\x1f\n" +
+	"\vpaying_orgs\x18\v \x01(\x05R\n" +
+	"payingOrgs\x12X\n" +
+	"\x0erecent_signups\x18\f \x03(\v21.gophercourier.platform.v1.PlatformServiceUserRowR\rrecentSignups\"\x97\x01\n" +
+	"'PlatformServiceForceAddOrgMemberRequest\x12\x15\n" +
+	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12$\n" +
+	"\x0etarget_user_id\x18\x02 \x01(\tR\ftargetUserId\x12\x17\n" +
+	"\arole_id\x18\x03 \x01(\tR\x06roleId\x12\x16\n" +
+	"\x06reason\x18\x04 \x01(\tR\x06reason\"\xbf\x01\n" +
+	"(PlatformServiceForceAddOrgMemberResponse\x12\x15\n" +
+	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x17\n" +
+	"\arole_id\x18\x03 \x01(\tR\x06roleId\x12%\n" +
+	"\x0ealready_member\x18\x04 \x01(\bR\ralreadyMember\x12#\n" +
+	"\rprevious_role\x18\x05 \x01(\tR\fpreviousRole\"\xa5\x01\n" +
+	".PlatformServiceForceChangeOrgMemberRoleRequest\x12\x15\n" +
+	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12$\n" +
+	"\x0etarget_user_id\x18\x02 \x01(\tR\ftargetUserId\x12\x1e\n" +
+	"\vnew_role_id\x18\x03 \x01(\tR\tnewRoleId\x12\x16\n" +
+	"\x06reason\x18\x04 \x01(\tR\x06reason\"\xa1\x01\n" +
+	"/PlatformServiceForceChangeOrgMemberRoleResponse\x12\x15\n" +
+	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12#\n" +
+	"\rprevious_role\x18\x03 \x01(\tR\fpreviousRole\x12\x19\n" +
+	"\bnew_role\x18\x04 \x01(\tR\anewRole\"\x81\x01\n" +
+	"*PlatformServiceForceRemoveOrgMemberRequest\x12\x15\n" +
+	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12$\n" +
+	"\x0etarget_user_id\x18\x02 \x01(\tR\ftargetUserId\x12\x16\n" +
+	"\x06reason\x18\x03 \x01(\tR\x06reason\"\xae\x01\n" +
+	"+PlatformServiceForceRemoveOrgMemberResponse\x12\x15\n" +
+	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x19\n" +
+	"\bhad_role\x18\x03 \x01(\tR\ahadRole\x124\n" +
+	"\x16ws_memberships_removed\x18\x04 \x01(\x03R\x14wsMembershipsRemoved2\xd6\x12\n" +
 	"\x0fPlatformService\x12\x81\x01\n" +
 	"\bListOrgs\x129.gophercourier.platform.v1.PlatformServiceListOrgsRequest\x1a:.gophercourier.platform.v1.PlatformServiceListOrgsResponse\x12{\n" +
 	"\x06GetOrg\x127.gophercourier.platform.v1.PlatformServiceGetOrgRequest\x1a8.gophercourier.platform.v1.PlatformServiceGetOrgResponse\x12\x84\x01\n" +
@@ -4287,110 +5764,141 @@ const file_gophercourier_platform_v1_platform_proto_rawDesc = "" +
 	"\x0fForceDeleteUser\x12@.gophercourier.platform.v1.PlatformServiceForceDeleteUserRequest\x1aA.gophercourier.platform.v1.PlatformServiceForceDeleteUserResponse\x12\x93\x01\n" +
 	"\x0eForceDeleteOrg\x12?.gophercourier.platform.v1.PlatformServiceForceDeleteOrgRequest\x1a@.gophercourier.platform.v1.PlatformServiceForceDeleteOrgResponse\x12\x99\x01\n" +
 	"\x10AdminVerifyEmail\x12A.gophercourier.platform.v1.PlatformServiceAdminVerifyEmailRequest\x1aB.gophercourier.platform.v1.PlatformServiceAdminVerifyEmailResponse\x12~\n" +
-	"\aSetPlan\x128.gophercourier.platform.v1.PlatformServiceSetPlanRequest\x1a9.gophercourier.platform.v1.PlatformServiceSetPlanResponseB\xf9\x01\n" +
+	"\aSetPlan\x128.gophercourier.platform.v1.PlatformServiceSetPlanRequest\x1a9.gophercourier.platform.v1.PlatformServiceSetPlanResponse\x12\x8a\x01\n" +
+	"\vGetOverview\x12<.gophercourier.platform.v1.PlatformServiceGetOverviewRequest\x1a=.gophercourier.platform.v1.PlatformServiceGetOverviewResponse\x12\x9c\x01\n" +
+	"\x11ForceAddOrgMember\x12B.gophercourier.platform.v1.PlatformServiceForceAddOrgMemberRequest\x1aC.gophercourier.platform.v1.PlatformServiceForceAddOrgMemberResponse\x12\xb1\x01\n" +
+	"\x18ForceChangeOrgMemberRole\x12I.gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleRequest\x1aJ.gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleResponse\x12\xa5\x01\n" +
+	"\x14ForceRemoveOrgMember\x12E.gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberRequest\x1aF.gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberResponseB\xf9\x01\n" +
 	"\x1dcom.gophercourier.platform.v1B\rPlatformProtoP\x01ZCgithub.com/tetiva-app/proto/go/gophercourier/platform/v1;platformv1\xa2\x02\x03GPX\xaa\x02\x19Gophercourier.Platform.V1\xca\x02\x19Gophercourier\\Platform\\V1\xe2\x02%Gophercourier\\Platform\\V1\\GPBMetadata\xea\x02\x1bGophercourier::Platform::V1b\x06proto3"
 
-var file_gophercourier_platform_v1_platform_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
+var file_gophercourier_platform_v1_platform_proto_msgTypes = make([]protoimpl.MessageInfo, 44)
 var file_gophercourier_platform_v1_platform_proto_goTypes = []any{
-	(*PlatformServiceListOrgsRequest)(nil),             // 0: gophercourier.platform.v1.PlatformServiceListOrgsRequest
-	(*PlatformServiceOrgRow)(nil),                      // 1: gophercourier.platform.v1.PlatformServiceOrgRow
-	(*PlatformServiceListOrgsResponse)(nil),            // 2: gophercourier.platform.v1.PlatformServiceListOrgsResponse
-	(*PlatformServiceGetOrgRequest)(nil),               // 3: gophercourier.platform.v1.PlatformServiceGetOrgRequest
-	(*PlatformServiceOrgMember)(nil),                   // 4: gophercourier.platform.v1.PlatformServiceOrgMember
-	(*PlatformServiceWorkspace)(nil),                   // 5: gophercourier.platform.v1.PlatformServiceWorkspace
-	(*PlatformServiceInvite)(nil),                      // 6: gophercourier.platform.v1.PlatformServiceInvite
-	(*PlatformServiceOrg)(nil),                         // 7: gophercourier.platform.v1.PlatformServiceOrg
-	(*PlatformServiceGetOrgResponse)(nil),              // 8: gophercourier.platform.v1.PlatformServiceGetOrgResponse
-	(*PlatformServiceListUsersRequest)(nil),            // 9: gophercourier.platform.v1.PlatformServiceListUsersRequest
-	(*PlatformServiceUserRow)(nil),                     // 10: gophercourier.platform.v1.PlatformServiceUserRow
-	(*PlatformServiceListUsersResponse)(nil),           // 11: gophercourier.platform.v1.PlatformServiceListUsersResponse
-	(*PlatformServiceGetUserRequest)(nil),              // 12: gophercourier.platform.v1.PlatformServiceGetUserRequest
-	(*PlatformServiceUserMembership)(nil),              // 13: gophercourier.platform.v1.PlatformServiceUserMembership
-	(*PlatformServiceUserSession)(nil),                 // 14: gophercourier.platform.v1.PlatformServiceUserSession
-	(*PlatformServiceUser)(nil),                        // 15: gophercourier.platform.v1.PlatformServiceUser
-	(*PlatformServiceGetUserResponse)(nil),             // 16: gophercourier.platform.v1.PlatformServiceGetUserResponse
-	(*PlatformServiceAuditFilter)(nil),                 // 17: gophercourier.platform.v1.PlatformServiceAuditFilter
-	(*PlatformServiceAuditEntry)(nil),                  // 18: gophercourier.platform.v1.PlatformServiceAuditEntry
-	(*PlatformServiceListAuditRequest)(nil),            // 19: gophercourier.platform.v1.PlatformServiceListAuditRequest
-	(*PlatformServiceListAuditResponse)(nil),           // 20: gophercourier.platform.v1.PlatformServiceListAuditResponse
-	(*PlatformServiceForceResetPasswordRequest)(nil),   // 21: gophercourier.platform.v1.PlatformServiceForceResetPasswordRequest
-	(*PlatformServiceForceResetPasswordResponse)(nil),  // 22: gophercourier.platform.v1.PlatformServiceForceResetPasswordResponse
-	(*PlatformServiceForceTransferOrgRequest)(nil),     // 23: gophercourier.platform.v1.PlatformServiceForceTransferOrgRequest
-	(*PlatformServiceForceTransferOrgResponse)(nil),    // 24: gophercourier.platform.v1.PlatformServiceForceTransferOrgResponse
-	(*PlatformServiceForceRevokeSessionsRequest)(nil),  // 25: gophercourier.platform.v1.PlatformServiceForceRevokeSessionsRequest
-	(*PlatformServiceForceRevokeSessionsResponse)(nil), // 26: gophercourier.platform.v1.PlatformServiceForceRevokeSessionsResponse
-	(*PlatformServiceForceDeleteUserRequest)(nil),      // 27: gophercourier.platform.v1.PlatformServiceForceDeleteUserRequest
-	(*PlatformServiceForceDeleteUserResponse)(nil),     // 28: gophercourier.platform.v1.PlatformServiceForceDeleteUserResponse
-	(*PlatformServiceForceDeleteOrgRequest)(nil),       // 29: gophercourier.platform.v1.PlatformServiceForceDeleteOrgRequest
-	(*PlatformServiceForceDeleteOrgResponse)(nil),      // 30: gophercourier.platform.v1.PlatformServiceForceDeleteOrgResponse
-	(*PlatformServiceAdminVerifyEmailRequest)(nil),     // 31: gophercourier.platform.v1.PlatformServiceAdminVerifyEmailRequest
-	(*PlatformServiceAdminVerifyEmailResponse)(nil),    // 32: gophercourier.platform.v1.PlatformServiceAdminVerifyEmailResponse
-	(*PlatformServiceSetPlanRequest)(nil),              // 33: gophercourier.platform.v1.PlatformServiceSetPlanRequest
-	(*PlatformServiceSetPlanResponse)(nil),             // 34: gophercourier.platform.v1.PlatformServiceSetPlanResponse
-	(*timestamppb.Timestamp)(nil),                      // 35: google.protobuf.Timestamp
+	(*PlatformServiceListOrgsRequest)(nil),                  // 0: gophercourier.platform.v1.PlatformServiceListOrgsRequest
+	(*PlatformServiceOrgRow)(nil),                           // 1: gophercourier.platform.v1.PlatformServiceOrgRow
+	(*PlatformServiceListOrgsResponse)(nil),                 // 2: gophercourier.platform.v1.PlatformServiceListOrgsResponse
+	(*PlatformServiceGetOrgRequest)(nil),                    // 3: gophercourier.platform.v1.PlatformServiceGetOrgRequest
+	(*PlatformServiceOrgMember)(nil),                        // 4: gophercourier.platform.v1.PlatformServiceOrgMember
+	(*PlatformServiceWorkspace)(nil),                        // 5: gophercourier.platform.v1.PlatformServiceWorkspace
+	(*PlatformServiceInvite)(nil),                           // 6: gophercourier.platform.v1.PlatformServiceInvite
+	(*PlatformServiceOrg)(nil),                              // 7: gophercourier.platform.v1.PlatformServiceOrg
+	(*PlatformServiceGetOrgResponse)(nil),                   // 8: gophercourier.platform.v1.PlatformServiceGetOrgResponse
+	(*PlatformServiceListUsersRequest)(nil),                 // 9: gophercourier.platform.v1.PlatformServiceListUsersRequest
+	(*PlatformServiceUserRow)(nil),                          // 10: gophercourier.platform.v1.PlatformServiceUserRow
+	(*PlatformServiceListUsersResponse)(nil),                // 11: gophercourier.platform.v1.PlatformServiceListUsersResponse
+	(*PlatformServiceGetUserRequest)(nil),                   // 12: gophercourier.platform.v1.PlatformServiceGetUserRequest
+	(*PlatformServiceUserMembership)(nil),                   // 13: gophercourier.platform.v1.PlatformServiceUserMembership
+	(*PlatformServiceUserSession)(nil),                      // 14: gophercourier.platform.v1.PlatformServiceUserSession
+	(*PlatformServiceUser)(nil),                             // 15: gophercourier.platform.v1.PlatformServiceUser
+	(*PlatformServiceGetUserResponse)(nil),                  // 16: gophercourier.platform.v1.PlatformServiceGetUserResponse
+	(*PlatformServiceAuditFilter)(nil),                      // 17: gophercourier.platform.v1.PlatformServiceAuditFilter
+	(*PlatformServiceAuditEntry)(nil),                       // 18: gophercourier.platform.v1.PlatformServiceAuditEntry
+	(*PlatformServiceListAuditRequest)(nil),                 // 19: gophercourier.platform.v1.PlatformServiceListAuditRequest
+	(*PlatformServiceListAuditResponse)(nil),                // 20: gophercourier.platform.v1.PlatformServiceListAuditResponse
+	(*PlatformServiceForceResetPasswordRequest)(nil),        // 21: gophercourier.platform.v1.PlatformServiceForceResetPasswordRequest
+	(*PlatformServiceForceResetPasswordResponse)(nil),       // 22: gophercourier.platform.v1.PlatformServiceForceResetPasswordResponse
+	(*PlatformServiceForceTransferOrgRequest)(nil),          // 23: gophercourier.platform.v1.PlatformServiceForceTransferOrgRequest
+	(*PlatformServiceForceTransferOrgResponse)(nil),         // 24: gophercourier.platform.v1.PlatformServiceForceTransferOrgResponse
+	(*PlatformServiceForceRevokeSessionsRequest)(nil),       // 25: gophercourier.platform.v1.PlatformServiceForceRevokeSessionsRequest
+	(*PlatformServiceForceRevokeSessionsResponse)(nil),      // 26: gophercourier.platform.v1.PlatformServiceForceRevokeSessionsResponse
+	(*PlatformServiceForceDeleteUserRequest)(nil),           // 27: gophercourier.platform.v1.PlatformServiceForceDeleteUserRequest
+	(*PlatformServiceForceDeleteUserResponse)(nil),          // 28: gophercourier.platform.v1.PlatformServiceForceDeleteUserResponse
+	(*PlatformServiceForceDeleteOrgRequest)(nil),            // 29: gophercourier.platform.v1.PlatformServiceForceDeleteOrgRequest
+	(*PlatformServiceForceDeleteOrgResponse)(nil),           // 30: gophercourier.platform.v1.PlatformServiceForceDeleteOrgResponse
+	(*PlatformServiceAdminVerifyEmailRequest)(nil),          // 31: gophercourier.platform.v1.PlatformServiceAdminVerifyEmailRequest
+	(*PlatformServiceAdminVerifyEmailResponse)(nil),         // 32: gophercourier.platform.v1.PlatformServiceAdminVerifyEmailResponse
+	(*PlatformServiceSetPlanRequest)(nil),                   // 33: gophercourier.platform.v1.PlatformServiceSetPlanRequest
+	(*PlatformServiceSetPlanResponse)(nil),                  // 34: gophercourier.platform.v1.PlatformServiceSetPlanResponse
+	(*PlatformServiceGetOverviewRequest)(nil),               // 35: gophercourier.platform.v1.PlatformServiceGetOverviewRequest
+	(*PlatformServicePlanCount)(nil),                        // 36: gophercourier.platform.v1.PlatformServicePlanCount
+	(*PlatformServiceGetOverviewResponse)(nil),              // 37: gophercourier.platform.v1.PlatformServiceGetOverviewResponse
+	(*PlatformServiceForceAddOrgMemberRequest)(nil),         // 38: gophercourier.platform.v1.PlatformServiceForceAddOrgMemberRequest
+	(*PlatformServiceForceAddOrgMemberResponse)(nil),        // 39: gophercourier.platform.v1.PlatformServiceForceAddOrgMemberResponse
+	(*PlatformServiceForceChangeOrgMemberRoleRequest)(nil),  // 40: gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleRequest
+	(*PlatformServiceForceChangeOrgMemberRoleResponse)(nil), // 41: gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleResponse
+	(*PlatformServiceForceRemoveOrgMemberRequest)(nil),      // 42: gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberRequest
+	(*PlatformServiceForceRemoveOrgMemberResponse)(nil),     // 43: gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberResponse
+	(*timestamppb.Timestamp)(nil),                           // 44: google.protobuf.Timestamp
 }
 var file_gophercourier_platform_v1_platform_proto_depIdxs = []int32{
-	35, // 0: gophercourier.platform.v1.PlatformServiceOrgRow.last_activity_at:type_name -> google.protobuf.Timestamp
-	35, // 1: gophercourier.platform.v1.PlatformServiceOrgRow.created_at:type_name -> google.protobuf.Timestamp
-	35, // 2: gophercourier.platform.v1.PlatformServiceOrgRow.updated_at:type_name -> google.protobuf.Timestamp
-	1,  // 3: gophercourier.platform.v1.PlatformServiceListOrgsResponse.orgs:type_name -> gophercourier.platform.v1.PlatformServiceOrgRow
-	35, // 4: gophercourier.platform.v1.PlatformServiceOrgMember.joined_at:type_name -> google.protobuf.Timestamp
-	35, // 5: gophercourier.platform.v1.PlatformServiceOrgMember.last_login_at:type_name -> google.protobuf.Timestamp
-	35, // 6: gophercourier.platform.v1.PlatformServiceWorkspace.last_sync_at:type_name -> google.protobuf.Timestamp
-	35, // 7: gophercourier.platform.v1.PlatformServiceInvite.expires_at:type_name -> google.protobuf.Timestamp
-	35, // 8: gophercourier.platform.v1.PlatformServiceOrg.created_at:type_name -> google.protobuf.Timestamp
-	35, // 9: gophercourier.platform.v1.PlatformServiceOrg.updated_at:type_name -> google.protobuf.Timestamp
-	7,  // 10: gophercourier.platform.v1.PlatformServiceGetOrgResponse.org:type_name -> gophercourier.platform.v1.PlatformServiceOrg
-	4,  // 11: gophercourier.platform.v1.PlatformServiceGetOrgResponse.members:type_name -> gophercourier.platform.v1.PlatformServiceOrgMember
-	5,  // 12: gophercourier.platform.v1.PlatformServiceGetOrgResponse.workspaces:type_name -> gophercourier.platform.v1.PlatformServiceWorkspace
-	6,  // 13: gophercourier.platform.v1.PlatformServiceGetOrgResponse.invites:type_name -> gophercourier.platform.v1.PlatformServiceInvite
-	35, // 14: gophercourier.platform.v1.PlatformServiceUserRow.created_at:type_name -> google.protobuf.Timestamp
-	35, // 15: gophercourier.platform.v1.PlatformServiceUserRow.last_login_at:type_name -> google.protobuf.Timestamp
-	10, // 16: gophercourier.platform.v1.PlatformServiceListUsersResponse.users:type_name -> gophercourier.platform.v1.PlatformServiceUserRow
-	35, // 17: gophercourier.platform.v1.PlatformServiceUserMembership.joined_at:type_name -> google.protobuf.Timestamp
-	35, // 18: gophercourier.platform.v1.PlatformServiceUserSession.last_used_at:type_name -> google.protobuf.Timestamp
-	35, // 19: gophercourier.platform.v1.PlatformServiceUserSession.revoked_at:type_name -> google.protobuf.Timestamp
-	35, // 20: gophercourier.platform.v1.PlatformServiceUser.created_at:type_name -> google.protobuf.Timestamp
-	35, // 21: gophercourier.platform.v1.PlatformServiceUser.last_login_at:type_name -> google.protobuf.Timestamp
-	15, // 22: gophercourier.platform.v1.PlatformServiceGetUserResponse.user:type_name -> gophercourier.platform.v1.PlatformServiceUser
-	13, // 23: gophercourier.platform.v1.PlatformServiceGetUserResponse.memberships:type_name -> gophercourier.platform.v1.PlatformServiceUserMembership
-	14, // 24: gophercourier.platform.v1.PlatformServiceGetUserResponse.sessions:type_name -> gophercourier.platform.v1.PlatformServiceUserSession
-	35, // 25: gophercourier.platform.v1.PlatformServiceAuditFilter.from:type_name -> google.protobuf.Timestamp
-	35, // 26: gophercourier.platform.v1.PlatformServiceAuditFilter.to:type_name -> google.protobuf.Timestamp
-	35, // 27: gophercourier.platform.v1.PlatformServiceAuditEntry.timestamp:type_name -> google.protobuf.Timestamp
-	17, // 28: gophercourier.platform.v1.PlatformServiceListAuditRequest.filter:type_name -> gophercourier.platform.v1.PlatformServiceAuditFilter
-	18, // 29: gophercourier.platform.v1.PlatformServiceListAuditResponse.entries:type_name -> gophercourier.platform.v1.PlatformServiceAuditEntry
-	35, // 30: gophercourier.platform.v1.PlatformServiceSetPlanRequest.plan_until:type_name -> google.protobuf.Timestamp
-	35, // 31: gophercourier.platform.v1.PlatformServiceSetPlanResponse.plan_until:type_name -> google.protobuf.Timestamp
-	0,  // 32: gophercourier.platform.v1.PlatformService.ListOrgs:input_type -> gophercourier.platform.v1.PlatformServiceListOrgsRequest
-	3,  // 33: gophercourier.platform.v1.PlatformService.GetOrg:input_type -> gophercourier.platform.v1.PlatformServiceGetOrgRequest
-	9,  // 34: gophercourier.platform.v1.PlatformService.ListUsers:input_type -> gophercourier.platform.v1.PlatformServiceListUsersRequest
-	12, // 35: gophercourier.platform.v1.PlatformService.GetUser:input_type -> gophercourier.platform.v1.PlatformServiceGetUserRequest
-	19, // 36: gophercourier.platform.v1.PlatformService.ListAudit:input_type -> gophercourier.platform.v1.PlatformServiceListAuditRequest
-	21, // 37: gophercourier.platform.v1.PlatformService.ForceResetPassword:input_type -> gophercourier.platform.v1.PlatformServiceForceResetPasswordRequest
-	23, // 38: gophercourier.platform.v1.PlatformService.ForceTransferOrg:input_type -> gophercourier.platform.v1.PlatformServiceForceTransferOrgRequest
-	25, // 39: gophercourier.platform.v1.PlatformService.ForceRevokeSessions:input_type -> gophercourier.platform.v1.PlatformServiceForceRevokeSessionsRequest
-	27, // 40: gophercourier.platform.v1.PlatformService.ForceDeleteUser:input_type -> gophercourier.platform.v1.PlatformServiceForceDeleteUserRequest
-	29, // 41: gophercourier.platform.v1.PlatformService.ForceDeleteOrg:input_type -> gophercourier.platform.v1.PlatformServiceForceDeleteOrgRequest
-	31, // 42: gophercourier.platform.v1.PlatformService.AdminVerifyEmail:input_type -> gophercourier.platform.v1.PlatformServiceAdminVerifyEmailRequest
-	33, // 43: gophercourier.platform.v1.PlatformService.SetPlan:input_type -> gophercourier.platform.v1.PlatformServiceSetPlanRequest
-	2,  // 44: gophercourier.platform.v1.PlatformService.ListOrgs:output_type -> gophercourier.platform.v1.PlatformServiceListOrgsResponse
-	8,  // 45: gophercourier.platform.v1.PlatformService.GetOrg:output_type -> gophercourier.platform.v1.PlatformServiceGetOrgResponse
-	11, // 46: gophercourier.platform.v1.PlatformService.ListUsers:output_type -> gophercourier.platform.v1.PlatformServiceListUsersResponse
-	16, // 47: gophercourier.platform.v1.PlatformService.GetUser:output_type -> gophercourier.platform.v1.PlatformServiceGetUserResponse
-	20, // 48: gophercourier.platform.v1.PlatformService.ListAudit:output_type -> gophercourier.platform.v1.PlatformServiceListAuditResponse
-	22, // 49: gophercourier.platform.v1.PlatformService.ForceResetPassword:output_type -> gophercourier.platform.v1.PlatformServiceForceResetPasswordResponse
-	24, // 50: gophercourier.platform.v1.PlatformService.ForceTransferOrg:output_type -> gophercourier.platform.v1.PlatformServiceForceTransferOrgResponse
-	26, // 51: gophercourier.platform.v1.PlatformService.ForceRevokeSessions:output_type -> gophercourier.platform.v1.PlatformServiceForceRevokeSessionsResponse
-	28, // 52: gophercourier.platform.v1.PlatformService.ForceDeleteUser:output_type -> gophercourier.platform.v1.PlatformServiceForceDeleteUserResponse
-	30, // 53: gophercourier.platform.v1.PlatformService.ForceDeleteOrg:output_type -> gophercourier.platform.v1.PlatformServiceForceDeleteOrgResponse
-	32, // 54: gophercourier.platform.v1.PlatformService.AdminVerifyEmail:output_type -> gophercourier.platform.v1.PlatformServiceAdminVerifyEmailResponse
-	34, // 55: gophercourier.platform.v1.PlatformService.SetPlan:output_type -> gophercourier.platform.v1.PlatformServiceSetPlanResponse
-	44, // [44:56] is the sub-list for method output_type
-	32, // [32:44] is the sub-list for method input_type
-	32, // [32:32] is the sub-list for extension type_name
-	32, // [32:32] is the sub-list for extension extendee
-	0,  // [0:32] is the sub-list for field type_name
+	44, // 0: gophercourier.platform.v1.PlatformServiceOrgRow.last_activity_at:type_name -> google.protobuf.Timestamp
+	44, // 1: gophercourier.platform.v1.PlatformServiceOrgRow.created_at:type_name -> google.protobuf.Timestamp
+	44, // 2: gophercourier.platform.v1.PlatformServiceOrgRow.updated_at:type_name -> google.protobuf.Timestamp
+	44, // 3: gophercourier.platform.v1.PlatformServiceOrgRow.plan_until:type_name -> google.protobuf.Timestamp
+	44, // 4: gophercourier.platform.v1.PlatformServiceOrgRow.current_period_end:type_name -> google.protobuf.Timestamp
+	1,  // 5: gophercourier.platform.v1.PlatformServiceListOrgsResponse.orgs:type_name -> gophercourier.platform.v1.PlatformServiceOrgRow
+	44, // 6: gophercourier.platform.v1.PlatformServiceOrgMember.joined_at:type_name -> google.protobuf.Timestamp
+	44, // 7: gophercourier.platform.v1.PlatformServiceOrgMember.last_login_at:type_name -> google.protobuf.Timestamp
+	44, // 8: gophercourier.platform.v1.PlatformServiceWorkspace.last_sync_at:type_name -> google.protobuf.Timestamp
+	44, // 9: gophercourier.platform.v1.PlatformServiceInvite.expires_at:type_name -> google.protobuf.Timestamp
+	44, // 10: gophercourier.platform.v1.PlatformServiceOrg.created_at:type_name -> google.protobuf.Timestamp
+	44, // 11: gophercourier.platform.v1.PlatformServiceOrg.updated_at:type_name -> google.protobuf.Timestamp
+	44, // 12: gophercourier.platform.v1.PlatformServiceOrg.plan_until:type_name -> google.protobuf.Timestamp
+	44, // 13: gophercourier.platform.v1.PlatformServiceOrg.current_period_end:type_name -> google.protobuf.Timestamp
+	7,  // 14: gophercourier.platform.v1.PlatformServiceGetOrgResponse.org:type_name -> gophercourier.platform.v1.PlatformServiceOrg
+	4,  // 15: gophercourier.platform.v1.PlatformServiceGetOrgResponse.members:type_name -> gophercourier.platform.v1.PlatformServiceOrgMember
+	5,  // 16: gophercourier.platform.v1.PlatformServiceGetOrgResponse.workspaces:type_name -> gophercourier.platform.v1.PlatformServiceWorkspace
+	6,  // 17: gophercourier.platform.v1.PlatformServiceGetOrgResponse.invites:type_name -> gophercourier.platform.v1.PlatformServiceInvite
+	44, // 18: gophercourier.platform.v1.PlatformServiceUserRow.created_at:type_name -> google.protobuf.Timestamp
+	44, // 19: gophercourier.platform.v1.PlatformServiceUserRow.last_login_at:type_name -> google.protobuf.Timestamp
+	44, // 20: gophercourier.platform.v1.PlatformServiceUserRow.last_activity_at:type_name -> google.protobuf.Timestamp
+	10, // 21: gophercourier.platform.v1.PlatformServiceListUsersResponse.users:type_name -> gophercourier.platform.v1.PlatformServiceUserRow
+	44, // 22: gophercourier.platform.v1.PlatformServiceUserMembership.joined_at:type_name -> google.protobuf.Timestamp
+	44, // 23: gophercourier.platform.v1.PlatformServiceUserSession.last_used_at:type_name -> google.protobuf.Timestamp
+	44, // 24: gophercourier.platform.v1.PlatformServiceUserSession.revoked_at:type_name -> google.protobuf.Timestamp
+	44, // 25: gophercourier.platform.v1.PlatformServiceUserSession.created_at:type_name -> google.protobuf.Timestamp
+	44, // 26: gophercourier.platform.v1.PlatformServiceUserSession.expires_at:type_name -> google.protobuf.Timestamp
+	44, // 27: gophercourier.platform.v1.PlatformServiceUser.created_at:type_name -> google.protobuf.Timestamp
+	44, // 28: gophercourier.platform.v1.PlatformServiceUser.last_login_at:type_name -> google.protobuf.Timestamp
+	44, // 29: gophercourier.platform.v1.PlatformServiceUser.last_activity_at:type_name -> google.protobuf.Timestamp
+	15, // 30: gophercourier.platform.v1.PlatformServiceGetUserResponse.user:type_name -> gophercourier.platform.v1.PlatformServiceUser
+	13, // 31: gophercourier.platform.v1.PlatformServiceGetUserResponse.memberships:type_name -> gophercourier.platform.v1.PlatformServiceUserMembership
+	14, // 32: gophercourier.platform.v1.PlatformServiceGetUserResponse.sessions:type_name -> gophercourier.platform.v1.PlatformServiceUserSession
+	44, // 33: gophercourier.platform.v1.PlatformServiceAuditFilter.from:type_name -> google.protobuf.Timestamp
+	44, // 34: gophercourier.platform.v1.PlatformServiceAuditFilter.to:type_name -> google.protobuf.Timestamp
+	44, // 35: gophercourier.platform.v1.PlatformServiceAuditEntry.timestamp:type_name -> google.protobuf.Timestamp
+	17, // 36: gophercourier.platform.v1.PlatformServiceListAuditRequest.filter:type_name -> gophercourier.platform.v1.PlatformServiceAuditFilter
+	18, // 37: gophercourier.platform.v1.PlatformServiceListAuditResponse.entries:type_name -> gophercourier.platform.v1.PlatformServiceAuditEntry
+	44, // 38: gophercourier.platform.v1.PlatformServiceSetPlanRequest.plan_until:type_name -> google.protobuf.Timestamp
+	44, // 39: gophercourier.platform.v1.PlatformServiceSetPlanResponse.plan_until:type_name -> google.protobuf.Timestamp
+	36, // 40: gophercourier.platform.v1.PlatformServiceGetOverviewResponse.orgs_by_plan:type_name -> gophercourier.platform.v1.PlatformServicePlanCount
+	10, // 41: gophercourier.platform.v1.PlatformServiceGetOverviewResponse.recent_signups:type_name -> gophercourier.platform.v1.PlatformServiceUserRow
+	0,  // 42: gophercourier.platform.v1.PlatformService.ListOrgs:input_type -> gophercourier.platform.v1.PlatformServiceListOrgsRequest
+	3,  // 43: gophercourier.platform.v1.PlatformService.GetOrg:input_type -> gophercourier.platform.v1.PlatformServiceGetOrgRequest
+	9,  // 44: gophercourier.platform.v1.PlatformService.ListUsers:input_type -> gophercourier.platform.v1.PlatformServiceListUsersRequest
+	12, // 45: gophercourier.platform.v1.PlatformService.GetUser:input_type -> gophercourier.platform.v1.PlatformServiceGetUserRequest
+	19, // 46: gophercourier.platform.v1.PlatformService.ListAudit:input_type -> gophercourier.platform.v1.PlatformServiceListAuditRequest
+	21, // 47: gophercourier.platform.v1.PlatformService.ForceResetPassword:input_type -> gophercourier.platform.v1.PlatformServiceForceResetPasswordRequest
+	23, // 48: gophercourier.platform.v1.PlatformService.ForceTransferOrg:input_type -> gophercourier.platform.v1.PlatformServiceForceTransferOrgRequest
+	25, // 49: gophercourier.platform.v1.PlatformService.ForceRevokeSessions:input_type -> gophercourier.platform.v1.PlatformServiceForceRevokeSessionsRequest
+	27, // 50: gophercourier.platform.v1.PlatformService.ForceDeleteUser:input_type -> gophercourier.platform.v1.PlatformServiceForceDeleteUserRequest
+	29, // 51: gophercourier.platform.v1.PlatformService.ForceDeleteOrg:input_type -> gophercourier.platform.v1.PlatformServiceForceDeleteOrgRequest
+	31, // 52: gophercourier.platform.v1.PlatformService.AdminVerifyEmail:input_type -> gophercourier.platform.v1.PlatformServiceAdminVerifyEmailRequest
+	33, // 53: gophercourier.platform.v1.PlatformService.SetPlan:input_type -> gophercourier.platform.v1.PlatformServiceSetPlanRequest
+	35, // 54: gophercourier.platform.v1.PlatformService.GetOverview:input_type -> gophercourier.platform.v1.PlatformServiceGetOverviewRequest
+	38, // 55: gophercourier.platform.v1.PlatformService.ForceAddOrgMember:input_type -> gophercourier.platform.v1.PlatformServiceForceAddOrgMemberRequest
+	40, // 56: gophercourier.platform.v1.PlatformService.ForceChangeOrgMemberRole:input_type -> gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleRequest
+	42, // 57: gophercourier.platform.v1.PlatformService.ForceRemoveOrgMember:input_type -> gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberRequest
+	2,  // 58: gophercourier.platform.v1.PlatformService.ListOrgs:output_type -> gophercourier.platform.v1.PlatformServiceListOrgsResponse
+	8,  // 59: gophercourier.platform.v1.PlatformService.GetOrg:output_type -> gophercourier.platform.v1.PlatformServiceGetOrgResponse
+	11, // 60: gophercourier.platform.v1.PlatformService.ListUsers:output_type -> gophercourier.platform.v1.PlatformServiceListUsersResponse
+	16, // 61: gophercourier.platform.v1.PlatformService.GetUser:output_type -> gophercourier.platform.v1.PlatformServiceGetUserResponse
+	20, // 62: gophercourier.platform.v1.PlatformService.ListAudit:output_type -> gophercourier.platform.v1.PlatformServiceListAuditResponse
+	22, // 63: gophercourier.platform.v1.PlatformService.ForceResetPassword:output_type -> gophercourier.platform.v1.PlatformServiceForceResetPasswordResponse
+	24, // 64: gophercourier.platform.v1.PlatformService.ForceTransferOrg:output_type -> gophercourier.platform.v1.PlatformServiceForceTransferOrgResponse
+	26, // 65: gophercourier.platform.v1.PlatformService.ForceRevokeSessions:output_type -> gophercourier.platform.v1.PlatformServiceForceRevokeSessionsResponse
+	28, // 66: gophercourier.platform.v1.PlatformService.ForceDeleteUser:output_type -> gophercourier.platform.v1.PlatformServiceForceDeleteUserResponse
+	30, // 67: gophercourier.platform.v1.PlatformService.ForceDeleteOrg:output_type -> gophercourier.platform.v1.PlatformServiceForceDeleteOrgResponse
+	32, // 68: gophercourier.platform.v1.PlatformService.AdminVerifyEmail:output_type -> gophercourier.platform.v1.PlatformServiceAdminVerifyEmailResponse
+	34, // 69: gophercourier.platform.v1.PlatformService.SetPlan:output_type -> gophercourier.platform.v1.PlatformServiceSetPlanResponse
+	37, // 70: gophercourier.platform.v1.PlatformService.GetOverview:output_type -> gophercourier.platform.v1.PlatformServiceGetOverviewResponse
+	39, // 71: gophercourier.platform.v1.PlatformService.ForceAddOrgMember:output_type -> gophercourier.platform.v1.PlatformServiceForceAddOrgMemberResponse
+	41, // 72: gophercourier.platform.v1.PlatformService.ForceChangeOrgMemberRole:output_type -> gophercourier.platform.v1.PlatformServiceForceChangeOrgMemberRoleResponse
+	43, // 73: gophercourier.platform.v1.PlatformService.ForceRemoveOrgMember:output_type -> gophercourier.platform.v1.PlatformServiceForceRemoveOrgMemberResponse
+	58, // [58:74] is the sub-list for method output_type
+	42, // [42:58] is the sub-list for method input_type
+	42, // [42:42] is the sub-list for extension type_name
+	42, // [42:42] is the sub-list for extension extendee
+	0,  // [0:42] is the sub-list for field type_name
 }
 
 func init() { file_gophercourier_platform_v1_platform_proto_init() }
@@ -4404,7 +5912,7 @@ func file_gophercourier_platform_v1_platform_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_gophercourier_platform_v1_platform_proto_rawDesc), len(file_gophercourier_platform_v1_platform_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   35,
+			NumMessages:   44,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -19,18 +19,22 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PlatformService_ListOrgs_FullMethodName            = "/gophercourier.platform.v1.PlatformService/ListOrgs"
-	PlatformService_GetOrg_FullMethodName              = "/gophercourier.platform.v1.PlatformService/GetOrg"
-	PlatformService_ListUsers_FullMethodName           = "/gophercourier.platform.v1.PlatformService/ListUsers"
-	PlatformService_GetUser_FullMethodName             = "/gophercourier.platform.v1.PlatformService/GetUser"
-	PlatformService_ListAudit_FullMethodName           = "/gophercourier.platform.v1.PlatformService/ListAudit"
-	PlatformService_ForceResetPassword_FullMethodName  = "/gophercourier.platform.v1.PlatformService/ForceResetPassword"
-	PlatformService_ForceTransferOrg_FullMethodName    = "/gophercourier.platform.v1.PlatformService/ForceTransferOrg"
-	PlatformService_ForceRevokeSessions_FullMethodName = "/gophercourier.platform.v1.PlatformService/ForceRevokeSessions"
-	PlatformService_ForceDeleteUser_FullMethodName     = "/gophercourier.platform.v1.PlatformService/ForceDeleteUser"
-	PlatformService_ForceDeleteOrg_FullMethodName      = "/gophercourier.platform.v1.PlatformService/ForceDeleteOrg"
-	PlatformService_AdminVerifyEmail_FullMethodName    = "/gophercourier.platform.v1.PlatformService/AdminVerifyEmail"
-	PlatformService_SetPlan_FullMethodName             = "/gophercourier.platform.v1.PlatformService/SetPlan"
+	PlatformService_ListOrgs_FullMethodName                 = "/gophercourier.platform.v1.PlatformService/ListOrgs"
+	PlatformService_GetOrg_FullMethodName                   = "/gophercourier.platform.v1.PlatformService/GetOrg"
+	PlatformService_ListUsers_FullMethodName                = "/gophercourier.platform.v1.PlatformService/ListUsers"
+	PlatformService_GetUser_FullMethodName                  = "/gophercourier.platform.v1.PlatformService/GetUser"
+	PlatformService_ListAudit_FullMethodName                = "/gophercourier.platform.v1.PlatformService/ListAudit"
+	PlatformService_ForceResetPassword_FullMethodName       = "/gophercourier.platform.v1.PlatformService/ForceResetPassword"
+	PlatformService_ForceTransferOrg_FullMethodName         = "/gophercourier.platform.v1.PlatformService/ForceTransferOrg"
+	PlatformService_ForceRevokeSessions_FullMethodName      = "/gophercourier.platform.v1.PlatformService/ForceRevokeSessions"
+	PlatformService_ForceDeleteUser_FullMethodName          = "/gophercourier.platform.v1.PlatformService/ForceDeleteUser"
+	PlatformService_ForceDeleteOrg_FullMethodName           = "/gophercourier.platform.v1.PlatformService/ForceDeleteOrg"
+	PlatformService_AdminVerifyEmail_FullMethodName         = "/gophercourier.platform.v1.PlatformService/AdminVerifyEmail"
+	PlatformService_SetPlan_FullMethodName                  = "/gophercourier.platform.v1.PlatformService/SetPlan"
+	PlatformService_GetOverview_FullMethodName              = "/gophercourier.platform.v1.PlatformService/GetOverview"
+	PlatformService_ForceAddOrgMember_FullMethodName        = "/gophercourier.platform.v1.PlatformService/ForceAddOrgMember"
+	PlatformService_ForceChangeOrgMemberRole_FullMethodName = "/gophercourier.platform.v1.PlatformService/ForceChangeOrgMemberRole"
+	PlatformService_ForceRemoveOrgMember_FullMethodName     = "/gophercourier.platform.v1.PlatformService/ForceRemoveOrgMember"
 )
 
 // PlatformServiceClient is the client API for PlatformService service.
@@ -69,6 +73,13 @@ type PlatformServiceClient interface {
 	// SetPlan assigns a billing plan to an org. Both upgrade and downgrade go
 	// through this single call; nothing is deleted on downgrade.
 	SetPlan(ctx context.Context, in *PlatformServiceSetPlanRequest, opts ...grpc.CallOption) (*PlatformServiceSetPlanResponse, error)
+	// GetOverview returns instance-wide counters for the platform dashboard.
+	GetOverview(ctx context.Context, in *PlatformServiceGetOverviewRequest, opts ...grpc.CallOption) (*PlatformServiceGetOverviewResponse, error)
+	// Force member ops bypass org RBAC. Personal orgs are rejected; the last
+	// admin and the owner's own role are protected.
+	ForceAddOrgMember(ctx context.Context, in *PlatformServiceForceAddOrgMemberRequest, opts ...grpc.CallOption) (*PlatformServiceForceAddOrgMemberResponse, error)
+	ForceChangeOrgMemberRole(ctx context.Context, in *PlatformServiceForceChangeOrgMemberRoleRequest, opts ...grpc.CallOption) (*PlatformServiceForceChangeOrgMemberRoleResponse, error)
+	ForceRemoveOrgMember(ctx context.Context, in *PlatformServiceForceRemoveOrgMemberRequest, opts ...grpc.CallOption) (*PlatformServiceForceRemoveOrgMemberResponse, error)
 }
 
 type platformServiceClient struct {
@@ -199,6 +210,46 @@ func (c *platformServiceClient) SetPlan(ctx context.Context, in *PlatformService
 	return out, nil
 }
 
+func (c *platformServiceClient) GetOverview(ctx context.Context, in *PlatformServiceGetOverviewRequest, opts ...grpc.CallOption) (*PlatformServiceGetOverviewResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PlatformServiceGetOverviewResponse)
+	err := c.cc.Invoke(ctx, PlatformService_GetOverview_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *platformServiceClient) ForceAddOrgMember(ctx context.Context, in *PlatformServiceForceAddOrgMemberRequest, opts ...grpc.CallOption) (*PlatformServiceForceAddOrgMemberResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PlatformServiceForceAddOrgMemberResponse)
+	err := c.cc.Invoke(ctx, PlatformService_ForceAddOrgMember_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *platformServiceClient) ForceChangeOrgMemberRole(ctx context.Context, in *PlatformServiceForceChangeOrgMemberRoleRequest, opts ...grpc.CallOption) (*PlatformServiceForceChangeOrgMemberRoleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PlatformServiceForceChangeOrgMemberRoleResponse)
+	err := c.cc.Invoke(ctx, PlatformService_ForceChangeOrgMemberRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *platformServiceClient) ForceRemoveOrgMember(ctx context.Context, in *PlatformServiceForceRemoveOrgMemberRequest, opts ...grpc.CallOption) (*PlatformServiceForceRemoveOrgMemberResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PlatformServiceForceRemoveOrgMemberResponse)
+	err := c.cc.Invoke(ctx, PlatformService_ForceRemoveOrgMember_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PlatformServiceServer is the server API for PlatformService service.
 // All implementations must embed UnimplementedPlatformServiceServer
 // for forward compatibility.
@@ -235,6 +286,13 @@ type PlatformServiceServer interface {
 	// SetPlan assigns a billing plan to an org. Both upgrade and downgrade go
 	// through this single call; nothing is deleted on downgrade.
 	SetPlan(context.Context, *PlatformServiceSetPlanRequest) (*PlatformServiceSetPlanResponse, error)
+	// GetOverview returns instance-wide counters for the platform dashboard.
+	GetOverview(context.Context, *PlatformServiceGetOverviewRequest) (*PlatformServiceGetOverviewResponse, error)
+	// Force member ops bypass org RBAC. Personal orgs are rejected; the last
+	// admin and the owner's own role are protected.
+	ForceAddOrgMember(context.Context, *PlatformServiceForceAddOrgMemberRequest) (*PlatformServiceForceAddOrgMemberResponse, error)
+	ForceChangeOrgMemberRole(context.Context, *PlatformServiceForceChangeOrgMemberRoleRequest) (*PlatformServiceForceChangeOrgMemberRoleResponse, error)
+	ForceRemoveOrgMember(context.Context, *PlatformServiceForceRemoveOrgMemberRequest) (*PlatformServiceForceRemoveOrgMemberResponse, error)
 	mustEmbedUnimplementedPlatformServiceServer()
 }
 
@@ -280,6 +338,18 @@ func (UnimplementedPlatformServiceServer) AdminVerifyEmail(context.Context, *Pla
 }
 func (UnimplementedPlatformServiceServer) SetPlan(context.Context, *PlatformServiceSetPlanRequest) (*PlatformServiceSetPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetPlan not implemented")
+}
+func (UnimplementedPlatformServiceServer) GetOverview(context.Context, *PlatformServiceGetOverviewRequest) (*PlatformServiceGetOverviewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOverview not implemented")
+}
+func (UnimplementedPlatformServiceServer) ForceAddOrgMember(context.Context, *PlatformServiceForceAddOrgMemberRequest) (*PlatformServiceForceAddOrgMemberResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForceAddOrgMember not implemented")
+}
+func (UnimplementedPlatformServiceServer) ForceChangeOrgMemberRole(context.Context, *PlatformServiceForceChangeOrgMemberRoleRequest) (*PlatformServiceForceChangeOrgMemberRoleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForceChangeOrgMemberRole not implemented")
+}
+func (UnimplementedPlatformServiceServer) ForceRemoveOrgMember(context.Context, *PlatformServiceForceRemoveOrgMemberRequest) (*PlatformServiceForceRemoveOrgMemberResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForceRemoveOrgMember not implemented")
 }
 func (UnimplementedPlatformServiceServer) mustEmbedUnimplementedPlatformServiceServer() {}
 func (UnimplementedPlatformServiceServer) testEmbeddedByValue()                         {}
@@ -518,6 +588,78 @@ func _PlatformService_SetPlan_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PlatformService_GetOverview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformServiceGetOverviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlatformServiceServer).GetOverview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlatformService_GetOverview_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlatformServiceServer).GetOverview(ctx, req.(*PlatformServiceGetOverviewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlatformService_ForceAddOrgMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformServiceForceAddOrgMemberRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlatformServiceServer).ForceAddOrgMember(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlatformService_ForceAddOrgMember_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlatformServiceServer).ForceAddOrgMember(ctx, req.(*PlatformServiceForceAddOrgMemberRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlatformService_ForceChangeOrgMemberRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformServiceForceChangeOrgMemberRoleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlatformServiceServer).ForceChangeOrgMemberRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlatformService_ForceChangeOrgMemberRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlatformServiceServer).ForceChangeOrgMemberRole(ctx, req.(*PlatformServiceForceChangeOrgMemberRoleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PlatformService_ForceRemoveOrgMember_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlatformServiceForceRemoveOrgMemberRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PlatformServiceServer).ForceRemoveOrgMember(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PlatformService_ForceRemoveOrgMember_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PlatformServiceServer).ForceRemoveOrgMember(ctx, req.(*PlatformServiceForceRemoveOrgMemberRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PlatformService_ServiceDesc is the grpc.ServiceDesc for PlatformService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -572,6 +714,22 @@ var PlatformService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetPlan",
 			Handler:    _PlatformService_SetPlan_Handler,
+		},
+		{
+			MethodName: "GetOverview",
+			Handler:    _PlatformService_GetOverview_Handler,
+		},
+		{
+			MethodName: "ForceAddOrgMember",
+			Handler:    _PlatformService_ForceAddOrgMember_Handler,
+		},
+		{
+			MethodName: "ForceChangeOrgMemberRole",
+			Handler:    _PlatformService_ForceChangeOrgMemberRole_Handler,
+		},
+		{
+			MethodName: "ForceRemoveOrgMember",
+			Handler:    _PlatformService_ForceRemoveOrgMember_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
