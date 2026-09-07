@@ -19,19 +19,29 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_Register_FullMethodName           = "/gophercourier.auth.v1.AuthService/Register"
-	AuthService_Login_FullMethodName              = "/gophercourier.auth.v1.AuthService/Login"
-	AuthService_Refresh_FullMethodName            = "/gophercourier.auth.v1.AuthService/Refresh"
-	AuthService_GetMe_FullMethodName              = "/gophercourier.auth.v1.AuthService/GetMe"
-	AuthService_SwitchOrg_FullMethodName          = "/gophercourier.auth.v1.AuthService/SwitchOrg"
-	AuthService_Me_FullMethodName                 = "/gophercourier.auth.v1.AuthService/Me"
-	AuthService_MyOrgs_FullMethodName             = "/gophercourier.auth.v1.AuthService/MyOrgs"
-	AuthService_VerifyEmail_FullMethodName        = "/gophercourier.auth.v1.AuthService/VerifyEmail"
-	AuthService_ResendVerification_FullMethodName = "/gophercourier.auth.v1.AuthService/ResendVerification"
-	AuthService_ChangePassword_FullMethodName     = "/gophercourier.auth.v1.AuthService/ChangePassword"
-	AuthService_Logout_FullMethodName             = "/gophercourier.auth.v1.AuthService/Logout"
-	AuthService_RevokeSession_FullMethodName      = "/gophercourier.auth.v1.AuthService/RevokeSession"
-	AuthService_LogoutAll_FullMethodName          = "/gophercourier.auth.v1.AuthService/LogoutAll"
+	AuthService_Register_FullMethodName             = "/gophercourier.auth.v1.AuthService/Register"
+	AuthService_Login_FullMethodName                = "/gophercourier.auth.v1.AuthService/Login"
+	AuthService_Refresh_FullMethodName              = "/gophercourier.auth.v1.AuthService/Refresh"
+	AuthService_GetMe_FullMethodName                = "/gophercourier.auth.v1.AuthService/GetMe"
+	AuthService_SwitchOrg_FullMethodName            = "/gophercourier.auth.v1.AuthService/SwitchOrg"
+	AuthService_Me_FullMethodName                   = "/gophercourier.auth.v1.AuthService/Me"
+	AuthService_MyOrgs_FullMethodName               = "/gophercourier.auth.v1.AuthService/MyOrgs"
+	AuthService_VerifyEmail_FullMethodName          = "/gophercourier.auth.v1.AuthService/VerifyEmail"
+	AuthService_ResendVerification_FullMethodName   = "/gophercourier.auth.v1.AuthService/ResendVerification"
+	AuthService_ChangePassword_FullMethodName       = "/gophercourier.auth.v1.AuthService/ChangePassword"
+	AuthService_Logout_FullMethodName               = "/gophercourier.auth.v1.AuthService/Logout"
+	AuthService_RevokeSession_FullMethodName        = "/gophercourier.auth.v1.AuthService/RevokeSession"
+	AuthService_LogoutAll_FullMethodName            = "/gophercourier.auth.v1.AuthService/LogoutAll"
+	AuthService_GetServerInfo_FullMethodName        = "/gophercourier.auth.v1.AuthService/GetServerInfo"
+	AuthService_StartDesktopSignIn_FullMethodName   = "/gophercourier.auth.v1.AuthService/StartDesktopSignIn"
+	AuthService_PollDesktopSignIn_FullMethodName    = "/gophercourier.auth.v1.AuthService/PollDesktopSignIn"
+	AuthService_CancelDesktopSignIn_FullMethodName  = "/gophercourier.auth.v1.AuthService/CancelDesktopSignIn"
+	AuthService_ClaimDesktopSignIn_FullMethodName   = "/gophercourier.auth.v1.AuthService/ClaimDesktopSignIn"
+	AuthService_GetDesktopSignIn_FullMethodName     = "/gophercourier.auth.v1.AuthService/GetDesktopSignIn"
+	AuthService_ApproveDesktopSignIn_FullMethodName = "/gophercourier.auth.v1.AuthService/ApproveDesktopSignIn"
+	AuthService_DenyDesktopSignIn_FullMethodName    = "/gophercourier.auth.v1.AuthService/DenyDesktopSignIn"
+	AuthService_RequestPasswordReset_FullMethodName = "/gophercourier.auth.v1.AuthService/RequestPasswordReset"
+	AuthService_ResetPassword_FullMethodName        = "/gophercourier.auth.v1.AuthService/ResetPassword"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -60,6 +70,22 @@ type AuthServiceClient interface {
 	RevokeSession(ctx context.Context, in *RevokeSessionRequest, opts ...grpc.CallOption) (*RevokeSessionResponse, error)
 	// LogoutAll revokes every session except the current one.
 	LogoutAll(ctx context.Context, in *LogoutAllRequest, opts ...grpc.CallOption) (*LogoutAllResponse, error)
+	// Discovery. Public: what this server offers before anyone signs in.
+	GetServerInfo(ctx context.Context, in *GetServerInfoRequest, opts ...grpc.CallOption) (*GetServerInfoResponse, error)
+	// Desktop sign-in (RFC 8628-shaped). Start/Poll/Cancel are public and called
+	// by the desktop app. Claim is public and called by the cabinet page on first
+	// open; Get/Approve/Deny require a bearer token and the claim token.
+	StartDesktopSignIn(ctx context.Context, in *StartDesktopSignInRequest, opts ...grpc.CallOption) (*StartDesktopSignInResponse, error)
+	PollDesktopSignIn(ctx context.Context, in *PollDesktopSignInRequest, opts ...grpc.CallOption) (*PollDesktopSignInResponse, error)
+	CancelDesktopSignIn(ctx context.Context, in *CancelDesktopSignInRequest, opts ...grpc.CallOption) (*CancelDesktopSignInResponse, error)
+	ClaimDesktopSignIn(ctx context.Context, in *ClaimDesktopSignInRequest, opts ...grpc.CallOption) (*ClaimDesktopSignInResponse, error)
+	GetDesktopSignIn(ctx context.Context, in *GetDesktopSignInRequest, opts ...grpc.CallOption) (*GetDesktopSignInResponse, error)
+	ApproveDesktopSignIn(ctx context.Context, in *ApproveDesktopSignInRequest, opts ...grpc.CallOption) (*ApproveDesktopSignInResponse, error)
+	DenyDesktopSignIn(ctx context.Context, in *DenyDesktopSignInRequest, opts ...grpc.CallOption) (*DenyDesktopSignInResponse, error)
+	// Password reset. Both public; RequestPasswordReset never reveals whether
+	// the address exists.
+	RequestPasswordReset(ctx context.Context, in *RequestPasswordResetRequest, opts ...grpc.CallOption) (*RequestPasswordResetResponse, error)
+	ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error)
 }
 
 type authServiceClient struct {
@@ -200,6 +226,106 @@ func (c *authServiceClient) LogoutAll(ctx context.Context, in *LogoutAllRequest,
 	return out, nil
 }
 
+func (c *authServiceClient) GetServerInfo(ctx context.Context, in *GetServerInfoRequest, opts ...grpc.CallOption) (*GetServerInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetServerInfoResponse)
+	err := c.cc.Invoke(ctx, AuthService_GetServerInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) StartDesktopSignIn(ctx context.Context, in *StartDesktopSignInRequest, opts ...grpc.CallOption) (*StartDesktopSignInResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StartDesktopSignInResponse)
+	err := c.cc.Invoke(ctx, AuthService_StartDesktopSignIn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) PollDesktopSignIn(ctx context.Context, in *PollDesktopSignInRequest, opts ...grpc.CallOption) (*PollDesktopSignInResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PollDesktopSignInResponse)
+	err := c.cc.Invoke(ctx, AuthService_PollDesktopSignIn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CancelDesktopSignIn(ctx context.Context, in *CancelDesktopSignInRequest, opts ...grpc.CallOption) (*CancelDesktopSignInResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CancelDesktopSignInResponse)
+	err := c.cc.Invoke(ctx, AuthService_CancelDesktopSignIn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) ClaimDesktopSignIn(ctx context.Context, in *ClaimDesktopSignInRequest, opts ...grpc.CallOption) (*ClaimDesktopSignInResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ClaimDesktopSignInResponse)
+	err := c.cc.Invoke(ctx, AuthService_ClaimDesktopSignIn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) GetDesktopSignIn(ctx context.Context, in *GetDesktopSignInRequest, opts ...grpc.CallOption) (*GetDesktopSignInResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetDesktopSignInResponse)
+	err := c.cc.Invoke(ctx, AuthService_GetDesktopSignIn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) ApproveDesktopSignIn(ctx context.Context, in *ApproveDesktopSignInRequest, opts ...grpc.CallOption) (*ApproveDesktopSignInResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ApproveDesktopSignInResponse)
+	err := c.cc.Invoke(ctx, AuthService_ApproveDesktopSignIn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) DenyDesktopSignIn(ctx context.Context, in *DenyDesktopSignInRequest, opts ...grpc.CallOption) (*DenyDesktopSignInResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DenyDesktopSignInResponse)
+	err := c.cc.Invoke(ctx, AuthService_DenyDesktopSignIn_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) RequestPasswordReset(ctx context.Context, in *RequestPasswordResetRequest, opts ...grpc.CallOption) (*RequestPasswordResetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RequestPasswordResetResponse)
+	err := c.cc.Invoke(ctx, AuthService_RequestPasswordReset_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResetPasswordResponse)
+	err := c.cc.Invoke(ctx, AuthService_ResetPassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -226,6 +352,22 @@ type AuthServiceServer interface {
 	RevokeSession(context.Context, *RevokeSessionRequest) (*RevokeSessionResponse, error)
 	// LogoutAll revokes every session except the current one.
 	LogoutAll(context.Context, *LogoutAllRequest) (*LogoutAllResponse, error)
+	// Discovery. Public: what this server offers before anyone signs in.
+	GetServerInfo(context.Context, *GetServerInfoRequest) (*GetServerInfoResponse, error)
+	// Desktop sign-in (RFC 8628-shaped). Start/Poll/Cancel are public and called
+	// by the desktop app. Claim is public and called by the cabinet page on first
+	// open; Get/Approve/Deny require a bearer token and the claim token.
+	StartDesktopSignIn(context.Context, *StartDesktopSignInRequest) (*StartDesktopSignInResponse, error)
+	PollDesktopSignIn(context.Context, *PollDesktopSignInRequest) (*PollDesktopSignInResponse, error)
+	CancelDesktopSignIn(context.Context, *CancelDesktopSignInRequest) (*CancelDesktopSignInResponse, error)
+	ClaimDesktopSignIn(context.Context, *ClaimDesktopSignInRequest) (*ClaimDesktopSignInResponse, error)
+	GetDesktopSignIn(context.Context, *GetDesktopSignInRequest) (*GetDesktopSignInResponse, error)
+	ApproveDesktopSignIn(context.Context, *ApproveDesktopSignInRequest) (*ApproveDesktopSignInResponse, error)
+	DenyDesktopSignIn(context.Context, *DenyDesktopSignInRequest) (*DenyDesktopSignInResponse, error)
+	// Password reset. Both public; RequestPasswordReset never reveals whether
+	// the address exists.
+	RequestPasswordReset(context.Context, *RequestPasswordResetRequest) (*RequestPasswordResetResponse, error)
+	ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -274,6 +416,36 @@ func (UnimplementedAuthServiceServer) RevokeSession(context.Context, *RevokeSess
 }
 func (UnimplementedAuthServiceServer) LogoutAll(context.Context, *LogoutAllRequest) (*LogoutAllResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LogoutAll not implemented")
+}
+func (UnimplementedAuthServiceServer) GetServerInfo(context.Context, *GetServerInfoRequest) (*GetServerInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetServerInfo not implemented")
+}
+func (UnimplementedAuthServiceServer) StartDesktopSignIn(context.Context, *StartDesktopSignInRequest) (*StartDesktopSignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartDesktopSignIn not implemented")
+}
+func (UnimplementedAuthServiceServer) PollDesktopSignIn(context.Context, *PollDesktopSignInRequest) (*PollDesktopSignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PollDesktopSignIn not implemented")
+}
+func (UnimplementedAuthServiceServer) CancelDesktopSignIn(context.Context, *CancelDesktopSignInRequest) (*CancelDesktopSignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelDesktopSignIn not implemented")
+}
+func (UnimplementedAuthServiceServer) ClaimDesktopSignIn(context.Context, *ClaimDesktopSignInRequest) (*ClaimDesktopSignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClaimDesktopSignIn not implemented")
+}
+func (UnimplementedAuthServiceServer) GetDesktopSignIn(context.Context, *GetDesktopSignInRequest) (*GetDesktopSignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDesktopSignIn not implemented")
+}
+func (UnimplementedAuthServiceServer) ApproveDesktopSignIn(context.Context, *ApproveDesktopSignInRequest) (*ApproveDesktopSignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApproveDesktopSignIn not implemented")
+}
+func (UnimplementedAuthServiceServer) DenyDesktopSignIn(context.Context, *DenyDesktopSignInRequest) (*DenyDesktopSignInResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DenyDesktopSignIn not implemented")
+}
+func (UnimplementedAuthServiceServer) RequestPasswordReset(context.Context, *RequestPasswordResetRequest) (*RequestPasswordResetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RequestPasswordReset not implemented")
+}
+func (UnimplementedAuthServiceServer) ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetPassword not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -530,6 +702,186 @@ func _AuthService_LogoutAll_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_GetServerInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetServerInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GetServerInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_GetServerInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GetServerInfo(ctx, req.(*GetServerInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_StartDesktopSignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartDesktopSignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).StartDesktopSignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_StartDesktopSignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).StartDesktopSignIn(ctx, req.(*StartDesktopSignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_PollDesktopSignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PollDesktopSignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).PollDesktopSignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_PollDesktopSignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).PollDesktopSignIn(ctx, req.(*PollDesktopSignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CancelDesktopSignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelDesktopSignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CancelDesktopSignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_CancelDesktopSignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CancelDesktopSignIn(ctx, req.(*CancelDesktopSignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_ClaimDesktopSignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClaimDesktopSignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).ClaimDesktopSignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_ClaimDesktopSignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).ClaimDesktopSignIn(ctx, req.(*ClaimDesktopSignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_GetDesktopSignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDesktopSignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GetDesktopSignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_GetDesktopSignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GetDesktopSignIn(ctx, req.(*GetDesktopSignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_ApproveDesktopSignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApproveDesktopSignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).ApproveDesktopSignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_ApproveDesktopSignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).ApproveDesktopSignIn(ctx, req.(*ApproveDesktopSignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_DenyDesktopSignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DenyDesktopSignInRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).DenyDesktopSignIn(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_DenyDesktopSignIn_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).DenyDesktopSignIn(ctx, req.(*DenyDesktopSignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_RequestPasswordReset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestPasswordResetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).RequestPasswordReset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_RequestPasswordReset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).RequestPasswordReset(ctx, req.(*RequestPasswordResetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_ResetPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).ResetPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_ResetPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).ResetPassword(ctx, req.(*ResetPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -588,6 +940,46 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LogoutAll",
 			Handler:    _AuthService_LogoutAll_Handler,
+		},
+		{
+			MethodName: "GetServerInfo",
+			Handler:    _AuthService_GetServerInfo_Handler,
+		},
+		{
+			MethodName: "StartDesktopSignIn",
+			Handler:    _AuthService_StartDesktopSignIn_Handler,
+		},
+		{
+			MethodName: "PollDesktopSignIn",
+			Handler:    _AuthService_PollDesktopSignIn_Handler,
+		},
+		{
+			MethodName: "CancelDesktopSignIn",
+			Handler:    _AuthService_CancelDesktopSignIn_Handler,
+		},
+		{
+			MethodName: "ClaimDesktopSignIn",
+			Handler:    _AuthService_ClaimDesktopSignIn_Handler,
+		},
+		{
+			MethodName: "GetDesktopSignIn",
+			Handler:    _AuthService_GetDesktopSignIn_Handler,
+		},
+		{
+			MethodName: "ApproveDesktopSignIn",
+			Handler:    _AuthService_ApproveDesktopSignIn_Handler,
+		},
+		{
+			MethodName: "DenyDesktopSignIn",
+			Handler:    _AuthService_DenyDesktopSignIn_Handler,
+		},
+		{
+			MethodName: "RequestPasswordReset",
+			Handler:    _AuthService_RequestPasswordReset_Handler,
+		},
+		{
+			MethodName: "ResetPassword",
+			Handler:    _AuthService_ResetPassword_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

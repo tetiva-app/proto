@@ -21,6 +21,56 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type DesktopSignInStatus int32
+
+const (
+	DesktopSignInStatus_DESKTOP_SIGN_IN_STATUS_UNSPECIFIED DesktopSignInStatus = 0
+	DesktopSignInStatus_DESKTOP_SIGN_IN_STATUS_PENDING     DesktopSignInStatus = 1
+	DesktopSignInStatus_DESKTOP_SIGN_IN_STATUS_APPROVED    DesktopSignInStatus = 2
+	DesktopSignInStatus_DESKTOP_SIGN_IN_STATUS_DENIED      DesktopSignInStatus = 3
+	DesktopSignInStatus_DESKTOP_SIGN_IN_STATUS_EXPIRED     DesktopSignInStatus = 4
+)
+
+// Enum value maps for DesktopSignInStatus.
+var (
+	DesktopSignInStatus_name = map[int32]string{
+		0: "DESKTOP_SIGN_IN_STATUS_UNSPECIFIED",
+		1: "DESKTOP_SIGN_IN_STATUS_PENDING",
+		2: "DESKTOP_SIGN_IN_STATUS_APPROVED",
+		3: "DESKTOP_SIGN_IN_STATUS_DENIED",
+		4: "DESKTOP_SIGN_IN_STATUS_EXPIRED",
+	}
+	DesktopSignInStatus_value = map[string]int32{
+		"DESKTOP_SIGN_IN_STATUS_UNSPECIFIED": 0,
+		"DESKTOP_SIGN_IN_STATUS_PENDING":     1,
+		"DESKTOP_SIGN_IN_STATUS_APPROVED":    2,
+		"DESKTOP_SIGN_IN_STATUS_DENIED":      3,
+		"DESKTOP_SIGN_IN_STATUS_EXPIRED":     4,
+	}
+)
+
+func (x DesktopSignInStatus) Enum() *DesktopSignInStatus {
+	p := new(DesktopSignInStatus)
+	*p = x
+	return p
+}
+
+func (x DesktopSignInStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (DesktopSignInStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_gophercourier_auth_v1_auth_proto_enumTypes[0].Descriptor()
+}
+
+func (DesktopSignInStatus) Type() protoreflect.EnumType {
+	return &file_gophercourier_auth_v1_auth_proto_enumTypes[0]
+}
+
+func (x DesktopSignInStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
 type RegisterRequest struct {
 	state                  protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_Email       string                 `protobuf:"bytes,1,opt,name=email,proto3"`
@@ -2578,6 +2628,1765 @@ func (b0 LogoutAllResponse_builder) Build() *LogoutAllResponse {
 	return m0
 }
 
+type GetServerInfoRequest struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetServerInfoRequest) Reset() {
+	*x = GetServerInfoRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetServerInfoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetServerInfoRequest) ProtoMessage() {}
+
+func (x *GetServerInfoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+type GetServerInfoRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+}
+
+func (b0 GetServerInfoRequest_builder) Build() *GetServerInfoRequest {
+	m0 := &GetServerInfoRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	return m0
+}
+
+type GetServerInfoResponse struct {
+	state                       protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ServerVersion    string                 `protobuf:"bytes,1,opt,name=server_version,json=serverVersion,proto3"`
+	xxx_hidden_Capabilities     []string               `protobuf:"bytes,2,rep,name=capabilities,proto3"`
+	xxx_hidden_DesktopSigninUrl string                 `protobuf:"bytes,3,opt,name=desktop_signin_url,json=desktopSigninUrl,proto3"`
+	xxx_hidden_RegistrationOpen bool                   `protobuf:"varint,4,opt,name=registration_open,json=registrationOpen,proto3"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
+}
+
+func (x *GetServerInfoResponse) Reset() {
+	*x = GetServerInfoResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetServerInfoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetServerInfoResponse) ProtoMessage() {}
+
+func (x *GetServerInfoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *GetServerInfoResponse) GetServerVersion() string {
+	if x != nil {
+		return x.xxx_hidden_ServerVersion
+	}
+	return ""
+}
+
+func (x *GetServerInfoResponse) GetCapabilities() []string {
+	if x != nil {
+		return x.xxx_hidden_Capabilities
+	}
+	return nil
+}
+
+func (x *GetServerInfoResponse) GetDesktopSigninUrl() string {
+	if x != nil {
+		return x.xxx_hidden_DesktopSigninUrl
+	}
+	return ""
+}
+
+func (x *GetServerInfoResponse) GetRegistrationOpen() bool {
+	if x != nil {
+		return x.xxx_hidden_RegistrationOpen
+	}
+	return false
+}
+
+func (x *GetServerInfoResponse) SetServerVersion(v string) {
+	x.xxx_hidden_ServerVersion = v
+}
+
+func (x *GetServerInfoResponse) SetCapabilities(v []string) {
+	x.xxx_hidden_Capabilities = v
+}
+
+func (x *GetServerInfoResponse) SetDesktopSigninUrl(v string) {
+	x.xxx_hidden_DesktopSigninUrl = v
+}
+
+func (x *GetServerInfoResponse) SetRegistrationOpen(v bool) {
+	x.xxx_hidden_RegistrationOpen = v
+}
+
+type GetServerInfoResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	ServerVersion string
+	// Feature names a client may rely on: "desktop_signin", "password_reset".
+	Capabilities []string
+	// Absolute page URL that completes a desktop sign-in; empty without the capability.
+	DesktopSigninUrl string
+	RegistrationOpen bool
+}
+
+func (b0 GetServerInfoResponse_builder) Build() *GetServerInfoResponse {
+	m0 := &GetServerInfoResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_ServerVersion = b.ServerVersion
+	x.xxx_hidden_Capabilities = b.Capabilities
+	x.xxx_hidden_DesktopSigninUrl = b.DesktopSigninUrl
+	x.xxx_hidden_RegistrationOpen = b.RegistrationOpen
+	return m0
+}
+
+type StartDesktopSignInRequest struct {
+	state                     protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_ClientId       string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3"`
+	xxx_hidden_CodeChallenge  string                 `protobuf:"bytes,2,opt,name=code_challenge,json=codeChallenge,proto3"`
+	xxx_hidden_DeviceName     string                 `protobuf:"bytes,3,opt,name=device_name,json=deviceName,proto3"`
+	xxx_hidden_Platform       string                 `protobuf:"bytes,4,opt,name=platform,proto3"`
+	xxx_hidden_AppVersion     string                 `protobuf:"bytes,5,opt,name=app_version,json=appVersion,proto3"`
+	xxx_hidden_RedirectUri    string                 `protobuf:"bytes,6,opt,name=redirect_uri,json=redirectUri,proto3"`
+	xxx_hidden_Locale         string                 `protobuf:"bytes,7,opt,name=locale,proto3"`
+	xxx_hidden_Intent         string                 `protobuf:"bytes,8,opt,name=intent,proto3"`
+	xxx_hidden_ClaimChallenge string                 `protobuf:"bytes,9,opt,name=claim_challenge,json=claimChallenge,proto3"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
+}
+
+func (x *StartDesktopSignInRequest) Reset() {
+	*x = StartDesktopSignInRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartDesktopSignInRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartDesktopSignInRequest) ProtoMessage() {}
+
+func (x *StartDesktopSignInRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *StartDesktopSignInRequest) GetClientId() string {
+	if x != nil {
+		return x.xxx_hidden_ClientId
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInRequest) GetCodeChallenge() string {
+	if x != nil {
+		return x.xxx_hidden_CodeChallenge
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInRequest) GetDeviceName() string {
+	if x != nil {
+		return x.xxx_hidden_DeviceName
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInRequest) GetPlatform() string {
+	if x != nil {
+		return x.xxx_hidden_Platform
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInRequest) GetAppVersion() string {
+	if x != nil {
+		return x.xxx_hidden_AppVersion
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInRequest) GetRedirectUri() string {
+	if x != nil {
+		return x.xxx_hidden_RedirectUri
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInRequest) GetLocale() string {
+	if x != nil {
+		return x.xxx_hidden_Locale
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInRequest) GetIntent() string {
+	if x != nil {
+		return x.xxx_hidden_Intent
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInRequest) GetClaimChallenge() string {
+	if x != nil {
+		return x.xxx_hidden_ClaimChallenge
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInRequest) SetClientId(v string) {
+	x.xxx_hidden_ClientId = v
+}
+
+func (x *StartDesktopSignInRequest) SetCodeChallenge(v string) {
+	x.xxx_hidden_CodeChallenge = v
+}
+
+func (x *StartDesktopSignInRequest) SetDeviceName(v string) {
+	x.xxx_hidden_DeviceName = v
+}
+
+func (x *StartDesktopSignInRequest) SetPlatform(v string) {
+	x.xxx_hidden_Platform = v
+}
+
+func (x *StartDesktopSignInRequest) SetAppVersion(v string) {
+	x.xxx_hidden_AppVersion = v
+}
+
+func (x *StartDesktopSignInRequest) SetRedirectUri(v string) {
+	x.xxx_hidden_RedirectUri = v
+}
+
+func (x *StartDesktopSignInRequest) SetLocale(v string) {
+	x.xxx_hidden_Locale = v
+}
+
+func (x *StartDesktopSignInRequest) SetIntent(v string) {
+	x.xxx_hidden_Intent = v
+}
+
+func (x *StartDesktopSignInRequest) SetClaimChallenge(v string) {
+	x.xxx_hidden_ClaimChallenge = v
+}
+
+type StartDesktopSignInRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	ClientId string
+	// base64url(SHA-256(code_verifier)), RFC 7636 S256. Only S256 is accepted.
+	CodeChallenge string
+	DeviceName    string
+	// runtime.GOOS of the app: "darwin" | "windows" | "linux" | other.
+	Platform   string
+	AppVersion string
+	// Loopback the cabinet redirects to after approval: http://127.0.0.1:<port>/callback.
+	// Empty when the app cannot listen.
+	RedirectUri string
+	// "ru" | "en" hint for the page; empty lets the cabinet detect.
+	Locale string
+	// "signin" (default) | "register" — which form the cabinet opens first.
+	Intent string
+	// base64url(SHA-256(claim_secret)). The secret itself travels only in the URL
+	// fragment the app opens, so proxies and logs never see it.
+	ClaimChallenge string
+}
+
+func (b0 StartDesktopSignInRequest_builder) Build() *StartDesktopSignInRequest {
+	m0 := &StartDesktopSignInRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_ClientId = b.ClientId
+	x.xxx_hidden_CodeChallenge = b.CodeChallenge
+	x.xxx_hidden_DeviceName = b.DeviceName
+	x.xxx_hidden_Platform = b.Platform
+	x.xxx_hidden_AppVersion = b.AppVersion
+	x.xxx_hidden_RedirectUri = b.RedirectUri
+	x.xxx_hidden_Locale = b.Locale
+	x.xxx_hidden_Intent = b.Intent
+	x.xxx_hidden_ClaimChallenge = b.ClaimChallenge
+	return m0
+}
+
+type StartDesktopSignInResponse struct {
+	state                          protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestId           string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3"`
+	xxx_hidden_LoginUrl            string                 `protobuf:"bytes,2,opt,name=login_url,json=loginUrl,proto3"`
+	xxx_hidden_ExpiresAt           *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expires_at,json=expiresAt,proto3"`
+	xxx_hidden_PollIntervalSeconds int32                  `protobuf:"varint,4,opt,name=poll_interval_seconds,json=pollIntervalSeconds,proto3"`
+	unknownFields                  protoimpl.UnknownFields
+	sizeCache                      protoimpl.SizeCache
+}
+
+func (x *StartDesktopSignInResponse) Reset() {
+	*x = StartDesktopSignInResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartDesktopSignInResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartDesktopSignInResponse) ProtoMessage() {}
+
+func (x *StartDesktopSignInResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *StartDesktopSignInResponse) GetRequestId() string {
+	if x != nil {
+		return x.xxx_hidden_RequestId
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInResponse) GetLoginUrl() string {
+	if x != nil {
+		return x.xxx_hidden_LoginUrl
+	}
+	return ""
+}
+
+func (x *StartDesktopSignInResponse) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_ExpiresAt
+	}
+	return nil
+}
+
+func (x *StartDesktopSignInResponse) GetPollIntervalSeconds() int32 {
+	if x != nil {
+		return x.xxx_hidden_PollIntervalSeconds
+	}
+	return 0
+}
+
+func (x *StartDesktopSignInResponse) SetRequestId(v string) {
+	x.xxx_hidden_RequestId = v
+}
+
+func (x *StartDesktopSignInResponse) SetLoginUrl(v string) {
+	x.xxx_hidden_LoginUrl = v
+}
+
+func (x *StartDesktopSignInResponse) SetExpiresAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_ExpiresAt = v
+}
+
+func (x *StartDesktopSignInResponse) SetPollIntervalSeconds(v int32) {
+	x.xxx_hidden_PollIntervalSeconds = v
+}
+
+func (x *StartDesktopSignInResponse) HasExpiresAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_ExpiresAt != nil
+}
+
+func (x *StartDesktopSignInResponse) ClearExpiresAt() {
+	x.xxx_hidden_ExpiresAt = nil
+}
+
+type StartDesktopSignInResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	RequestId           string
+	LoginUrl            string
+	ExpiresAt           *timestamppb.Timestamp
+	PollIntervalSeconds int32
+}
+
+func (b0 StartDesktopSignInResponse_builder) Build() *StartDesktopSignInResponse {
+	m0 := &StartDesktopSignInResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_RequestId = b.RequestId
+	x.xxx_hidden_LoginUrl = b.LoginUrl
+	x.xxx_hidden_ExpiresAt = b.ExpiresAt
+	x.xxx_hidden_PollIntervalSeconds = b.PollIntervalSeconds
+	return m0
+}
+
+type PollDesktopSignInRequest struct {
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestId    string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3"`
+	xxx_hidden_ClientId     string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3"`
+	xxx_hidden_CodeVerifier string                 `protobuf:"bytes,3,opt,name=code_verifier,json=codeVerifier,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *PollDesktopSignInRequest) Reset() {
+	*x = PollDesktopSignInRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PollDesktopSignInRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PollDesktopSignInRequest) ProtoMessage() {}
+
+func (x *PollDesktopSignInRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PollDesktopSignInRequest) GetRequestId() string {
+	if x != nil {
+		return x.xxx_hidden_RequestId
+	}
+	return ""
+}
+
+func (x *PollDesktopSignInRequest) GetClientId() string {
+	if x != nil {
+		return x.xxx_hidden_ClientId
+	}
+	return ""
+}
+
+func (x *PollDesktopSignInRequest) GetCodeVerifier() string {
+	if x != nil {
+		return x.xxx_hidden_CodeVerifier
+	}
+	return ""
+}
+
+func (x *PollDesktopSignInRequest) SetRequestId(v string) {
+	x.xxx_hidden_RequestId = v
+}
+
+func (x *PollDesktopSignInRequest) SetClientId(v string) {
+	x.xxx_hidden_ClientId = v
+}
+
+func (x *PollDesktopSignInRequest) SetCodeVerifier(v string) {
+	x.xxx_hidden_CodeVerifier = v
+}
+
+type PollDesktopSignInRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	RequestId    string
+	ClientId     string
+	CodeVerifier string
+}
+
+func (b0 PollDesktopSignInRequest_builder) Build() *PollDesktopSignInRequest {
+	m0 := &PollDesktopSignInRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_RequestId = b.RequestId
+	x.xxx_hidden_ClientId = b.ClientId
+	x.xxx_hidden_CodeVerifier = b.CodeVerifier
+	return m0
+}
+
+// Tokens are present only with APPROVED; the layout mirrors LoginResponse.
+type PollDesktopSignInResponse struct {
+	state                                protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Status                    DesktopSignInStatus    `protobuf:"varint,1,opt,name=status,proto3,enum=gophercourier.auth.v1.DesktopSignInStatus"`
+	xxx_hidden_AccessToken               string                 `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3"`
+	xxx_hidden_RefreshToken              string                 `protobuf:"bytes,3,opt,name=refresh_token,json=refreshToken,proto3"`
+	xxx_hidden_User                      *User                  `protobuf:"bytes,4,opt,name=user,proto3"`
+	xxx_hidden_ActiveOrgId               string                 `protobuf:"bytes,10,opt,name=active_org_id,json=activeOrgId,proto3"`
+	xxx_hidden_ActiveRoleId              string                 `protobuf:"bytes,11,opt,name=active_role_id,json=activeRoleId,proto3"`
+	xxx_hidden_IsPlatformStaff           bool                   `protobuf:"varint,12,opt,name=is_platform_staff,json=isPlatformStaff,proto3"`
+	xxx_hidden_Memberships               *[]*Membership         `protobuf:"bytes,13,rep,name=memberships,proto3"`
+	xxx_hidden_RequiresEmailVerification bool                   `protobuf:"varint,14,opt,name=requires_email_verification,json=requiresEmailVerification,proto3"`
+	xxx_hidden_EmailVerificationPending  bool                   `protobuf:"varint,15,opt,name=email_verification_pending,json=emailVerificationPending,proto3"`
+	xxx_hidden_ExpiresAt                 *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=expires_at,json=expiresAt,proto3"`
+	unknownFields                        protoimpl.UnknownFields
+	sizeCache                            protoimpl.SizeCache
+}
+
+func (x *PollDesktopSignInResponse) Reset() {
+	*x = PollDesktopSignInResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PollDesktopSignInResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PollDesktopSignInResponse) ProtoMessage() {}
+
+func (x *PollDesktopSignInResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *PollDesktopSignInResponse) GetStatus() DesktopSignInStatus {
+	if x != nil {
+		return x.xxx_hidden_Status
+	}
+	return DesktopSignInStatus_DESKTOP_SIGN_IN_STATUS_UNSPECIFIED
+}
+
+func (x *PollDesktopSignInResponse) GetAccessToken() string {
+	if x != nil {
+		return x.xxx_hidden_AccessToken
+	}
+	return ""
+}
+
+func (x *PollDesktopSignInResponse) GetRefreshToken() string {
+	if x != nil {
+		return x.xxx_hidden_RefreshToken
+	}
+	return ""
+}
+
+func (x *PollDesktopSignInResponse) GetUser() *User {
+	if x != nil {
+		return x.xxx_hidden_User
+	}
+	return nil
+}
+
+func (x *PollDesktopSignInResponse) GetActiveOrgId() string {
+	if x != nil {
+		return x.xxx_hidden_ActiveOrgId
+	}
+	return ""
+}
+
+func (x *PollDesktopSignInResponse) GetActiveRoleId() string {
+	if x != nil {
+		return x.xxx_hidden_ActiveRoleId
+	}
+	return ""
+}
+
+func (x *PollDesktopSignInResponse) GetIsPlatformStaff() bool {
+	if x != nil {
+		return x.xxx_hidden_IsPlatformStaff
+	}
+	return false
+}
+
+func (x *PollDesktopSignInResponse) GetMemberships() []*Membership {
+	if x != nil {
+		if x.xxx_hidden_Memberships != nil {
+			return *x.xxx_hidden_Memberships
+		}
+	}
+	return nil
+}
+
+func (x *PollDesktopSignInResponse) GetRequiresEmailVerification() bool {
+	if x != nil {
+		return x.xxx_hidden_RequiresEmailVerification
+	}
+	return false
+}
+
+func (x *PollDesktopSignInResponse) GetEmailVerificationPending() bool {
+	if x != nil {
+		return x.xxx_hidden_EmailVerificationPending
+	}
+	return false
+}
+
+func (x *PollDesktopSignInResponse) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_ExpiresAt
+	}
+	return nil
+}
+
+func (x *PollDesktopSignInResponse) SetStatus(v DesktopSignInStatus) {
+	x.xxx_hidden_Status = v
+}
+
+func (x *PollDesktopSignInResponse) SetAccessToken(v string) {
+	x.xxx_hidden_AccessToken = v
+}
+
+func (x *PollDesktopSignInResponse) SetRefreshToken(v string) {
+	x.xxx_hidden_RefreshToken = v
+}
+
+func (x *PollDesktopSignInResponse) SetUser(v *User) {
+	x.xxx_hidden_User = v
+}
+
+func (x *PollDesktopSignInResponse) SetActiveOrgId(v string) {
+	x.xxx_hidden_ActiveOrgId = v
+}
+
+func (x *PollDesktopSignInResponse) SetActiveRoleId(v string) {
+	x.xxx_hidden_ActiveRoleId = v
+}
+
+func (x *PollDesktopSignInResponse) SetIsPlatformStaff(v bool) {
+	x.xxx_hidden_IsPlatformStaff = v
+}
+
+func (x *PollDesktopSignInResponse) SetMemberships(v []*Membership) {
+	x.xxx_hidden_Memberships = &v
+}
+
+func (x *PollDesktopSignInResponse) SetRequiresEmailVerification(v bool) {
+	x.xxx_hidden_RequiresEmailVerification = v
+}
+
+func (x *PollDesktopSignInResponse) SetEmailVerificationPending(v bool) {
+	x.xxx_hidden_EmailVerificationPending = v
+}
+
+func (x *PollDesktopSignInResponse) SetExpiresAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_ExpiresAt = v
+}
+
+func (x *PollDesktopSignInResponse) HasUser() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_User != nil
+}
+
+func (x *PollDesktopSignInResponse) HasExpiresAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_ExpiresAt != nil
+}
+
+func (x *PollDesktopSignInResponse) ClearUser() {
+	x.xxx_hidden_User = nil
+}
+
+func (x *PollDesktopSignInResponse) ClearExpiresAt() {
+	x.xxx_hidden_ExpiresAt = nil
+}
+
+type PollDesktopSignInResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Status                    DesktopSignInStatus
+	AccessToken               string
+	RefreshToken              string
+	User                      *User
+	ActiveOrgId               string
+	ActiveRoleId              string
+	IsPlatformStaff           bool
+	Memberships               []*Membership
+	RequiresEmailVerification bool
+	// With PENDING: the request is approved but this server requires a verified
+	// email before issuing a session; keep polling until expires_at.
+	EmailVerificationPending bool
+	// Current deadline of the request; extended once when the email gate is hit.
+	ExpiresAt *timestamppb.Timestamp
+}
+
+func (b0 PollDesktopSignInResponse_builder) Build() *PollDesktopSignInResponse {
+	m0 := &PollDesktopSignInResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Status = b.Status
+	x.xxx_hidden_AccessToken = b.AccessToken
+	x.xxx_hidden_RefreshToken = b.RefreshToken
+	x.xxx_hidden_User = b.User
+	x.xxx_hidden_ActiveOrgId = b.ActiveOrgId
+	x.xxx_hidden_ActiveRoleId = b.ActiveRoleId
+	x.xxx_hidden_IsPlatformStaff = b.IsPlatformStaff
+	x.xxx_hidden_Memberships = &b.Memberships
+	x.xxx_hidden_RequiresEmailVerification = b.RequiresEmailVerification
+	x.xxx_hidden_EmailVerificationPending = b.EmailVerificationPending
+	x.xxx_hidden_ExpiresAt = b.ExpiresAt
+	return m0
+}
+
+type CancelDesktopSignInRequest struct {
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestId    string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3"`
+	xxx_hidden_ClientId     string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3"`
+	xxx_hidden_CodeVerifier string                 `protobuf:"bytes,3,opt,name=code_verifier,json=codeVerifier,proto3"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *CancelDesktopSignInRequest) Reset() {
+	*x = CancelDesktopSignInRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelDesktopSignInRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelDesktopSignInRequest) ProtoMessage() {}
+
+func (x *CancelDesktopSignInRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *CancelDesktopSignInRequest) GetRequestId() string {
+	if x != nil {
+		return x.xxx_hidden_RequestId
+	}
+	return ""
+}
+
+func (x *CancelDesktopSignInRequest) GetClientId() string {
+	if x != nil {
+		return x.xxx_hidden_ClientId
+	}
+	return ""
+}
+
+func (x *CancelDesktopSignInRequest) GetCodeVerifier() string {
+	if x != nil {
+		return x.xxx_hidden_CodeVerifier
+	}
+	return ""
+}
+
+func (x *CancelDesktopSignInRequest) SetRequestId(v string) {
+	x.xxx_hidden_RequestId = v
+}
+
+func (x *CancelDesktopSignInRequest) SetClientId(v string) {
+	x.xxx_hidden_ClientId = v
+}
+
+func (x *CancelDesktopSignInRequest) SetCodeVerifier(v string) {
+	x.xxx_hidden_CodeVerifier = v
+}
+
+type CancelDesktopSignInRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	RequestId    string
+	ClientId     string
+	CodeVerifier string
+}
+
+func (b0 CancelDesktopSignInRequest_builder) Build() *CancelDesktopSignInRequest {
+	m0 := &CancelDesktopSignInRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_RequestId = b.RequestId
+	x.xxx_hidden_ClientId = b.ClientId
+	x.xxx_hidden_CodeVerifier = b.CodeVerifier
+	return m0
+}
+
+type CancelDesktopSignInResponse struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CancelDesktopSignInResponse) Reset() {
+	*x = CancelDesktopSignInResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelDesktopSignInResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelDesktopSignInResponse) ProtoMessage() {}
+
+func (x *CancelDesktopSignInResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+type CancelDesktopSignInResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+}
+
+func (b0 CancelDesktopSignInResponse_builder) Build() *CancelDesktopSignInResponse {
+	m0 := &CancelDesktopSignInResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	return m0
+}
+
+// Claim binds a pending request to the browser tab that opened the link;
+// a second claim is refused so the id in the address bar cannot be reused.
+type ClaimDesktopSignInRequest struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestId   string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3"`
+	xxx_hidden_ClaimSecret string                 `protobuf:"bytes,2,opt,name=claim_secret,json=claimSecret,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *ClaimDesktopSignInRequest) Reset() {
+	*x = ClaimDesktopSignInRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClaimDesktopSignInRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClaimDesktopSignInRequest) ProtoMessage() {}
+
+func (x *ClaimDesktopSignInRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *ClaimDesktopSignInRequest) GetRequestId() string {
+	if x != nil {
+		return x.xxx_hidden_RequestId
+	}
+	return ""
+}
+
+func (x *ClaimDesktopSignInRequest) GetClaimSecret() string {
+	if x != nil {
+		return x.xxx_hidden_ClaimSecret
+	}
+	return ""
+}
+
+func (x *ClaimDesktopSignInRequest) SetRequestId(v string) {
+	x.xxx_hidden_RequestId = v
+}
+
+func (x *ClaimDesktopSignInRequest) SetClaimSecret(v string) {
+	x.xxx_hidden_ClaimSecret = v
+}
+
+type ClaimDesktopSignInRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	RequestId   string
+	ClaimSecret string
+}
+
+func (b0 ClaimDesktopSignInRequest_builder) Build() *ClaimDesktopSignInRequest {
+	m0 := &ClaimDesktopSignInRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_RequestId = b.RequestId
+	x.xxx_hidden_ClaimSecret = b.ClaimSecret
+	return m0
+}
+
+type ClaimDesktopSignInResponse struct {
+	state                protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Intent    string                 `protobuf:"bytes,1,opt,name=intent,proto3"`
+	xxx_hidden_ExpiresAt *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expires_at,json=expiresAt,proto3"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *ClaimDesktopSignInResponse) Reset() {
+	*x = ClaimDesktopSignInResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClaimDesktopSignInResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClaimDesktopSignInResponse) ProtoMessage() {}
+
+func (x *ClaimDesktopSignInResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *ClaimDesktopSignInResponse) GetIntent() string {
+	if x != nil {
+		return x.xxx_hidden_Intent
+	}
+	return ""
+}
+
+func (x *ClaimDesktopSignInResponse) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_ExpiresAt
+	}
+	return nil
+}
+
+func (x *ClaimDesktopSignInResponse) SetIntent(v string) {
+	x.xxx_hidden_Intent = v
+}
+
+func (x *ClaimDesktopSignInResponse) SetExpiresAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_ExpiresAt = v
+}
+
+func (x *ClaimDesktopSignInResponse) HasExpiresAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_ExpiresAt != nil
+}
+
+func (x *ClaimDesktopSignInResponse) ClearExpiresAt() {
+	x.xxx_hidden_ExpiresAt = nil
+}
+
+type ClaimDesktopSignInResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Intent    string
+	ExpiresAt *timestamppb.Timestamp
+}
+
+func (b0 ClaimDesktopSignInResponse_builder) Build() *ClaimDesktopSignInResponse {
+	m0 := &ClaimDesktopSignInResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Intent = b.Intent
+	x.xxx_hidden_ExpiresAt = b.ExpiresAt
+	return m0
+}
+
+type GetDesktopSignInRequest struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestId   string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3"`
+	xxx_hidden_ClaimSecret string                 `protobuf:"bytes,2,opt,name=claim_secret,json=claimSecret,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *GetDesktopSignInRequest) Reset() {
+	*x = GetDesktopSignInRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDesktopSignInRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDesktopSignInRequest) ProtoMessage() {}
+
+func (x *GetDesktopSignInRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *GetDesktopSignInRequest) GetRequestId() string {
+	if x != nil {
+		return x.xxx_hidden_RequestId
+	}
+	return ""
+}
+
+func (x *GetDesktopSignInRequest) GetClaimSecret() string {
+	if x != nil {
+		return x.xxx_hidden_ClaimSecret
+	}
+	return ""
+}
+
+func (x *GetDesktopSignInRequest) SetRequestId(v string) {
+	x.xxx_hidden_RequestId = v
+}
+
+func (x *GetDesktopSignInRequest) SetClaimSecret(v string) {
+	x.xxx_hidden_ClaimSecret = v
+}
+
+type GetDesktopSignInRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	RequestId   string
+	ClaimSecret string
+}
+
+func (b0 GetDesktopSignInRequest_builder) Build() *GetDesktopSignInRequest {
+	m0 := &GetDesktopSignInRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_RequestId = b.RequestId
+	x.xxx_hidden_ClaimSecret = b.ClaimSecret
+	return m0
+}
+
+type GetDesktopSignInResponse struct {
+	state                 protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestId  string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3"`
+	xxx_hidden_Status     DesktopSignInStatus    `protobuf:"varint,2,opt,name=status,proto3,enum=gophercourier.auth.v1.DesktopSignInStatus"`
+	xxx_hidden_DeviceName string                 `protobuf:"bytes,3,opt,name=device_name,json=deviceName,proto3"`
+	xxx_hidden_Platform   string                 `protobuf:"bytes,4,opt,name=platform,proto3"`
+	xxx_hidden_AppVersion string                 `protobuf:"bytes,5,opt,name=app_version,json=appVersion,proto3"`
+	xxx_hidden_Ip         string                 `protobuf:"bytes,6,opt,name=ip,proto3"`
+	xxx_hidden_SameIp     bool                   `protobuf:"varint,7,opt,name=same_ip,json=sameIp,proto3"`
+	xxx_hidden_CreatedAt  *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3"`
+	xxx_hidden_ExpiresAt  *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=expires_at,json=expiresAt,proto3"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *GetDesktopSignInResponse) Reset() {
+	*x = GetDesktopSignInResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDesktopSignInResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDesktopSignInResponse) ProtoMessage() {}
+
+func (x *GetDesktopSignInResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *GetDesktopSignInResponse) GetRequestId() string {
+	if x != nil {
+		return x.xxx_hidden_RequestId
+	}
+	return ""
+}
+
+func (x *GetDesktopSignInResponse) GetStatus() DesktopSignInStatus {
+	if x != nil {
+		return x.xxx_hidden_Status
+	}
+	return DesktopSignInStatus_DESKTOP_SIGN_IN_STATUS_UNSPECIFIED
+}
+
+func (x *GetDesktopSignInResponse) GetDeviceName() string {
+	if x != nil {
+		return x.xxx_hidden_DeviceName
+	}
+	return ""
+}
+
+func (x *GetDesktopSignInResponse) GetPlatform() string {
+	if x != nil {
+		return x.xxx_hidden_Platform
+	}
+	return ""
+}
+
+func (x *GetDesktopSignInResponse) GetAppVersion() string {
+	if x != nil {
+		return x.xxx_hidden_AppVersion
+	}
+	return ""
+}
+
+func (x *GetDesktopSignInResponse) GetIp() string {
+	if x != nil {
+		return x.xxx_hidden_Ip
+	}
+	return ""
+}
+
+func (x *GetDesktopSignInResponse) GetSameIp() bool {
+	if x != nil {
+		return x.xxx_hidden_SameIp
+	}
+	return false
+}
+
+func (x *GetDesktopSignInResponse) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_CreatedAt
+	}
+	return nil
+}
+
+func (x *GetDesktopSignInResponse) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.xxx_hidden_ExpiresAt
+	}
+	return nil
+}
+
+func (x *GetDesktopSignInResponse) SetRequestId(v string) {
+	x.xxx_hidden_RequestId = v
+}
+
+func (x *GetDesktopSignInResponse) SetStatus(v DesktopSignInStatus) {
+	x.xxx_hidden_Status = v
+}
+
+func (x *GetDesktopSignInResponse) SetDeviceName(v string) {
+	x.xxx_hidden_DeviceName = v
+}
+
+func (x *GetDesktopSignInResponse) SetPlatform(v string) {
+	x.xxx_hidden_Platform = v
+}
+
+func (x *GetDesktopSignInResponse) SetAppVersion(v string) {
+	x.xxx_hidden_AppVersion = v
+}
+
+func (x *GetDesktopSignInResponse) SetIp(v string) {
+	x.xxx_hidden_Ip = v
+}
+
+func (x *GetDesktopSignInResponse) SetSameIp(v bool) {
+	x.xxx_hidden_SameIp = v
+}
+
+func (x *GetDesktopSignInResponse) SetCreatedAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_CreatedAt = v
+}
+
+func (x *GetDesktopSignInResponse) SetExpiresAt(v *timestamppb.Timestamp) {
+	x.xxx_hidden_ExpiresAt = v
+}
+
+func (x *GetDesktopSignInResponse) HasCreatedAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_CreatedAt != nil
+}
+
+func (x *GetDesktopSignInResponse) HasExpiresAt() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_ExpiresAt != nil
+}
+
+func (x *GetDesktopSignInResponse) ClearCreatedAt() {
+	x.xxx_hidden_CreatedAt = nil
+}
+
+func (x *GetDesktopSignInResponse) ClearExpiresAt() {
+	x.xxx_hidden_ExpiresAt = nil
+}
+
+type GetDesktopSignInResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	RequestId string
+	Status    DesktopSignInStatus
+	// Reported by the app that started the request; shown as a claim, not a fact.
+	DeviceName string
+	Platform   string
+	AppVersion string
+	// Address the app started the request from, and whether the browser calls from the same one.
+	Ip        string
+	SameIp    bool
+	CreatedAt *timestamppb.Timestamp
+	ExpiresAt *timestamppb.Timestamp
+}
+
+func (b0 GetDesktopSignInResponse_builder) Build() *GetDesktopSignInResponse {
+	m0 := &GetDesktopSignInResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_RequestId = b.RequestId
+	x.xxx_hidden_Status = b.Status
+	x.xxx_hidden_DeviceName = b.DeviceName
+	x.xxx_hidden_Platform = b.Platform
+	x.xxx_hidden_AppVersion = b.AppVersion
+	x.xxx_hidden_Ip = b.Ip
+	x.xxx_hidden_SameIp = b.SameIp
+	x.xxx_hidden_CreatedAt = b.CreatedAt
+	x.xxx_hidden_ExpiresAt = b.ExpiresAt
+	return m0
+}
+
+type ApproveDesktopSignInRequest struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestId   string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3"`
+	xxx_hidden_ClaimSecret string                 `protobuf:"bytes,2,opt,name=claim_secret,json=claimSecret,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *ApproveDesktopSignInRequest) Reset() {
+	*x = ApproveDesktopSignInRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[42]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ApproveDesktopSignInRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApproveDesktopSignInRequest) ProtoMessage() {}
+
+func (x *ApproveDesktopSignInRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[42]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *ApproveDesktopSignInRequest) GetRequestId() string {
+	if x != nil {
+		return x.xxx_hidden_RequestId
+	}
+	return ""
+}
+
+func (x *ApproveDesktopSignInRequest) GetClaimSecret() string {
+	if x != nil {
+		return x.xxx_hidden_ClaimSecret
+	}
+	return ""
+}
+
+func (x *ApproveDesktopSignInRequest) SetRequestId(v string) {
+	x.xxx_hidden_RequestId = v
+}
+
+func (x *ApproveDesktopSignInRequest) SetClaimSecret(v string) {
+	x.xxx_hidden_ClaimSecret = v
+}
+
+type ApproveDesktopSignInRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	RequestId   string
+	ClaimSecret string
+}
+
+func (b0 ApproveDesktopSignInRequest_builder) Build() *ApproveDesktopSignInRequest {
+	m0 := &ApproveDesktopSignInRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_RequestId = b.RequestId
+	x.xxx_hidden_ClaimSecret = b.ClaimSecret
+	return m0
+}
+
+type ApproveDesktopSignInResponse struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RedirectUri string                 `protobuf:"bytes,1,opt,name=redirect_uri,json=redirectUri,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *ApproveDesktopSignInResponse) Reset() {
+	*x = ApproveDesktopSignInResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ApproveDesktopSignInResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApproveDesktopSignInResponse) ProtoMessage() {}
+
+func (x *ApproveDesktopSignInResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *ApproveDesktopSignInResponse) GetRedirectUri() string {
+	if x != nil {
+		return x.xxx_hidden_RedirectUri
+	}
+	return ""
+}
+
+func (x *ApproveDesktopSignInResponse) SetRedirectUri(v string) {
+	x.xxx_hidden_RedirectUri = v
+}
+
+type ApproveDesktopSignInResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	// Empty when the app registered no loopback: show "return to the app" instead.
+	RedirectUri string
+}
+
+func (b0 ApproveDesktopSignInResponse_builder) Build() *ApproveDesktopSignInResponse {
+	m0 := &ApproveDesktopSignInResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_RedirectUri = b.RedirectUri
+	return m0
+}
+
+type DenyDesktopSignInRequest struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_RequestId   string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3"`
+	xxx_hidden_ClaimSecret string                 `protobuf:"bytes,2,opt,name=claim_secret,json=claimSecret,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *DenyDesktopSignInRequest) Reset() {
+	*x = DenyDesktopSignInRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DenyDesktopSignInRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DenyDesktopSignInRequest) ProtoMessage() {}
+
+func (x *DenyDesktopSignInRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *DenyDesktopSignInRequest) GetRequestId() string {
+	if x != nil {
+		return x.xxx_hidden_RequestId
+	}
+	return ""
+}
+
+func (x *DenyDesktopSignInRequest) GetClaimSecret() string {
+	if x != nil {
+		return x.xxx_hidden_ClaimSecret
+	}
+	return ""
+}
+
+func (x *DenyDesktopSignInRequest) SetRequestId(v string) {
+	x.xxx_hidden_RequestId = v
+}
+
+func (x *DenyDesktopSignInRequest) SetClaimSecret(v string) {
+	x.xxx_hidden_ClaimSecret = v
+}
+
+type DenyDesktopSignInRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	RequestId   string
+	ClaimSecret string
+}
+
+func (b0 DenyDesktopSignInRequest_builder) Build() *DenyDesktopSignInRequest {
+	m0 := &DenyDesktopSignInRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_RequestId = b.RequestId
+	x.xxx_hidden_ClaimSecret = b.ClaimSecret
+	return m0
+}
+
+type DenyDesktopSignInResponse struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DenyDesktopSignInResponse) Reset() {
+	*x = DenyDesktopSignInResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DenyDesktopSignInResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DenyDesktopSignInResponse) ProtoMessage() {}
+
+func (x *DenyDesktopSignInResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+type DenyDesktopSignInResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+}
+
+func (b0 DenyDesktopSignInResponse_builder) Build() *DenyDesktopSignInResponse {
+	m0 := &DenyDesktopSignInResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	return m0
+}
+
+type RequestPasswordResetRequest struct {
+	state             protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Email  string                 `protobuf:"bytes,1,opt,name=email,proto3"`
+	xxx_hidden_Locale string                 `protobuf:"bytes,2,opt,name=locale,proto3"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *RequestPasswordResetRequest) Reset() {
+	*x = RequestPasswordResetRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RequestPasswordResetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RequestPasswordResetRequest) ProtoMessage() {}
+
+func (x *RequestPasswordResetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *RequestPasswordResetRequest) GetEmail() string {
+	if x != nil {
+		return x.xxx_hidden_Email
+	}
+	return ""
+}
+
+func (x *RequestPasswordResetRequest) GetLocale() string {
+	if x != nil {
+		return x.xxx_hidden_Locale
+	}
+	return ""
+}
+
+func (x *RequestPasswordResetRequest) SetEmail(v string) {
+	x.xxx_hidden_Email = v
+}
+
+func (x *RequestPasswordResetRequest) SetLocale(v string) {
+	x.xxx_hidden_Locale = v
+}
+
+type RequestPasswordResetRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Email  string
+	Locale string
+}
+
+func (b0 RequestPasswordResetRequest_builder) Build() *RequestPasswordResetRequest {
+	m0 := &RequestPasswordResetRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Email = b.Email
+	x.xxx_hidden_Locale = b.Locale
+	return m0
+}
+
+type RequestPasswordResetResponse struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RequestPasswordResetResponse) Reset() {
+	*x = RequestPasswordResetResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RequestPasswordResetResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RequestPasswordResetResponse) ProtoMessage() {}
+
+func (x *RequestPasswordResetResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+type RequestPasswordResetResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+}
+
+func (b0 RequestPasswordResetResponse_builder) Build() *RequestPasswordResetResponse {
+	m0 := &RequestPasswordResetResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	return m0
+}
+
+type ResetPasswordRequest struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Token       string                 `protobuf:"bytes,1,opt,name=token,proto3"`
+	xxx_hidden_NewPassword string                 `protobuf:"bytes,2,opt,name=new_password,json=newPassword,proto3"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *ResetPasswordRequest) Reset() {
+	*x = ResetPasswordRequest{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[48]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResetPasswordRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResetPasswordRequest) ProtoMessage() {}
+
+func (x *ResetPasswordRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[48]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *ResetPasswordRequest) GetToken() string {
+	if x != nil {
+		return x.xxx_hidden_Token
+	}
+	return ""
+}
+
+func (x *ResetPasswordRequest) GetNewPassword() string {
+	if x != nil {
+		return x.xxx_hidden_NewPassword
+	}
+	return ""
+}
+
+func (x *ResetPasswordRequest) SetToken(v string) {
+	x.xxx_hidden_Token = v
+}
+
+func (x *ResetPasswordRequest) SetNewPassword(v string) {
+	x.xxx_hidden_NewPassword = v
+}
+
+type ResetPasswordRequest_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Token       string
+	NewPassword string
+}
+
+func (b0 ResetPasswordRequest_builder) Build() *ResetPasswordRequest {
+	m0 := &ResetPasswordRequest{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Token = b.Token
+	x.xxx_hidden_NewPassword = b.NewPassword
+	return m0
+}
+
+type ResetPasswordResponse struct {
+	state         protoimpl.MessageState `protogen:"opaque.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResetPasswordResponse) Reset() {
+	*x = ResetPasswordResponse{}
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[49]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResetPasswordResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResetPasswordResponse) ProtoMessage() {}
+
+func (x *ResetPasswordResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_gophercourier_auth_v1_auth_proto_msgTypes[49]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+type ResetPasswordResponse_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+}
+
+func (b0 ResetPasswordResponse_builder) Build() *ResetPasswordResponse {
+	m0 := &ResetPasswordResponse{}
+	b, x := &b0, m0
+	_, _ = b, x
+	return m0
+}
+
 var File_gophercourier_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_gophercourier_auth_v1_auth_proto_rawDesc = "" +
@@ -2707,7 +4516,109 @@ const file_gophercourier_auth_v1_auth_proto_rawDesc = "" +
 	"\x15RevokeSessionResponse\"\x12\n" +
 	"\x10LogoutAllRequest\"8\n" +
 	"\x11LogoutAllResponse\x12#\n" +
-	"\rrevoked_count\x18\x01 \x01(\x05R\frevokedCount2\xe1\t\n" +
+	"\rrevoked_count\x18\x01 \x01(\x05R\frevokedCount\"\x16\n" +
+	"\x14GetServerInfoRequest\"\xbd\x01\n" +
+	"\x15GetServerInfoResponse\x12%\n" +
+	"\x0eserver_version\x18\x01 \x01(\tR\rserverVersion\x12\"\n" +
+	"\fcapabilities\x18\x02 \x03(\tR\fcapabilities\x12,\n" +
+	"\x12desktop_signin_url\x18\x03 \x01(\tR\x10desktopSigninUrl\x12+\n" +
+	"\x11registration_open\x18\x04 \x01(\bR\x10registrationOpen\"\xb9\x02\n" +
+	"\x19StartDesktopSignInRequest\x12\x1b\n" +
+	"\tclient_id\x18\x01 \x01(\tR\bclientId\x12%\n" +
+	"\x0ecode_challenge\x18\x02 \x01(\tR\rcodeChallenge\x12\x1f\n" +
+	"\vdevice_name\x18\x03 \x01(\tR\n" +
+	"deviceName\x12\x1a\n" +
+	"\bplatform\x18\x04 \x01(\tR\bplatform\x12\x1f\n" +
+	"\vapp_version\x18\x05 \x01(\tR\n" +
+	"appVersion\x12!\n" +
+	"\fredirect_uri\x18\x06 \x01(\tR\vredirectUri\x12\x16\n" +
+	"\x06locale\x18\a \x01(\tR\x06locale\x12\x16\n" +
+	"\x06intent\x18\b \x01(\tR\x06intent\x12'\n" +
+	"\x0fclaim_challenge\x18\t \x01(\tR\x0eclaimChallenge\"\xc7\x01\n" +
+	"\x1aStartDesktopSignInResponse\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12\x1b\n" +
+	"\tlogin_url\x18\x02 \x01(\tR\bloginUrl\x129\n" +
+	"\n" +
+	"expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x122\n" +
+	"\x15poll_interval_seconds\x18\x04 \x01(\x05R\x13pollIntervalSeconds\"{\n" +
+	"\x18PollDesktopSignInRequest\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12\x1b\n" +
+	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12#\n" +
+	"\rcode_verifier\x18\x03 \x01(\tR\fcodeVerifier\"\xcc\x04\n" +
+	"\x19PollDesktopSignInResponse\x12B\n" +
+	"\x06status\x18\x01 \x01(\x0e2*.gophercourier.auth.v1.DesktopSignInStatusR\x06status\x12!\n" +
+	"\faccess_token\x18\x02 \x01(\tR\vaccessToken\x12#\n" +
+	"\rrefresh_token\x18\x03 \x01(\tR\frefreshToken\x12/\n" +
+	"\x04user\x18\x04 \x01(\v2\x1b.gophercourier.auth.v1.UserR\x04user\x12\"\n" +
+	"\ractive_org_id\x18\n" +
+	" \x01(\tR\vactiveOrgId\x12$\n" +
+	"\x0eactive_role_id\x18\v \x01(\tR\factiveRoleId\x12*\n" +
+	"\x11is_platform_staff\x18\f \x01(\bR\x0fisPlatformStaff\x12C\n" +
+	"\vmemberships\x18\r \x03(\v2!.gophercourier.auth.v1.MembershipR\vmemberships\x12>\n" +
+	"\x1brequires_email_verification\x18\x0e \x01(\bR\x19requiresEmailVerification\x12<\n" +
+	"\x1aemail_verification_pending\x18\x0f \x01(\bR\x18emailVerificationPending\x129\n" +
+	"\n" +
+	"expires_at\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\"}\n" +
+	"\x1aCancelDesktopSignInRequest\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12\x1b\n" +
+	"\tclient_id\x18\x02 \x01(\tR\bclientId\x12#\n" +
+	"\rcode_verifier\x18\x03 \x01(\tR\fcodeVerifier\"\x1d\n" +
+	"\x1bCancelDesktopSignInResponse\"]\n" +
+	"\x19ClaimDesktopSignInRequest\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12!\n" +
+	"\fclaim_secret\x18\x02 \x01(\tR\vclaimSecret\"o\n" +
+	"\x1aClaimDesktopSignInResponse\x12\x16\n" +
+	"\x06intent\x18\x01 \x01(\tR\x06intent\x129\n" +
+	"\n" +
+	"expires_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\"[\n" +
+	"\x17GetDesktopSignInRequest\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12!\n" +
+	"\fclaim_secret\x18\x02 \x01(\tR\vclaimSecret\"\xfa\x02\n" +
+	"\x18GetDesktopSignInResponse\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12B\n" +
+	"\x06status\x18\x02 \x01(\x0e2*.gophercourier.auth.v1.DesktopSignInStatusR\x06status\x12\x1f\n" +
+	"\vdevice_name\x18\x03 \x01(\tR\n" +
+	"deviceName\x12\x1a\n" +
+	"\bplatform\x18\x04 \x01(\tR\bplatform\x12\x1f\n" +
+	"\vapp_version\x18\x05 \x01(\tR\n" +
+	"appVersion\x12\x0e\n" +
+	"\x02ip\x18\x06 \x01(\tR\x02ip\x12\x17\n" +
+	"\asame_ip\x18\a \x01(\bR\x06sameIp\x129\n" +
+	"\n" +
+	"created_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"expires_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\"_\n" +
+	"\x1bApproveDesktopSignInRequest\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12!\n" +
+	"\fclaim_secret\x18\x02 \x01(\tR\vclaimSecret\"A\n" +
+	"\x1cApproveDesktopSignInResponse\x12!\n" +
+	"\fredirect_uri\x18\x01 \x01(\tR\vredirectUri\"\\\n" +
+	"\x18DenyDesktopSignInRequest\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12!\n" +
+	"\fclaim_secret\x18\x02 \x01(\tR\vclaimSecret\"\x1b\n" +
+	"\x19DenyDesktopSignInResponse\"K\n" +
+	"\x1bRequestPasswordResetRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\x16\n" +
+	"\x06locale\x18\x02 \x01(\tR\x06locale\"\x1e\n" +
+	"\x1cRequestPasswordResetResponse\"O\n" +
+	"\x14ResetPasswordRequest\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12!\n" +
+	"\fnew_password\x18\x02 \x01(\tR\vnewPassword\"\x17\n" +
+	"\x15ResetPasswordResponse*\xcd\x01\n" +
+	"\x13DesktopSignInStatus\x12&\n" +
+	"\"DESKTOP_SIGN_IN_STATUS_UNSPECIFIED\x10\x00\x12\"\n" +
+	"\x1eDESKTOP_SIGN_IN_STATUS_PENDING\x10\x01\x12#\n" +
+	"\x1fDESKTOP_SIGN_IN_STATUS_APPROVED\x10\x02\x12!\n" +
+	"\x1dDESKTOP_SIGN_IN_STATUS_DENIED\x10\x03\x12\"\n" +
+	"\x1eDESKTOP_SIGN_IN_STATUS_EXPIRED\x10\x042\x94\x13\n" +
 	"\vAuthService\x12[\n" +
 	"\bRegister\x12&.gophercourier.auth.v1.RegisterRequest\x1a'.gophercourier.auth.v1.RegisterResponse\x12R\n" +
 	"\x05Login\x12#.gophercourier.auth.v1.LoginRequest\x1a$.gophercourier.auth.v1.LoginResponse\x12X\n" +
@@ -2721,92 +4632,153 @@ const file_gophercourier_auth_v1_auth_proto_rawDesc = "" +
 	"\x0eChangePassword\x12,.gophercourier.auth.v1.ChangePasswordRequest\x1a-.gophercourier.auth.v1.ChangePasswordResponse\x12U\n" +
 	"\x06Logout\x12$.gophercourier.auth.v1.LogoutRequest\x1a%.gophercourier.auth.v1.LogoutResponse\x12j\n" +
 	"\rRevokeSession\x12+.gophercourier.auth.v1.RevokeSessionRequest\x1a,.gophercourier.auth.v1.RevokeSessionResponse\x12^\n" +
-	"\tLogoutAll\x12'.gophercourier.auth.v1.LogoutAllRequest\x1a(.gophercourier.auth.v1.LogoutAllResponseB\xd9\x01\n" +
+	"\tLogoutAll\x12'.gophercourier.auth.v1.LogoutAllRequest\x1a(.gophercourier.auth.v1.LogoutAllResponse\x12j\n" +
+	"\rGetServerInfo\x12+.gophercourier.auth.v1.GetServerInfoRequest\x1a,.gophercourier.auth.v1.GetServerInfoResponse\x12y\n" +
+	"\x12StartDesktopSignIn\x120.gophercourier.auth.v1.StartDesktopSignInRequest\x1a1.gophercourier.auth.v1.StartDesktopSignInResponse\x12v\n" +
+	"\x11PollDesktopSignIn\x12/.gophercourier.auth.v1.PollDesktopSignInRequest\x1a0.gophercourier.auth.v1.PollDesktopSignInResponse\x12|\n" +
+	"\x13CancelDesktopSignIn\x121.gophercourier.auth.v1.CancelDesktopSignInRequest\x1a2.gophercourier.auth.v1.CancelDesktopSignInResponse\x12y\n" +
+	"\x12ClaimDesktopSignIn\x120.gophercourier.auth.v1.ClaimDesktopSignInRequest\x1a1.gophercourier.auth.v1.ClaimDesktopSignInResponse\x12s\n" +
+	"\x10GetDesktopSignIn\x12..gophercourier.auth.v1.GetDesktopSignInRequest\x1a/.gophercourier.auth.v1.GetDesktopSignInResponse\x12\x7f\n" +
+	"\x14ApproveDesktopSignIn\x122.gophercourier.auth.v1.ApproveDesktopSignInRequest\x1a3.gophercourier.auth.v1.ApproveDesktopSignInResponse\x12v\n" +
+	"\x11DenyDesktopSignIn\x12/.gophercourier.auth.v1.DenyDesktopSignInRequest\x1a0.gophercourier.auth.v1.DenyDesktopSignInResponse\x12\x7f\n" +
+	"\x14RequestPasswordReset\x122.gophercourier.auth.v1.RequestPasswordResetRequest\x1a3.gophercourier.auth.v1.RequestPasswordResetResponse\x12j\n" +
+	"\rResetPassword\x12+.gophercourier.auth.v1.ResetPasswordRequest\x1a,.gophercourier.auth.v1.ResetPasswordResponseB\xd9\x01\n" +
 	"\x19com.gophercourier.auth.v1B\tAuthProtoP\x01Z;github.com/tetiva-app/proto/go/gophercourier/auth/v1;authv1\xa2\x02\x03GAX\xaa\x02\x15Gophercourier.Auth.V1\xca\x02\x15Gophercourier\\Auth\\V1\xe2\x02!Gophercourier\\Auth\\V1\\GPBMetadata\xea\x02\x17Gophercourier::Auth::V1b\x06proto3"
 
-var file_gophercourier_auth_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
+var file_gophercourier_auth_v1_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_gophercourier_auth_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 50)
 var file_gophercourier_auth_v1_auth_proto_goTypes = []any{
-	(*RegisterRequest)(nil),            // 0: gophercourier.auth.v1.RegisterRequest
-	(*LoginRequest)(nil),               // 1: gophercourier.auth.v1.LoginRequest
-	(*RefreshRequest)(nil),             // 2: gophercourier.auth.v1.RefreshRequest
-	(*GetMeRequest)(nil),               // 3: gophercourier.auth.v1.GetMeRequest
-	(*RegisterResponse)(nil),           // 4: gophercourier.auth.v1.RegisterResponse
-	(*LoginResponse)(nil),              // 5: gophercourier.auth.v1.LoginResponse
-	(*RefreshResponse)(nil),            // 6: gophercourier.auth.v1.RefreshResponse
-	(*GetMeResponse)(nil),              // 7: gophercourier.auth.v1.GetMeResponse
-	(*User)(nil),                       // 8: gophercourier.auth.v1.User
-	(*Membership)(nil),                 // 9: gophercourier.auth.v1.Membership
-	(*SwitchOrgRequest)(nil),           // 10: gophercourier.auth.v1.SwitchOrgRequest
-	(*SwitchOrgResponse)(nil),          // 11: gophercourier.auth.v1.SwitchOrgResponse
-	(*MeRequest)(nil),                  // 12: gophercourier.auth.v1.MeRequest
-	(*MeResponse)(nil),                 // 13: gophercourier.auth.v1.MeResponse
-	(*ActiveOrg)(nil),                  // 14: gophercourier.auth.v1.ActiveOrg
-	(*SessionView)(nil),                // 15: gophercourier.auth.v1.SessionView
-	(*MyOrgsRequest)(nil),              // 16: gophercourier.auth.v1.MyOrgsRequest
-	(*MyOrgsResponse)(nil),             // 17: gophercourier.auth.v1.MyOrgsResponse
-	(*VerifyEmailRequest)(nil),         // 18: gophercourier.auth.v1.VerifyEmailRequest
-	(*VerifyEmailResponse)(nil),        // 19: gophercourier.auth.v1.VerifyEmailResponse
-	(*ResendVerificationRequest)(nil),  // 20: gophercourier.auth.v1.ResendVerificationRequest
-	(*ResendVerificationResponse)(nil), // 21: gophercourier.auth.v1.ResendVerificationResponse
-	(*ChangePasswordRequest)(nil),      // 22: gophercourier.auth.v1.ChangePasswordRequest
-	(*ChangePasswordResponse)(nil),     // 23: gophercourier.auth.v1.ChangePasswordResponse
-	(*LogoutRequest)(nil),              // 24: gophercourier.auth.v1.LogoutRequest
-	(*LogoutResponse)(nil),             // 25: gophercourier.auth.v1.LogoutResponse
-	(*RevokeSessionRequest)(nil),       // 26: gophercourier.auth.v1.RevokeSessionRequest
-	(*RevokeSessionResponse)(nil),      // 27: gophercourier.auth.v1.RevokeSessionResponse
-	(*LogoutAllRequest)(nil),           // 28: gophercourier.auth.v1.LogoutAllRequest
-	(*LogoutAllResponse)(nil),          // 29: gophercourier.auth.v1.LogoutAllResponse
-	(*timestamppb.Timestamp)(nil),      // 30: google.protobuf.Timestamp
+	(DesktopSignInStatus)(0),             // 0: gophercourier.auth.v1.DesktopSignInStatus
+	(*RegisterRequest)(nil),              // 1: gophercourier.auth.v1.RegisterRequest
+	(*LoginRequest)(nil),                 // 2: gophercourier.auth.v1.LoginRequest
+	(*RefreshRequest)(nil),               // 3: gophercourier.auth.v1.RefreshRequest
+	(*GetMeRequest)(nil),                 // 4: gophercourier.auth.v1.GetMeRequest
+	(*RegisterResponse)(nil),             // 5: gophercourier.auth.v1.RegisterResponse
+	(*LoginResponse)(nil),                // 6: gophercourier.auth.v1.LoginResponse
+	(*RefreshResponse)(nil),              // 7: gophercourier.auth.v1.RefreshResponse
+	(*GetMeResponse)(nil),                // 8: gophercourier.auth.v1.GetMeResponse
+	(*User)(nil),                         // 9: gophercourier.auth.v1.User
+	(*Membership)(nil),                   // 10: gophercourier.auth.v1.Membership
+	(*SwitchOrgRequest)(nil),             // 11: gophercourier.auth.v1.SwitchOrgRequest
+	(*SwitchOrgResponse)(nil),            // 12: gophercourier.auth.v1.SwitchOrgResponse
+	(*MeRequest)(nil),                    // 13: gophercourier.auth.v1.MeRequest
+	(*MeResponse)(nil),                   // 14: gophercourier.auth.v1.MeResponse
+	(*ActiveOrg)(nil),                    // 15: gophercourier.auth.v1.ActiveOrg
+	(*SessionView)(nil),                  // 16: gophercourier.auth.v1.SessionView
+	(*MyOrgsRequest)(nil),                // 17: gophercourier.auth.v1.MyOrgsRequest
+	(*MyOrgsResponse)(nil),               // 18: gophercourier.auth.v1.MyOrgsResponse
+	(*VerifyEmailRequest)(nil),           // 19: gophercourier.auth.v1.VerifyEmailRequest
+	(*VerifyEmailResponse)(nil),          // 20: gophercourier.auth.v1.VerifyEmailResponse
+	(*ResendVerificationRequest)(nil),    // 21: gophercourier.auth.v1.ResendVerificationRequest
+	(*ResendVerificationResponse)(nil),   // 22: gophercourier.auth.v1.ResendVerificationResponse
+	(*ChangePasswordRequest)(nil),        // 23: gophercourier.auth.v1.ChangePasswordRequest
+	(*ChangePasswordResponse)(nil),       // 24: gophercourier.auth.v1.ChangePasswordResponse
+	(*LogoutRequest)(nil),                // 25: gophercourier.auth.v1.LogoutRequest
+	(*LogoutResponse)(nil),               // 26: gophercourier.auth.v1.LogoutResponse
+	(*RevokeSessionRequest)(nil),         // 27: gophercourier.auth.v1.RevokeSessionRequest
+	(*RevokeSessionResponse)(nil),        // 28: gophercourier.auth.v1.RevokeSessionResponse
+	(*LogoutAllRequest)(nil),             // 29: gophercourier.auth.v1.LogoutAllRequest
+	(*LogoutAllResponse)(nil),            // 30: gophercourier.auth.v1.LogoutAllResponse
+	(*GetServerInfoRequest)(nil),         // 31: gophercourier.auth.v1.GetServerInfoRequest
+	(*GetServerInfoResponse)(nil),        // 32: gophercourier.auth.v1.GetServerInfoResponse
+	(*StartDesktopSignInRequest)(nil),    // 33: gophercourier.auth.v1.StartDesktopSignInRequest
+	(*StartDesktopSignInResponse)(nil),   // 34: gophercourier.auth.v1.StartDesktopSignInResponse
+	(*PollDesktopSignInRequest)(nil),     // 35: gophercourier.auth.v1.PollDesktopSignInRequest
+	(*PollDesktopSignInResponse)(nil),    // 36: gophercourier.auth.v1.PollDesktopSignInResponse
+	(*CancelDesktopSignInRequest)(nil),   // 37: gophercourier.auth.v1.CancelDesktopSignInRequest
+	(*CancelDesktopSignInResponse)(nil),  // 38: gophercourier.auth.v1.CancelDesktopSignInResponse
+	(*ClaimDesktopSignInRequest)(nil),    // 39: gophercourier.auth.v1.ClaimDesktopSignInRequest
+	(*ClaimDesktopSignInResponse)(nil),   // 40: gophercourier.auth.v1.ClaimDesktopSignInResponse
+	(*GetDesktopSignInRequest)(nil),      // 41: gophercourier.auth.v1.GetDesktopSignInRequest
+	(*GetDesktopSignInResponse)(nil),     // 42: gophercourier.auth.v1.GetDesktopSignInResponse
+	(*ApproveDesktopSignInRequest)(nil),  // 43: gophercourier.auth.v1.ApproveDesktopSignInRequest
+	(*ApproveDesktopSignInResponse)(nil), // 44: gophercourier.auth.v1.ApproveDesktopSignInResponse
+	(*DenyDesktopSignInRequest)(nil),     // 45: gophercourier.auth.v1.DenyDesktopSignInRequest
+	(*DenyDesktopSignInResponse)(nil),    // 46: gophercourier.auth.v1.DenyDesktopSignInResponse
+	(*RequestPasswordResetRequest)(nil),  // 47: gophercourier.auth.v1.RequestPasswordResetRequest
+	(*RequestPasswordResetResponse)(nil), // 48: gophercourier.auth.v1.RequestPasswordResetResponse
+	(*ResetPasswordRequest)(nil),         // 49: gophercourier.auth.v1.ResetPasswordRequest
+	(*ResetPasswordResponse)(nil),        // 50: gophercourier.auth.v1.ResetPasswordResponse
+	(*timestamppb.Timestamp)(nil),        // 51: google.protobuf.Timestamp
 }
 var file_gophercourier_auth_v1_auth_proto_depIdxs = []int32{
-	8,  // 0: gophercourier.auth.v1.RegisterResponse.user:type_name -> gophercourier.auth.v1.User
-	9,  // 1: gophercourier.auth.v1.RegisterResponse.memberships:type_name -> gophercourier.auth.v1.Membership
-	8,  // 2: gophercourier.auth.v1.LoginResponse.user:type_name -> gophercourier.auth.v1.User
-	9,  // 3: gophercourier.auth.v1.LoginResponse.memberships:type_name -> gophercourier.auth.v1.Membership
-	8,  // 4: gophercourier.auth.v1.RefreshResponse.user:type_name -> gophercourier.auth.v1.User
-	9,  // 5: gophercourier.auth.v1.RefreshResponse.memberships:type_name -> gophercourier.auth.v1.Membership
-	8,  // 6: gophercourier.auth.v1.GetMeResponse.user:type_name -> gophercourier.auth.v1.User
-	30, // 7: gophercourier.auth.v1.User.created_at:type_name -> google.protobuf.Timestamp
-	30, // 8: gophercourier.auth.v1.Membership.joined_at:type_name -> google.protobuf.Timestamp
-	8,  // 9: gophercourier.auth.v1.SwitchOrgResponse.user:type_name -> gophercourier.auth.v1.User
-	9,  // 10: gophercourier.auth.v1.SwitchOrgResponse.memberships:type_name -> gophercourier.auth.v1.Membership
-	8,  // 11: gophercourier.auth.v1.MeResponse.user:type_name -> gophercourier.auth.v1.User
-	14, // 12: gophercourier.auth.v1.MeResponse.active_org:type_name -> gophercourier.auth.v1.ActiveOrg
-	9,  // 13: gophercourier.auth.v1.MeResponse.memberships:type_name -> gophercourier.auth.v1.Membership
-	15, // 14: gophercourier.auth.v1.MeResponse.sessions:type_name -> gophercourier.auth.v1.SessionView
-	30, // 15: gophercourier.auth.v1.SessionView.last_used_at:type_name -> google.protobuf.Timestamp
-	9,  // 16: gophercourier.auth.v1.MyOrgsResponse.memberships:type_name -> gophercourier.auth.v1.Membership
-	0,  // 17: gophercourier.auth.v1.AuthService.Register:input_type -> gophercourier.auth.v1.RegisterRequest
-	1,  // 18: gophercourier.auth.v1.AuthService.Login:input_type -> gophercourier.auth.v1.LoginRequest
-	2,  // 19: gophercourier.auth.v1.AuthService.Refresh:input_type -> gophercourier.auth.v1.RefreshRequest
-	3,  // 20: gophercourier.auth.v1.AuthService.GetMe:input_type -> gophercourier.auth.v1.GetMeRequest
-	10, // 21: gophercourier.auth.v1.AuthService.SwitchOrg:input_type -> gophercourier.auth.v1.SwitchOrgRequest
-	12, // 22: gophercourier.auth.v1.AuthService.Me:input_type -> gophercourier.auth.v1.MeRequest
-	16, // 23: gophercourier.auth.v1.AuthService.MyOrgs:input_type -> gophercourier.auth.v1.MyOrgsRequest
-	18, // 24: gophercourier.auth.v1.AuthService.VerifyEmail:input_type -> gophercourier.auth.v1.VerifyEmailRequest
-	20, // 25: gophercourier.auth.v1.AuthService.ResendVerification:input_type -> gophercourier.auth.v1.ResendVerificationRequest
-	22, // 26: gophercourier.auth.v1.AuthService.ChangePassword:input_type -> gophercourier.auth.v1.ChangePasswordRequest
-	24, // 27: gophercourier.auth.v1.AuthService.Logout:input_type -> gophercourier.auth.v1.LogoutRequest
-	26, // 28: gophercourier.auth.v1.AuthService.RevokeSession:input_type -> gophercourier.auth.v1.RevokeSessionRequest
-	28, // 29: gophercourier.auth.v1.AuthService.LogoutAll:input_type -> gophercourier.auth.v1.LogoutAllRequest
-	4,  // 30: gophercourier.auth.v1.AuthService.Register:output_type -> gophercourier.auth.v1.RegisterResponse
-	5,  // 31: gophercourier.auth.v1.AuthService.Login:output_type -> gophercourier.auth.v1.LoginResponse
-	6,  // 32: gophercourier.auth.v1.AuthService.Refresh:output_type -> gophercourier.auth.v1.RefreshResponse
-	7,  // 33: gophercourier.auth.v1.AuthService.GetMe:output_type -> gophercourier.auth.v1.GetMeResponse
-	11, // 34: gophercourier.auth.v1.AuthService.SwitchOrg:output_type -> gophercourier.auth.v1.SwitchOrgResponse
-	13, // 35: gophercourier.auth.v1.AuthService.Me:output_type -> gophercourier.auth.v1.MeResponse
-	17, // 36: gophercourier.auth.v1.AuthService.MyOrgs:output_type -> gophercourier.auth.v1.MyOrgsResponse
-	19, // 37: gophercourier.auth.v1.AuthService.VerifyEmail:output_type -> gophercourier.auth.v1.VerifyEmailResponse
-	21, // 38: gophercourier.auth.v1.AuthService.ResendVerification:output_type -> gophercourier.auth.v1.ResendVerificationResponse
-	23, // 39: gophercourier.auth.v1.AuthService.ChangePassword:output_type -> gophercourier.auth.v1.ChangePasswordResponse
-	25, // 40: gophercourier.auth.v1.AuthService.Logout:output_type -> gophercourier.auth.v1.LogoutResponse
-	27, // 41: gophercourier.auth.v1.AuthService.RevokeSession:output_type -> gophercourier.auth.v1.RevokeSessionResponse
-	29, // 42: gophercourier.auth.v1.AuthService.LogoutAll:output_type -> gophercourier.auth.v1.LogoutAllResponse
-	30, // [30:43] is the sub-list for method output_type
-	17, // [17:30] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	9,  // 0: gophercourier.auth.v1.RegisterResponse.user:type_name -> gophercourier.auth.v1.User
+	10, // 1: gophercourier.auth.v1.RegisterResponse.memberships:type_name -> gophercourier.auth.v1.Membership
+	9,  // 2: gophercourier.auth.v1.LoginResponse.user:type_name -> gophercourier.auth.v1.User
+	10, // 3: gophercourier.auth.v1.LoginResponse.memberships:type_name -> gophercourier.auth.v1.Membership
+	9,  // 4: gophercourier.auth.v1.RefreshResponse.user:type_name -> gophercourier.auth.v1.User
+	10, // 5: gophercourier.auth.v1.RefreshResponse.memberships:type_name -> gophercourier.auth.v1.Membership
+	9,  // 6: gophercourier.auth.v1.GetMeResponse.user:type_name -> gophercourier.auth.v1.User
+	51, // 7: gophercourier.auth.v1.User.created_at:type_name -> google.protobuf.Timestamp
+	51, // 8: gophercourier.auth.v1.Membership.joined_at:type_name -> google.protobuf.Timestamp
+	9,  // 9: gophercourier.auth.v1.SwitchOrgResponse.user:type_name -> gophercourier.auth.v1.User
+	10, // 10: gophercourier.auth.v1.SwitchOrgResponse.memberships:type_name -> gophercourier.auth.v1.Membership
+	9,  // 11: gophercourier.auth.v1.MeResponse.user:type_name -> gophercourier.auth.v1.User
+	15, // 12: gophercourier.auth.v1.MeResponse.active_org:type_name -> gophercourier.auth.v1.ActiveOrg
+	10, // 13: gophercourier.auth.v1.MeResponse.memberships:type_name -> gophercourier.auth.v1.Membership
+	16, // 14: gophercourier.auth.v1.MeResponse.sessions:type_name -> gophercourier.auth.v1.SessionView
+	51, // 15: gophercourier.auth.v1.SessionView.last_used_at:type_name -> google.protobuf.Timestamp
+	10, // 16: gophercourier.auth.v1.MyOrgsResponse.memberships:type_name -> gophercourier.auth.v1.Membership
+	51, // 17: gophercourier.auth.v1.StartDesktopSignInResponse.expires_at:type_name -> google.protobuf.Timestamp
+	0,  // 18: gophercourier.auth.v1.PollDesktopSignInResponse.status:type_name -> gophercourier.auth.v1.DesktopSignInStatus
+	9,  // 19: gophercourier.auth.v1.PollDesktopSignInResponse.user:type_name -> gophercourier.auth.v1.User
+	10, // 20: gophercourier.auth.v1.PollDesktopSignInResponse.memberships:type_name -> gophercourier.auth.v1.Membership
+	51, // 21: gophercourier.auth.v1.PollDesktopSignInResponse.expires_at:type_name -> google.protobuf.Timestamp
+	51, // 22: gophercourier.auth.v1.ClaimDesktopSignInResponse.expires_at:type_name -> google.protobuf.Timestamp
+	0,  // 23: gophercourier.auth.v1.GetDesktopSignInResponse.status:type_name -> gophercourier.auth.v1.DesktopSignInStatus
+	51, // 24: gophercourier.auth.v1.GetDesktopSignInResponse.created_at:type_name -> google.protobuf.Timestamp
+	51, // 25: gophercourier.auth.v1.GetDesktopSignInResponse.expires_at:type_name -> google.protobuf.Timestamp
+	1,  // 26: gophercourier.auth.v1.AuthService.Register:input_type -> gophercourier.auth.v1.RegisterRequest
+	2,  // 27: gophercourier.auth.v1.AuthService.Login:input_type -> gophercourier.auth.v1.LoginRequest
+	3,  // 28: gophercourier.auth.v1.AuthService.Refresh:input_type -> gophercourier.auth.v1.RefreshRequest
+	4,  // 29: gophercourier.auth.v1.AuthService.GetMe:input_type -> gophercourier.auth.v1.GetMeRequest
+	11, // 30: gophercourier.auth.v1.AuthService.SwitchOrg:input_type -> gophercourier.auth.v1.SwitchOrgRequest
+	13, // 31: gophercourier.auth.v1.AuthService.Me:input_type -> gophercourier.auth.v1.MeRequest
+	17, // 32: gophercourier.auth.v1.AuthService.MyOrgs:input_type -> gophercourier.auth.v1.MyOrgsRequest
+	19, // 33: gophercourier.auth.v1.AuthService.VerifyEmail:input_type -> gophercourier.auth.v1.VerifyEmailRequest
+	21, // 34: gophercourier.auth.v1.AuthService.ResendVerification:input_type -> gophercourier.auth.v1.ResendVerificationRequest
+	23, // 35: gophercourier.auth.v1.AuthService.ChangePassword:input_type -> gophercourier.auth.v1.ChangePasswordRequest
+	25, // 36: gophercourier.auth.v1.AuthService.Logout:input_type -> gophercourier.auth.v1.LogoutRequest
+	27, // 37: gophercourier.auth.v1.AuthService.RevokeSession:input_type -> gophercourier.auth.v1.RevokeSessionRequest
+	29, // 38: gophercourier.auth.v1.AuthService.LogoutAll:input_type -> gophercourier.auth.v1.LogoutAllRequest
+	31, // 39: gophercourier.auth.v1.AuthService.GetServerInfo:input_type -> gophercourier.auth.v1.GetServerInfoRequest
+	33, // 40: gophercourier.auth.v1.AuthService.StartDesktopSignIn:input_type -> gophercourier.auth.v1.StartDesktopSignInRequest
+	35, // 41: gophercourier.auth.v1.AuthService.PollDesktopSignIn:input_type -> gophercourier.auth.v1.PollDesktopSignInRequest
+	37, // 42: gophercourier.auth.v1.AuthService.CancelDesktopSignIn:input_type -> gophercourier.auth.v1.CancelDesktopSignInRequest
+	39, // 43: gophercourier.auth.v1.AuthService.ClaimDesktopSignIn:input_type -> gophercourier.auth.v1.ClaimDesktopSignInRequest
+	41, // 44: gophercourier.auth.v1.AuthService.GetDesktopSignIn:input_type -> gophercourier.auth.v1.GetDesktopSignInRequest
+	43, // 45: gophercourier.auth.v1.AuthService.ApproveDesktopSignIn:input_type -> gophercourier.auth.v1.ApproveDesktopSignInRequest
+	45, // 46: gophercourier.auth.v1.AuthService.DenyDesktopSignIn:input_type -> gophercourier.auth.v1.DenyDesktopSignInRequest
+	47, // 47: gophercourier.auth.v1.AuthService.RequestPasswordReset:input_type -> gophercourier.auth.v1.RequestPasswordResetRequest
+	49, // 48: gophercourier.auth.v1.AuthService.ResetPassword:input_type -> gophercourier.auth.v1.ResetPasswordRequest
+	5,  // 49: gophercourier.auth.v1.AuthService.Register:output_type -> gophercourier.auth.v1.RegisterResponse
+	6,  // 50: gophercourier.auth.v1.AuthService.Login:output_type -> gophercourier.auth.v1.LoginResponse
+	7,  // 51: gophercourier.auth.v1.AuthService.Refresh:output_type -> gophercourier.auth.v1.RefreshResponse
+	8,  // 52: gophercourier.auth.v1.AuthService.GetMe:output_type -> gophercourier.auth.v1.GetMeResponse
+	12, // 53: gophercourier.auth.v1.AuthService.SwitchOrg:output_type -> gophercourier.auth.v1.SwitchOrgResponse
+	14, // 54: gophercourier.auth.v1.AuthService.Me:output_type -> gophercourier.auth.v1.MeResponse
+	18, // 55: gophercourier.auth.v1.AuthService.MyOrgs:output_type -> gophercourier.auth.v1.MyOrgsResponse
+	20, // 56: gophercourier.auth.v1.AuthService.VerifyEmail:output_type -> gophercourier.auth.v1.VerifyEmailResponse
+	22, // 57: gophercourier.auth.v1.AuthService.ResendVerification:output_type -> gophercourier.auth.v1.ResendVerificationResponse
+	24, // 58: gophercourier.auth.v1.AuthService.ChangePassword:output_type -> gophercourier.auth.v1.ChangePasswordResponse
+	26, // 59: gophercourier.auth.v1.AuthService.Logout:output_type -> gophercourier.auth.v1.LogoutResponse
+	28, // 60: gophercourier.auth.v1.AuthService.RevokeSession:output_type -> gophercourier.auth.v1.RevokeSessionResponse
+	30, // 61: gophercourier.auth.v1.AuthService.LogoutAll:output_type -> gophercourier.auth.v1.LogoutAllResponse
+	32, // 62: gophercourier.auth.v1.AuthService.GetServerInfo:output_type -> gophercourier.auth.v1.GetServerInfoResponse
+	34, // 63: gophercourier.auth.v1.AuthService.StartDesktopSignIn:output_type -> gophercourier.auth.v1.StartDesktopSignInResponse
+	36, // 64: gophercourier.auth.v1.AuthService.PollDesktopSignIn:output_type -> gophercourier.auth.v1.PollDesktopSignInResponse
+	38, // 65: gophercourier.auth.v1.AuthService.CancelDesktopSignIn:output_type -> gophercourier.auth.v1.CancelDesktopSignInResponse
+	40, // 66: gophercourier.auth.v1.AuthService.ClaimDesktopSignIn:output_type -> gophercourier.auth.v1.ClaimDesktopSignInResponse
+	42, // 67: gophercourier.auth.v1.AuthService.GetDesktopSignIn:output_type -> gophercourier.auth.v1.GetDesktopSignInResponse
+	44, // 68: gophercourier.auth.v1.AuthService.ApproveDesktopSignIn:output_type -> gophercourier.auth.v1.ApproveDesktopSignInResponse
+	46, // 69: gophercourier.auth.v1.AuthService.DenyDesktopSignIn:output_type -> gophercourier.auth.v1.DenyDesktopSignInResponse
+	48, // 70: gophercourier.auth.v1.AuthService.RequestPasswordReset:output_type -> gophercourier.auth.v1.RequestPasswordResetResponse
+	50, // 71: gophercourier.auth.v1.AuthService.ResetPassword:output_type -> gophercourier.auth.v1.ResetPasswordResponse
+	49, // [49:72] is the sub-list for method output_type
+	26, // [26:49] is the sub-list for method input_type
+	26, // [26:26] is the sub-list for extension type_name
+	26, // [26:26] is the sub-list for extension extendee
+	0,  // [0:26] is the sub-list for field type_name
 }
 
 func init() { file_gophercourier_auth_v1_auth_proto_init() }
@@ -2819,13 +4791,14 @@ func file_gophercourier_auth_v1_auth_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_gophercourier_auth_v1_auth_proto_rawDesc), len(file_gophercourier_auth_v1_auth_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   30,
+			NumEnums:      1,
+			NumMessages:   50,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_gophercourier_auth_v1_auth_proto_goTypes,
 		DependencyIndexes: file_gophercourier_auth_v1_auth_proto_depIdxs,
+		EnumInfos:         file_gophercourier_auth_v1_auth_proto_enumTypes,
 		MessageInfos:      file_gophercourier_auth_v1_auth_proto_msgTypes,
 	}.Build()
 	File_gophercourier_auth_v1_auth_proto = out.File

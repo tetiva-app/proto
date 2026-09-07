@@ -30,6 +30,25 @@ service AuthService {
   rpc RevokeSession(RevokeSessionRequest) returns (RevokeSessionResponse);
   // LogoutAll revokes every session except the current one.
   rpc LogoutAll(LogoutAllRequest) returns (LogoutAllResponse);
+
+  // Discovery. Public: what this server offers before anyone signs in.
+  rpc GetServerInfo(GetServerInfoRequest) returns (GetServerInfoResponse);
+
+  // Desktop sign-in (RFC 8628-shaped). Start/Poll/Cancel are public and called
+  // by the desktop app. Claim is public and called by the cabinet page on first
+  // open; Get/Approve/Deny require a bearer token and the claim token.
+  rpc StartDesktopSignIn(StartDesktopSignInRequest) returns (StartDesktopSignInResponse);
+  rpc PollDesktopSignIn(PollDesktopSignInRequest) returns (PollDesktopSignInResponse);
+  rpc CancelDesktopSignIn(CancelDesktopSignInRequest) returns (CancelDesktopSignInResponse);
+  rpc ClaimDesktopSignIn(ClaimDesktopSignInRequest) returns (ClaimDesktopSignInResponse);
+  rpc GetDesktopSignIn(GetDesktopSignInRequest) returns (GetDesktopSignInResponse);
+  rpc ApproveDesktopSignIn(ApproveDesktopSignInRequest) returns (ApproveDesktopSignInResponse);
+  rpc DenyDesktopSignIn(DenyDesktopSignInRequest) returns (DenyDesktopSignInResponse);
+
+  // Password reset. Both public; RequestPasswordReset never reveals whether
+  // the address exists.
+  rpc RequestPasswordReset(RequestPasswordResetRequest) returns (RequestPasswordResetResponse);
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
 }
 
 message RegisterRequest {
@@ -200,3 +219,143 @@ message LogoutAllRequest {}
 message LogoutAllResponse {
   int32 revoked_count = 1;
 }
+
+message GetServerInfoRequest {}
+
+message GetServerInfoResponse {
+  string server_version = 1;
+  // Feature names a client may rely on: "desktop_signin", "password_reset".
+  repeated string capabilities = 2;
+  // Absolute page URL that completes a desktop sign-in; empty without the capability.
+  string desktop_signin_url = 3;
+  bool registration_open = 4;
+}
+
+message StartDesktopSignInRequest {
+  string client_id = 1;
+  // base64url(SHA-256(code_verifier)), RFC 7636 S256. Only S256 is accepted.
+  string code_challenge = 2;
+  string device_name = 3;
+  // runtime.GOOS of the app: "darwin" | "windows" | "linux" | other.
+  string platform = 4;
+  string app_version = 5;
+  // Loopback the cabinet redirects to after approval: http://127.0.0.1:<port>/callback.
+  // Empty when the app cannot listen.
+  string redirect_uri = 6;
+  // "ru" | "en" hint for the page; empty lets the cabinet detect.
+  string locale = 7;
+  // "signin" (default) | "register" — which form the cabinet opens first.
+  string intent = 8;
+  // base64url(SHA-256(claim_secret)). The secret itself travels only in the URL
+  // fragment the app opens, so proxies and logs never see it.
+  string claim_challenge = 9;
+}
+
+message StartDesktopSignInResponse {
+  string request_id = 1;
+  string login_url = 2;
+  google.protobuf.Timestamp expires_at = 3;
+  int32 poll_interval_seconds = 4;
+}
+
+enum DesktopSignInStatus {
+  DESKTOP_SIGN_IN_STATUS_UNSPECIFIED = 0;
+  DESKTOP_SIGN_IN_STATUS_PENDING = 1;
+  DESKTOP_SIGN_IN_STATUS_APPROVED = 2;
+  DESKTOP_SIGN_IN_STATUS_DENIED = 3;
+  DESKTOP_SIGN_IN_STATUS_EXPIRED = 4;
+}
+
+message PollDesktopSignInRequest {
+  string request_id = 1;
+  string client_id = 2;
+  string code_verifier = 3;
+}
+
+// Tokens are present only with APPROVED; the layout mirrors LoginResponse.
+message PollDesktopSignInResponse {
+  DesktopSignInStatus status = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+  User user = 4;
+  string active_org_id = 10;
+  string active_role_id = 11;
+  bool is_platform_staff = 12;
+  repeated Membership memberships = 13;
+  bool requires_email_verification = 14;
+  // With PENDING: the request is approved but this server requires a verified
+  // email before issuing a session; keep polling until expires_at.
+  bool email_verification_pending = 15;
+  // Current deadline of the request; extended once when the email gate is hit.
+  google.protobuf.Timestamp expires_at = 16;
+}
+
+message CancelDesktopSignInRequest {
+  string request_id = 1;
+  string client_id = 2;
+  string code_verifier = 3;
+}
+
+message CancelDesktopSignInResponse {}
+
+// Claim binds a pending request to the browser tab that opened the link;
+// a second claim is refused so the id in the address bar cannot be reused.
+message ClaimDesktopSignInRequest {
+  string request_id = 1;
+  string claim_secret = 2;
+}
+
+message ClaimDesktopSignInResponse {
+  string intent = 1;
+  google.protobuf.Timestamp expires_at = 2;
+}
+
+message GetDesktopSignInRequest {
+  string request_id = 1;
+  string claim_secret = 2;
+}
+
+message GetDesktopSignInResponse {
+  string request_id = 1;
+  DesktopSignInStatus status = 2;
+  // Reported by the app that started the request; shown as a claim, not a fact.
+  string device_name = 3;
+  string platform = 4;
+  string app_version = 5;
+  // Address the app started the request from, and whether the browser calls from the same one.
+  string ip = 6;
+  bool same_ip = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp expires_at = 9;
+}
+
+message ApproveDesktopSignInRequest {
+  string request_id = 1;
+  string claim_secret = 2;
+}
+
+message ApproveDesktopSignInResponse {
+  // Empty when the app registered no loopback: show "return to the app" instead.
+  string redirect_uri = 1;
+}
+
+message DenyDesktopSignInRequest {
+  string request_id = 1;
+  string claim_secret = 2;
+}
+
+message DenyDesktopSignInResponse {}
+
+message RequestPasswordResetRequest {
+  string email = 1;
+  string locale = 2;
+}
+
+message RequestPasswordResetResponse {}
+
+message ResetPasswordRequest {
+  string token = 1;
+  string new_password = 2;
+}
+
+message ResetPasswordResponse {}
