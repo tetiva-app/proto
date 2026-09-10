@@ -67,8 +67,6 @@ service PlatformService {
       returns (PlatformServiceForceRemoveOrgMemberResponse);
 }
 
-// ---- Request / Response shapes ----
-
 message PlatformServiceListOrgsRequest {
   bool include_personal = 1;
   bool include_deleted = 2;
