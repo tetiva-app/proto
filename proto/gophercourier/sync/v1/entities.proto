@@ -34,6 +34,8 @@ message RequestData {
   string graphql_operation = 18;
   string pre_script = 19;
   string post_script = 20;
+  // Presence matters: a client too old to know the field must not clear docs.
+  optional string description = 21;
 }
 
 message EnvironmentData {

@@ -199,6 +199,9 @@ type RequestData struct {
 	xxx_hidden_GraphqlOperation  string                 `protobuf:"bytes,18,opt,name=graphql_operation,json=graphqlOperation,proto3"`
 	xxx_hidden_PreScript         string                 `protobuf:"bytes,19,opt,name=pre_script,json=preScript,proto3"`
 	xxx_hidden_PostScript        string                 `protobuf:"bytes,20,opt,name=post_script,json=postScript,proto3"`
+	xxx_hidden_Description       *string                `protobuf:"bytes,21,opt,name=description,proto3,oneof"`
+	XXX_raceDetectHookData       protoimpl.RaceDetectHookData
+	XXX_presence                 [1]uint32
 	unknownFields                protoimpl.UnknownFields
 	sizeCache                    protoimpl.SizeCache
 }
@@ -372,6 +375,16 @@ func (x *RequestData) GetPostScript() string {
 	return ""
 }
 
+func (x *RequestData) GetDescription() string {
+	if x != nil {
+		if x.xxx_hidden_Description != nil {
+			return *x.xxx_hidden_Description
+		}
+		return ""
+	}
+	return ""
+}
+
 func (x *RequestData) SetCollectionId(v string) {
 	x.xxx_hidden_CollectionId = v
 }
@@ -452,6 +465,23 @@ func (x *RequestData) SetPostScript(v string) {
 	x.xxx_hidden_PostScript = v
 }
 
+func (x *RequestData) SetDescription(v string) {
+	x.xxx_hidden_Description = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 20, 21)
+}
+
+func (x *RequestData) HasDescription() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 20)
+}
+
+func (x *RequestData) ClearDescription() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 20)
+	x.xxx_hidden_Description = nil
+}
+
 type RequestData_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
@@ -475,6 +505,8 @@ type RequestData_builder struct {
 	GraphqlOperation  string
 	PreScript         string
 	PostScript        string
+	// Presence matters: a client too old to know the field must not clear docs.
+	Description *string
 }
 
 func (b0 RequestData_builder) Build() *RequestData {
@@ -501,6 +533,10 @@ func (b0 RequestData_builder) Build() *RequestData {
 	x.xxx_hidden_GraphqlOperation = b.GraphqlOperation
 	x.xxx_hidden_PreScript = b.PreScript
 	x.xxx_hidden_PostScript = b.PostScript
+	if b.Description != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 20, 21)
+		x.xxx_hidden_Description = b.Description
+	}
 	return m0
 }
 
@@ -774,7 +810,7 @@ const file_gophercourier_sync_v1_entities_proto_rawDesc = "" +
 	"\n" +
 	"pre_script\x18\a \x01(\tR\tpreScript\x12\x1f\n" +
 	"\vpost_script\x18\b \x01(\tR\n" +
-	"postScript\"\xd7\x05\n" +
+	"postScript\"\x8e\x06\n" +
 	"\vRequestData\x12#\n" +
 	"\rcollection_id\x18\x01 \x01(\tR\fcollectionId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
@@ -799,7 +835,9 @@ const file_gophercourier_sync_v1_entities_proto_rawDesc = "" +
 	"\n" +
 	"pre_script\x18\x13 \x01(\tR\tpreScript\x12\x1f\n" +
 	"\vpost_script\x18\x14 \x01(\tR\n" +
-	"postScript\"%\n" +
+	"postScript\x12%\n" +
+	"\vdescription\x18\x15 \x01(\tH\x00R\vdescription\x88\x01\x01B\x0e\n" +
+	"\f_description\"%\n" +
 	"\x0fEnvironmentData\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\"\x94\x01\n" +
 	"\fVariableData\x12%\n" +
@@ -839,6 +877,7 @@ func file_gophercourier_sync_v1_entities_proto_init() {
 	if File_gophercourier_sync_v1_entities_proto != nil {
 		return
 	}
+	file_gophercourier_sync_v1_entities_proto_msgTypes[1].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
